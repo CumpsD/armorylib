@@ -13,16 +13,34 @@ namespace ArmoryLib.Character
         public CharacterDetail DetailLoaded { get; private set; }
 
         // Search result properties
+        [RequiredDetail(CharacterDetail.Basic)]
         public Region Region { get; private set; }
+
+        [RequiredDetail(CharacterDetail.Basic)]
         public Faction Faction { get; private set; }
+
+        [RequiredDetail(CharacterDetail.Basic)]
         public string Name { get; private set; }
+
+        [RequiredDetail(CharacterDetail.Basic)]
         public string Realm { get; private set; }
+
+        [RequiredDetail(CharacterDetail.Basic)]
         public string BattleGroup { get; private set; }
+
+        [RequiredDetail(CharacterDetail.Basic)]
         public Gender Gender { get; private set; }
+
+        [RequiredDetail(CharacterDetail.Basic)]
         public Race Race { get; private set; }
+
+        [RequiredDetail(CharacterDetail.Basic)]
         public Class Class { get; private set; }
+
+        [RequiredDetail(CharacterDetail.Basic)]
         public int Level { get; private set; }
 
+        [RequiredDetail(CharacterDetail.Basic)]
         public G Guild { get; private set; }
 
         public string BeImbaUrl
