@@ -7,11 +7,12 @@ using G = ArmoryLib.Guild.Guild;
 
 namespace ArmoryLib.Character
 {
-    public class Character: IComparable<Character>
+    public class Character : IComparable<Character>, IEquatable<Character>
     {
         private bool SearchResult { get; set; }
 
         // Search result properties
+        public Region Region { get; private set; }
         public Faction Faction { get; private set; }
         public string Name { get; private set; }
         public string Realm { get; private set; }
@@ -23,9 +24,21 @@ namespace ArmoryLib.Character
 
         public G Guild { get; private set; }
 
+        public string BeImbaUrl
+        {
+            get
+            {
+                return string.Format("http://be.imba.hu/?zone={0}&realm={1}&character={2}", 
+                                     this.Region.RegionAbbreviation(), 
+                                     this.Realm, 
+                                     this.Name);
+            }
+        }
+
         private string Url { get; set; }
 
         public Character(bool searchResult,
+                         Region region,
                          Faction faction,
                          string name,
                          string realm,
@@ -38,6 +51,7 @@ namespace ArmoryLib.Character
                          G guild)
         {
             SearchResult = searchResult;
+            Region = region;
             Faction = faction;
             Name = name;
             Realm = realm;
@@ -54,28 +68,87 @@ namespace ArmoryLib.Character
         #region IComparable<Character> Members
         public int CompareTo(Character other)
         {
-            if (this.Name == other.Name)
+            if (this.Region == other.Region)
             {
-                if (this.Faction == other.Faction)
+                if (this.Name == other.Name)
                 {
-                    if (this.BattleGroup == other.BattleGroup)
+                    if (this.Faction == other.Faction)
                     {
-                        return this.Realm.CompareTo(other.Realm);
+                        if (this.BattleGroup == other.BattleGroup)
+                        {
+                            return this.Realm.CompareTo(other.Realm);
+                        }
+                        else
+                        {
+                            return this.BattleGroup.CompareTo(other.BattleGroup);
+                        }
                     }
                     else
                     {
-                        return this.BattleGroup.CompareTo(other.BattleGroup);
+                        return ((int)this.Faction).CompareTo((int)other.Faction);
                     }
                 }
                 else
                 {
-                    return ((int)this.Faction).CompareTo((int)other.Faction);
+                    return this.Name.ToLowerInvariant().CompareTo(other.Name.ToLowerInvariant());
                 }
             }
             else
             {
-                return this.Name.ToLowerInvariant().CompareTo(other.Name.ToLowerInvariant());
+                return ((int)this.Region).CompareTo((int)other.Region);
             }
+        }
+        #endregion
+
+        #region IEquatable<Character> Members
+        public bool Equals(Character other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            else
+            {
+                return (other.Region == this.Region) &&
+                       (other.Name == this.Name) &&
+                       (other.Realm == this.Realm) &&
+                       (other.Faction == this.Faction);
+            }
+        }
+        #endregion
+
+        #region Equality Support
+        public override int GetHashCode()
+        {
+            return string.Format("{0}|{1}", this.Name, this.Realm).GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return base.Equals(obj);
+
+            if (!(obj is Character))
+            {
+                throw new InvalidCastException("The 'obj' argument is not a Character object.");
+            }
+            else
+            {
+                return Equals(obj as Character);
+            }
+        }
+
+        public static bool operator ==(Character a, Character b)
+        {
+            if (object.ReferenceEquals(a, b)) return true;
+            if (object.ReferenceEquals(a, null)) return false;
+            if (object.ReferenceEquals(b, null)) return false;
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Character a, Character b)
+        {
+            return !(a == b);
         }
         #endregion
     }

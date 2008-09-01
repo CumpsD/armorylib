@@ -55,6 +55,15 @@ namespace ArmoryTester
                                                 guild.BattleGroup,
                                                 guild.Realm,
                                                 guild.MemberCountText));
+
+                foreach (Character member in guild.Members)
+                {
+                    Console.WriteLine(string.Format("  - {0}, {1} Level {2} {3}", 
+                                                    member.Name,
+                                                    member.Gender,
+                                                    member.Level,
+                                                    member.Class));
+                }
             }
             else
             {
@@ -71,7 +80,7 @@ namespace ArmoryTester
                 Console.WriteLine("Search results for {0}:", characterName);
                 foreach (Character c in characters)
                 {
-                    Console.WriteLine(string.Format("{1} - {2} - {3} - {4} - {5}{0}\t{6} - {7} - {8} - {9}",
+                    Console.WriteLine(string.Format("{1} - {2} - {3} - Level {4} - {5}{0}\t{6} - {7} - {8} - {9}",
                                                     Environment.NewLine,
                                                     c.Name,
                                                     c.Faction,
@@ -89,6 +98,29 @@ namespace ArmoryTester
                 Console.WriteLine("No results for {0}.", characterName);
             }
 
+            Console.WriteLine(new string('-', 50));
+
+            Character character = armory.LoadCharacter(realmName, characterName);
+            if (character != null)
+            {
+                Console.WriteLine("Details for {0} - {1}:", characterName, realmName);
+                Console.WriteLine(string.Format("{1} - {2} - {3} - Level {4} - {5}{0}\t{6} - {7} - {8} - {9}",
+                                                Environment.NewLine,
+                                                character.Name,
+                                                character.Faction,
+                                                character.Gender,
+                                                character.Level,
+                                                character.Race,
+                                                character.Class,
+                                                character.BattleGroup,
+                                                character.Realm,
+                                                character.Guild.Name));
+            }
+            else
+            {
+                Console.WriteLine("Character {0} - {1} does not exist.", characterName, realmName);
+            }
+
             /*
              * Specs:
              *  - Character
@@ -96,7 +128,7 @@ namespace ArmoryTester
              *      - LoadCharacter(string name, string realm)
              *  - Guild
              *      - SearchGuild(string name) - OK
-             *      - LoadGuild(string name, string realm)
+             *      - LoadGuild(string name, string realm) - OK
              *  - Item?
              *      - LoadItem(????)
              * */
@@ -104,6 +136,4 @@ namespace ArmoryTester
     }
 }
 
-// guilds: http://be.imba.hu/ (requires login)
-// chars: http://be.imba.hu/?zone=EU&realm=Sporeggar&character=Zoing (public)
 // items: wowhead (public)
