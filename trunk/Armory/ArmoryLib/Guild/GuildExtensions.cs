@@ -3,6 +3,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Web;
 
+using ArmoryLib.Character;
 using C = ArmoryLib.Character.Character;
 
 namespace ArmoryLib.Guild
@@ -26,7 +27,7 @@ namespace ArmoryLib.Guild
             {
                 // <guild battleGroup="Vindication" faction="Horde" factionId="1" name="The Dominion" realm="Sporeggar" url="r=Sporeggar&amp;n=The+Dominion&amp;p=1"/>
                 Guild guild = new Guild(
-                                true,
+                                GuildDetail.Basic,
                                 armory.Region,
                                 (Faction)Enum.Parse(typeof(Faction), guildNode.Attributes["factionId"].Value),
                                 guildNode.Attributes["name"].Value,
@@ -40,6 +41,7 @@ namespace ArmoryLib.Guild
             return guilds;
         }
 
+        // TODO: add overload to specify level of detail to load
         public static Guild LoadGuild(this Armory armory, string realmName, string guildName)
         {
             // http://eu.wowarmory.com/guild-info.xml?r=Sporeggar&n=The+Dominion&p=1
@@ -64,7 +66,7 @@ namespace ArmoryLib.Guild
 
                 // <guildKey factionId="1" name="The Dominion" nameUrl="The+Dominion" realm="Sporeggar" realmUrl="Sporeggar" url="r=Sporeggar&amp;n=The+Dominion"/>
                 Guild guild = new Guild(
-                                false,
+                                GuildDetail.Basic | GuildDetail.Roster,
                                 armory.Region,
                                 (Faction)Enum.Parse(typeof(Faction), guildDetails.Attributes["factionId"].Value),
                                 guildDetails.Attributes["name"].Value,
@@ -81,7 +83,7 @@ namespace ArmoryLib.Guild
                 {
                     // <character class="Rogue" classId="4" gender="Female" genderId="1" level="70" name="Zoing" race="Blood Elf" raceId="10" rank="0" url="r=Sporeggar&amp;n=Zoing"/>
                     guild.Members.Add(new C(
-                                            true,
+                                            CharacterDetail.Basic,
                                             armory.Region,
                                             guild.Faction,
                                             guildMember.Attributes["name"].Value,
