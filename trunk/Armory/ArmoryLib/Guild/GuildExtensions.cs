@@ -9,6 +9,8 @@ namespace ArmoryLib.Guild
     {
         public static List<Guild> SearchGuild(this Armory armory, string guildName)
         {
+            // TODO: Take multiple pages into account!
+
             // http://eu.wowarmory.com/search.xml?searchQuery=The%20Dominion&searchType=guilds
             string searchString = string.Format("search.xml?searchQuery={0}&searchType=guilds", 
                                                 HttpUtility.UrlEncode(guildName));
@@ -20,6 +22,7 @@ namespace ArmoryLib.Guild
 
             foreach (XmlNode guildNode in guildNodes)
             {
+                // <guild battleGroup="Vindication" faction="Horde" factionId="1" name="The Dominion" realm="Sporeggar" url="r=Sporeggar&amp;n=The+Dominion&amp;p=1"/>
                 Guild guild = new Guild(
                                 true,
                                 (Faction)Enum.Parse(typeof(Faction), guildNode.Attributes["factionId"].Value),

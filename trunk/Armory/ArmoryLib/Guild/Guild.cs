@@ -5,15 +5,20 @@ using System.Text;
 
 namespace ArmoryLib.Guild
 {
-    public class Guild : IComparable<Guild>
+    public class Guild : IComparable<Guild>, IEquatable<Guild>
     {
         private bool SearchResult { get; set; }
 
         // Search result properties
         public Faction Faction { get; private set; }
-        public string Name { get; private set; }
         public string Realm { get; private set; }
         public string BattleGroup { get; private set; }
+
+        private string _name;
+        public string Name { 
+            get { return (this._name == string.Empty) ? "(No Guild)" : this._name; }
+            private set { _name = value; }
+        }
 
         private string Url { get; set; }
 
@@ -71,9 +76,9 @@ namespace ArmoryLib.Guild
         }
 
         #region IComparable<Guild> Members
-
         public int CompareTo(Guild other)
         {
+            // Converting because WoW keeps guild name casing, as opposed to character names
             if (this.Name.ToLowerInvariant() == other.Name.ToLowerInvariant())
             {
                 if (this.Faction == other.Faction)
@@ -97,7 +102,57 @@ namespace ArmoryLib.Guild
                 return this.Name.ToLowerInvariant().CompareTo(other.Name.ToLowerInvariant());
             }
         }
+        #endregion
 
+        #region IEquatable<Guild> Members
+        public bool Equals(Guild other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            else
+            {
+                return (other.Name == this.Name) &&
+                       (other.Realm == this.Realm) &&
+                       (other.Faction == this.Faction);
+            }
+        }
+        #endregion
+
+        #region Equality Support
+        public override int GetHashCode()
+        {
+            return string.Format("{0}|{1}", this.Name, this.Realm).GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return base.Equals(obj);
+
+            if (!(obj is Guild))
+            {
+                throw new InvalidCastException("The 'obj' argument is not a Guild object.");
+            }
+            else
+            {
+                return Equals(obj as Guild);
+            }
+        }
+
+        public static bool operator ==(Guild a, Guild b)
+        {
+            if (object.ReferenceEquals(a, b)) return true;
+            if (object.ReferenceEquals(a, null)) return false;
+            if (object.ReferenceEquals(b, null)) return false;
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Guild a, Guild b)
+        {
+            return !(a == b);
+        }
         #endregion
     }
 }
