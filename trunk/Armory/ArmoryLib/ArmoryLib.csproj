@@ -35,6 +35,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -46,12 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Armory.cs" />
+    <Compile Include="Gender.cs" />
     <Compile Include="Exceptions\InvalidRegionException.cs" />
+    <Compile Include="Faction.cs" />
+    <Compile Include="Guild\Guild.cs" />
+    <Compile Include="Guild\GuildExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Race.cs" />
     <Compile Include="Region.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Guild\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

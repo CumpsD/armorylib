@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Xml;
+using System.Web;
+using System.Net;
 
 using ArmoryLib.Exceptions;
 
@@ -20,15 +21,15 @@ namespace ArmoryLib
                 {
                     case Region.USA:
                     case Region.Oceanic:
-                        return "http://www.wowarmory.com";
+                        return "http://www.wowarmory.com/";
                     case Region.Europe:
-                        return "http://eu.wowarmory.com";
+                        return "http://eu.wowarmory.com/";
                     case Region.Korea:
-                        return "http://kr.wowarmory.com";
+                        return "http://kr.wowarmory.com/";
                     case Region.China:
-                        return "http://cn.wowarmory.com";
+                        return "http://cn.wowarmory.com/";
                     case Region.Taiwan:
-                        return "http://tw.wowarmory.com";
+                        return "http://tw.wowarmory.com/";
                 }
 
                 throw new InvalidRegionException();
@@ -44,14 +45,26 @@ namespace ArmoryLib
         }
 
         // Defaults to European Armory
-        public Armory(): this(Region.Europe)
-        {
-        }
+        public Armory(): this(Region.Europe) {}
 
         public Armory(Region region)
         {
             Region = region;
             UserAgent = DefaultUserAgent;
+        }
+
+        public XmlDocument Request(string command)
+        {
+            string armoryRequest = Url + command;
+            XmlDocument armoryResponse = new XmlDocument();
+
+            using (WebClient client = new WebClient())
+            {
+                client.Headers.Set("User-Agent", UserAgent);
+                armoryResponse.LoadXml(client.DownloadString(armoryRequest));
+            }
+
+            return armoryResponse;
         }
     }
 }
