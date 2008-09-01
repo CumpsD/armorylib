@@ -5,6 +5,7 @@ using System.Text;
 
 using ArmoryLib;
 using ArmoryLib.Guild;
+using ArmoryLib.Character;
 
 namespace ArmoryTester
 {
@@ -14,6 +15,7 @@ namespace ArmoryTester
         {
             string guildName = "The Dominion";
             string realmName = "Sporeggar";
+            string characterName = "Zoing";
 
             Armory armory = new Armory
             {
@@ -40,7 +42,7 @@ namespace ArmoryTester
                 Console.WriteLine("No results for {0}.", guildName);
             }
 
-            Console.WriteLine();
+            Console.WriteLine(new string('-', 50));
 
             Guild guild = armory.LoadGuild(realmName, guildName);
             if (guild != null)
@@ -59,11 +61,38 @@ namespace ArmoryTester
                 Console.WriteLine("Guild {0} - {1} does not exist.", guildName, realmName);
             }
 
+            Console.WriteLine(new string('-', 50));
+
+            List<Character> characters = armory.SearchCharacter(characterName);
+            characters.Sort();
+
+            if (characters.Count > 0)
+            {
+                Console.WriteLine("Search results for {0}:", characterName);
+                foreach (Character c in characters)
+                {
+                    Console.WriteLine(string.Format("{1} - {2} - {3} - {4} - {5}{0}\t{6} - {7} - {8} - {9}",
+                                                    Environment.NewLine,
+                                                    c.Name,
+                                                    c.Faction,
+                                                    c.Gender,
+                                                    c.Level,
+                                                    c.Race,
+                                                    c.Class,
+                                                    c.BattleGroup,
+                                                    c.Realm,
+                                                    c.Guild.Name));
+                }
+            }
+            else
+            {
+                Console.WriteLine("No results for {0}.", characterName);
+            }
 
             /*
              * Specs:
              *  - Character
-             *      - SearchCharacter(string name)
+             *      - SearchCharacter(string name) - OK
              *      - LoadCharacter(string name, string realm)
              *  - Guild
              *      - SearchGuild(string name) - OK
