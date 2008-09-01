@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using C = ArmoryLib.Character.Character;
+
 namespace ArmoryLib.Guild
 {
     public class Guild : IComparable<Guild>, IEquatable<Guild>
@@ -10,6 +12,7 @@ namespace ArmoryLib.Guild
         private bool SearchResult { get; set; }
 
         // Search result properties
+        public Region Region { get; private set; }
         public Faction Faction { get; private set; }
         public string Realm { get; private set; }
         public string BattleGroup { get; private set; }
@@ -33,16 +36,20 @@ namespace ArmoryLib.Guild
             }
         }
 
+        public List<C> Members { get; private set; }
+
         private string NameUrl { get; set; }
         private string RealmUrl { get; set; }
 
         public Guild(bool searchResult,
+                     Region region,
                      Faction faction,
                      string name,
                      string realm,
                      string battleGroup,
                      string url) :
             this(searchResult,
+                 region,
                  faction,
                  name,
                  realm,
@@ -55,6 +62,7 @@ namespace ArmoryLib.Guild
         }
 
         public Guild(bool searchResult,
+                     Region region,
                      Faction faction,
                      string name,
                      string realm,
@@ -65,6 +73,7 @@ namespace ArmoryLib.Guild
                      int memberCount)
         {
             SearchResult = searchResult;
+            Region = region;
             Faction = faction;
             Name = name;
             Realm = realm;
@@ -73,33 +82,42 @@ namespace ArmoryLib.Guild
             NameUrl = nameUrl;
             RealmUrl = realmUrl;
             MemberCount = memberCount;
+
+            Members = new List<C>();
         }
 
         #region IComparable<Guild> Members
         public int CompareTo(Guild other)
         {
-            // Converting because WoW keeps guild name casing, as opposed to character names
-            if (this.Name.ToLowerInvariant() == other.Name.ToLowerInvariant())
+            if (this.Region == other.Region)
             {
-                if (this.Faction == other.Faction)
+                // Converting because WoW keeps guild name casing, as opposed to character names
+                if (this.Name.ToLowerInvariant() == other.Name.ToLowerInvariant())
                 {
-                    if (this.BattleGroup == other.BattleGroup)
+                    if (this.Faction == other.Faction)
                     {
-                        return this.Realm.CompareTo(other.Realm);
+                        if (this.BattleGroup == other.BattleGroup)
+                        {
+                            return this.Realm.CompareTo(other.Realm);
+                        }
+                        else
+                        {
+                            return this.BattleGroup.CompareTo(other.BattleGroup);
+                        }
                     }
                     else
                     {
-                        return this.BattleGroup.CompareTo(other.BattleGroup);
+                        return ((int)this.Faction).CompareTo((int)other.Faction);
                     }
                 }
                 else
                 {
-                    return ((int)this.Faction).CompareTo((int)other.Faction);
+                    return this.Name.ToLowerInvariant().CompareTo(other.Name.ToLowerInvariant());
                 }
             }
             else
             {
-                return this.Name.ToLowerInvariant().CompareTo(other.Name.ToLowerInvariant());
+                return ((int)this.Region).CompareTo((int)other.Region);
             }
         }
         #endregion
@@ -113,7 +131,8 @@ namespace ArmoryLib.Guild
             }
             else
             {
-                return (other.Name == this.Name) &&
+                return (other.Region == this.Region) &&
+                       (other.Name == this.Name) &&
                        (other.Realm == this.Realm) &&
                        (other.Faction == this.Faction);
             }

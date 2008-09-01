@@ -3,6 +3,8 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Web;
 
+using C = ArmoryLib.Character.Character;
+
 namespace ArmoryLib.Guild
 {
     public static class GuildExtensions
@@ -25,6 +27,7 @@ namespace ArmoryLib.Guild
                 // <guild battleGroup="Vindication" faction="Horde" factionId="1" name="The Dominion" realm="Sporeggar" url="r=Sporeggar&amp;n=The+Dominion&amp;p=1"/>
                 Guild guild = new Guild(
                                 true,
+                                armory.Region,
                                 (Faction)Enum.Parse(typeof(Faction), guildNode.Attributes["factionId"].Value),
                                 guildNode.Attributes["name"].Value,
                                 guildNode.Attributes["realm"].Value,
@@ -59,8 +62,10 @@ namespace ArmoryLib.Guild
                 XmlNode guildDetailsMemberCount = searchDetailsResults.SelectSingleNode("/page/guildHeader/members");
                 XmlNode guildDetailsBattleGroup = searchDetailsResults.SelectSingleNode("/page/guildHeader/battleGroup");
 
+                // <guildKey factionId="1" name="The Dominion" nameUrl="The+Dominion" realm="Sporeggar" realmUrl="Sporeggar" url="r=Sporeggar&amp;n=The+Dominion"/>
                 Guild guild = new Guild(
                                 false,
+                                armory.Region,
                                 (Faction)Enum.Parse(typeof(Faction), guildDetails.Attributes["factionId"].Value),
                                 guildDetails.Attributes["name"].Value,
                                 guildDetails.Attributes["realm"].Value,
@@ -70,8 +75,25 @@ namespace ArmoryLib.Guild
                                 guildDetails.Attributes["realmUrl"].Value,
                                 Convert.ToInt32(guildDetailsMemberCount.Attributes["value"].Value));
 
-                // TODO: Load guild members from search result
-                // Check if the xml for <members> is the same as the results for character search
+                XmlNodeList guildMembers = searchResults.SelectNodes("/page/guildInfo/guild/members/character");
+
+                foreach (XmlNode guildMember in guildMembers)
+                {
+                    // <character class="Rogue" classId="4" gender="Female" genderId="1" level="70" name="Zoing" race="Blood Elf" raceId="10" rank="0" url="r=Sporeggar&amp;n=Zoing"/>
+                    guild.Members.Add(new C(
+                                            true,
+                                            armory.Region,
+                                            guild.Faction,
+                                            guildMember.Attributes["name"].Value,
+                                            guild.Realm,
+                                            guild.BattleGroup,
+                                            (Gender)Enum.Parse(typeof(Gender), guildMember.Attributes["genderId"].Value),
+                                            (Race)Enum.Parse(typeof(Race), guildMember.Attributes["raceId"].Value),
+                                            (Class)Enum.Parse(typeof(Class), guildMember.Attributes["classId"].Value),
+                                            Convert.ToInt32(guildMember.Attributes["level"].Value),
+                                            guildMember.Attributes["url"].Value,
+                                            guild));
+                }
 
                 return guild;
             }
