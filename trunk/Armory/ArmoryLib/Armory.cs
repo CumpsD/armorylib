@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using ArmoryLib.Exceptions;
+
+namespace ArmoryLib
+{
+    public class Armory
+    {
+        public Region Region { get; set; }
+        public string UserAgent { get; set; }
+
+        public string Url
+        {
+            get
+            {
+                switch (Region)
+                {
+                    case Region.USA:
+                    case Region.Oceanic:
+                        return "http://www.wowarmory.com";
+                    case Region.Europe:
+                        return "http://eu.wowarmory.com";
+                    case Region.Korea:
+                        return "http://kr.wowarmory.com";
+                    case Region.China:
+                        return "http://cn.wowarmory.com";
+                    case Region.Taiwan:
+                        return "http://tw.wowarmory.com";
+                }
+
+                throw new InvalidRegionException();
+            }
+        }
+
+        public string DefaultUserAgent
+        {
+            get
+            {
+                return "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.5.20404)";
+            }
+        }
+
+        // Defaults to European Armory
+        public Armory(): this(Region.Europe)
+        {
+        }
+
+        public Armory(Region region)
+        {
+            Region = region;
+            UserAgent = DefaultUserAgent;
+        }
+    }
+}
