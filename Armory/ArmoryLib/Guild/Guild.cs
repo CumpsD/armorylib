@@ -9,7 +9,8 @@ namespace ArmoryLib.Guild
 {
     public class Guild : IComparable<Guild>, IEquatable<Guild>
     {
-        private bool SearchResult { get; set; }
+        // TODO: Decorate properties to indicate under which detail-level they are available.
+        public GuildDetail DetailLoaded { get; private set; }
 
         // Search result properties
         public Region Region { get; private set; }
@@ -41,14 +42,14 @@ namespace ArmoryLib.Guild
         private string NameUrl { get; set; }
         private string RealmUrl { get; set; }
 
-        public Guild(bool searchResult,
+        public Guild(GuildDetail detailLoaded,
                      Region region,
                      Faction faction,
                      string name,
                      string realm,
                      string battleGroup,
                      string url) :
-            this(searchResult,
+            this(detailLoaded,
                  region,
                  faction,
                  name,
@@ -61,7 +62,7 @@ namespace ArmoryLib.Guild
         {
         }
 
-        public Guild(bool searchResult,
+        public Guild(GuildDetail detailLoaded,
                      Region region,
                      Faction faction,
                      string name,
@@ -72,7 +73,7 @@ namespace ArmoryLib.Guild
                      string realmUrl,
                      int memberCount)
         {
-            SearchResult = searchResult;
+            DetailLoaded = detailLoaded;
             Region = region;
             Faction = faction;
             Name = name;
@@ -84,6 +85,11 @@ namespace ArmoryLib.Guild
             MemberCount = memberCount;
 
             Members = new List<C>();
+        }
+
+        public bool IsDetailLoaded(GuildDetail checkDetail)
+        {
+            return ((DetailLoaded & checkDetail) == checkDetail);
         }
 
         #region IComparable<Guild> Members

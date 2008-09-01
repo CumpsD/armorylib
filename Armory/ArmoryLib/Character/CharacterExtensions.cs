@@ -3,6 +3,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Web;
 
+using ArmoryLib.Guild;
 using G = ArmoryLib.Guild.Guild;
 
 namespace ArmoryLib.Character
@@ -26,7 +27,7 @@ namespace ArmoryLib.Character
             {
                 // <character battleGroup="Vindication" battleGroupId="61" class="Rogue" classId="4" faction="Horde" factionId="1" gender="Female" genderId="1" guild="The Dominion" guildId="222341" level="70" name="Zoing" race="Blood Elf" raceId="10" realm="Sporeggar" url="r=Sporeggar&amp;n=Zoing"/>
                 G guild = new G(
-                            true,
+                            GuildDetail.Basic,
                             armory.Region,
                             (Faction)Enum.Parse(typeof(Faction), characterNode.Attributes["factionId"].Value),
                             characterNode.Attributes["guild"].Value,
@@ -37,7 +38,7 @@ namespace ArmoryLib.Character
                                           characterNode.Attributes["guild"].Value));
 
                 Character character = new Character(
-                                            true,
+                                            CharacterDetail.Basic,
                                             armory.Region,
                                             (Faction)Enum.Parse(typeof(Faction), characterNode.Attributes["factionId"].Value),
                                             characterNode.Attributes["name"].Value,
@@ -56,6 +57,7 @@ namespace ArmoryLib.Character
             return characters;
         }
 
+        // TODO: Add flags to specify level of detail
         public static Character LoadCharacter(this Armory armory, string realmName, string characterName)
         {
             // http://eu.wowarmory.com/character-sheet.xml?r=Sporeggar&n=Zoing
@@ -72,7 +74,7 @@ namespace ArmoryLib.Character
 
                 // <character battleGroup="Vindication" charUrl="r=Sporeggar&amp;n=Zoing" class="Rogue" classId="4" faction="Horde" factionId="1" gender="Female" genderId="1" guildName="The Dominion" guildUrl="r=Sporeggar&amp;n=The+Dominion&amp;p=1" lastModified="31 August 2008" level="70" name="Zoing" prefix="" race="Blood Elf" raceId="10" realm="Sporeggar" suffix="">
                 G guild = new G(
-                            true,
+                            GuildDetail.Basic,
                             armory.Region,
                             (Faction)Enum.Parse(typeof(Faction), characterNode.Attributes["factionId"].Value),
                             characterNode.Attributes["guildName"].Value,
@@ -81,7 +83,7 @@ namespace ArmoryLib.Character
                             characterNode.Attributes["guildUrl"].Value);
 
                 Character character = new Character(
-                                                    false,
+                                                    CharacterDetail.Basic,
                                                     armory.Region,
                                                     (Faction)Enum.Parse(typeof(Faction), characterNode.Attributes["factionId"].Value),
                                                     characterNode.Attributes["name"].Value,

@@ -9,7 +9,8 @@ namespace ArmoryLib.Character
 {
     public class Character : IComparable<Character>, IEquatable<Character>
     {
-        private bool SearchResult { get; set; }
+        // TODO: Decorate properties to indicate under which detail-level they are available.
+        public CharacterDetail DetailLoaded { get; private set; }
 
         // Search result properties
         public Region Region { get; private set; }
@@ -37,7 +38,7 @@ namespace ArmoryLib.Character
 
         private string Url { get; set; }
 
-        public Character(bool searchResult,
+        public Character(CharacterDetail detailLoaded,
                          Region region,
                          Faction faction,
                          string name,
@@ -50,7 +51,7 @@ namespace ArmoryLib.Character
                          string url,
                          G guild)
         {
-            SearchResult = searchResult;
+            DetailLoaded = detailLoaded;
             Region = region;
             Faction = faction;
             Name = name;
@@ -63,6 +64,11 @@ namespace ArmoryLib.Character
             Url = url;
 
             Guild = guild;
+        }
+
+        public bool IsDetailLoaded(CharacterDetail checkDetail)
+        {
+            return ((DetailLoaded & checkDetail) == checkDetail);
         }
 
         #region IComparable<Character> Members

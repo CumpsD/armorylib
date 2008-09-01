@@ -56,13 +56,16 @@ namespace ArmoryTester
                                                 guild.Realm,
                                                 guild.MemberCountText));
 
-                foreach (Character member in guild.Members)
+                if (guild.IsDetailLoaded(GuildDetail.Roster))
                 {
-                    Console.WriteLine(string.Format("  - {0}, {1} Level {2} {3}", 
-                                                    member.Name,
-                                                    member.Gender,
-                                                    member.Level,
-                                                    member.Class));
+                    foreach (Character member in guild.Members)
+                    {
+                        Console.WriteLine(string.Format("  - {0}, {1} Level {2} {3}",
+                                                        member.Name,
+                                                        member.Gender,
+                                                        member.Level,
+                                                        member.Class));
+                    }
                 }
             }
             else
@@ -131,6 +134,7 @@ namespace ArmoryTester
              *      - LoadGuild(string name, string realm) - OK
              *  - Item?
              *      - LoadItem(????)
+             *  - Enchants and Gems needed for character tab
              * */
         }
     }
