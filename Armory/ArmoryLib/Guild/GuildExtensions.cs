@@ -37,29 +37,35 @@ namespace ArmoryLib.Guild
         public static Guild LoadGuild(this Armory armory, string realmName, string guildName)
         {
             // http://eu.wowarmory.com/guild-info.xml?r=Sporeggar&n=The+Dominion&p=1
-            string searchString = string.Format("guild-info.xml?r={0}&n={1}&p=1", 
+            // http://eu.wowarmory.com/guildheader.xml?r=Sporeggar&n=The+Dominion (battlegroup, members, faction)
+
+            string searchString = string.Format("guild-info.xml?r={0}&n={1}&p=1", // TODO: Multi-page results, probably p=2, p=3, ...
                                                 HttpUtility.UrlEncode(realmName), 
                                                 HttpUtility.UrlEncode(guildName));
 
             XmlDocument searchResults = armory.Request(searchString);
             XmlNode guildDetails = searchResults.SelectSingleNode("/page/guildKey");
-            XmlNode memberDetails = searchResults.SelectSingleNode("/page/guildInfo/guild/members");
 
-            if ((guildDetails != null) && (memberDetails != null))
+            if (guildDetails != null)
             {
+                string searchDetailsString = string.Format("guildheader.xml?r={0}&n={1}",
+                                                            HttpUtility.UrlEncode(realmName),
+                                                            HttpUtility.UrlEncode(guildName));
 
-                // TODO: Apparently to figure out the battlegroup, we'll have to load 1 member...
+                XmlDocument searchDetailsResults = armory.Request(searchDetailsString);
+                XmlNode guildDetailsMemberCount = searchDetailsResults.SelectSingleNode("/page/guildHeader/members");
+                XmlNode guildDetailsBattleGroup = searchDetailsResults.SelectSingleNode("/page/guildHeader/battleGroup");
 
                 Guild guild = new Guild(
                                 false,
                                 (Faction)Enum.Parse(typeof(Faction), guildDetails.Attributes["factionId"].Value),
                                 guildDetails.Attributes["name"].Value,
                                 guildDetails.Attributes["realm"].Value,
-                                string.Empty,
+                                guildDetailsBattleGroup.Attributes["value"].Value,
                                 guildDetails.Attributes["url"].Value,
                                 guildDetails.Attributes["nameUrl"].Value,
                                 guildDetails.Attributes["realmUrl"].Value,
-                                Convert.ToInt32(memberDetails.Attributes["memberCount"].Value));
+                                Convert.ToInt32(guildDetailsMemberCount.Attributes["value"].Value));
 
                 // TODO: Load guild members from search result
                 // Check if the xml for <members> is the same as the results for character search

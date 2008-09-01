@@ -13,7 +13,7 @@ namespace ArmoryLib.Guild
         public Faction Faction { get; private set; }
         public string Name { get; private set; }
         public string Realm { get; private set; }
-        public string BattleGroup { get; private set; } // TODO: No battlegroup on detail page? *sigh*
+        public string BattleGroup { get; private set; }
 
         private string Url { get; set; }
 

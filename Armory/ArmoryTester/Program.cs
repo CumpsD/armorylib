@@ -46,10 +46,11 @@ namespace ArmoryTester
             if (guild != null)
             {
                 Console.WriteLine("Details for {0} - {1}:", guildName, realmName);
-                Console.WriteLine(string.Format("{1} - {2} - {3} - {4}.",
+                Console.WriteLine(string.Format("{1} - {2} - {3} - {4} - {5}.",
                                                 Environment.NewLine,
                                                 guild.Name,
                                                 guild.Faction,
+                                                guild.BattleGroup,
                                                 guild.Realm,
                                                 guild.MemberCountText));
             }
@@ -73,3 +74,7 @@ namespace ArmoryTester
         }
     }
 }
+
+// guilds: http://be.imba.hu/ (requires login)
+// chars: http://be.imba.hu/?zone=EU&realm=Sporeggar&character=Zoing (public)
+// items: wowhead (public)
