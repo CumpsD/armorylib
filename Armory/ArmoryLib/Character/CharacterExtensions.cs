@@ -57,8 +57,12 @@ namespace ArmoryLib.Character
             return characters;
         }
 
-        // TODO: Add flags to specify level of detail
         public static Character LoadCharacter(this Armory armory, string realmName, string characterName)
+        {
+            return LoadCharacter(armory, realmName, characterName, CharacterDetail.Basic);
+        }
+
+        public static Character LoadCharacter(this Armory armory, string realmName, string characterName, CharacterDetail loadDetail)
         {
             // http://eu.wowarmory.com/character-sheet.xml?r=Sporeggar&n=Zoing
             string searchString = string.Format("character-sheet.xml?r={0}&n={1}",
@@ -96,12 +100,98 @@ namespace ArmoryLib.Character
                                                     characterNode.Attributes["charUrl"].Value,
                                                     guild);
 
+                if (loadDetail.ContainsDetail(CharacterDetail.CharacterSheet))
+                {
+                    LoadTalentSpec(character, searchResults);
+                    LoadPvpInfo(character, searchResults);
+                    LoadStats(character, searchResults);
+
+                    // Indicate we finished loading extra detail
+                    character.LoadedDetail(CharacterDetail.CharacterSheet);
+                }
+
                 return character;
             }
             else
             {
                 return null;
             }
+        }
+
+        private static void LoadTalentSpec(Character character, XmlDocument searchResults)
+        {
+            // <talentSpec treeOne="20" treeThree="0" treeTwo="41"/>
+            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/talentSpec");
+
+            TalentSpec spec = new TalentSpec(
+                Convert.ToInt32(characterNode.Attributes["treeOne"].Value),
+                Convert.ToInt32(characterNode.Attributes["treeTwo"].Value),
+                Convert.ToInt32(characterNode.Attributes["treeThree"].Value));
+
+            character.TalentSpec = spec;
+        }
+
+        private static void LoadPvpInfo(Character character, XmlDocument searchResults)
+        {
+            // TODO: What is arenacurrency?
+            //<pvp>
+            //  <lifetimehonorablekills value="1463"/>
+            //  <arenacurrency value="0"/>
+            //</pvp>
+            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/pvp");
+            
+            PvpInfo pvpInfo = new PvpInfo(
+                Convert.ToInt32(characterNode.SelectSingleNode("lifetimehonorablekills").Attributes["value"].Value));
+
+            character.PvpInfo = pvpInfo;
+        }
+
+        private static void LoadStats(Character character, XmlDocument searchResults)
+        {
+            //<baseStats>
+            //  <strength attack="82" base="92" block="-1" effective="92"/>
+            //  <agility armor="642" attack="311" base="163" critHitPercent="7.73" effective="321"/>
+            //  <stamina base="90" effective="377" health="3590" petBonus="-1"/>
+            //  <intellect base="43" critHitPercent="-1.00" effective="43" mana="-1" petBonus="-1"/>
+            //  <spirit base="57" effective="57" healthRegen="20" manaRegen="-1"/>
+            //  <armor base="2181" effective="2181" percent="17.12" petBonus="-1"/>
+            //</baseStats>
+            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/baseStats");
+
+            XmlNode strengthNode = characterNode.SelectSingleNode("strength");
+            Strength strength = new Strength(
+                Convert.ToInt32(strengthNode.Attributes["attack"].Value),
+                Convert.ToInt32(strengthNode.Attributes["base"].Value),
+                Convert.ToInt32(strengthNode.Attributes["block"].Value),
+                Convert.ToInt32(strengthNode.Attributes["effective"].Value));
+
+            XmlNode agilityNode = characterNode.SelectSingleNode("agility");
+            Agility agility = new Agility(
+                Convert.ToInt32(agilityNode.Attributes["armor"].Value),
+                Convert.ToInt32(agilityNode.Attributes["attack"].Value),
+                Convert.ToInt32(agilityNode.Attributes["base"].Value),
+                Convert.ToDouble(agilityNode.Attributes["critHitPercent"].Value, Util.NumberFormatter),
+                Convert.ToInt32(agilityNode.Attributes["effective"].Value));
+
+            XmlNode staminaNode = characterNode.SelectSingleNode("stamina");
+            Stamina stamina = new Stamina(
+                Convert.ToInt32(staminaNode.Attributes["health"].Value),
+                Convert.ToInt32(staminaNode.Attributes["base"].Value),
+                Convert.ToInt32(staminaNode.Attributes["effective"].Value));
+
+            XmlNode intellectNode = characterNode.SelectSingleNode("intellect");
+            Intellect intellect = new Intellect(
+                Convert.ToInt32(intellectNode.Attributes["mana"].Value),
+                Convert.ToInt32(intellectNode.Attributes["base"].Value),
+                Convert.ToDouble(intellectNode.Attributes["critHitPercent"].Value, Util.NumberFormatter),
+                Convert.ToInt32(intellectNode.Attributes["effective"].Value));
+
+            Stats stats = new Stats(strength,
+                                    agility,
+                                    stamina,
+                                    intellect);
+
+            character.Stats = stats;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace ArmoryTester
             {
                 Region = Region.Europe
             };
-
+            /*
             List<Guild> guilds = armory.SearchGuild(guildName);
             guilds.Sort();
 
@@ -102,12 +102,23 @@ namespace ArmoryTester
             }
 
             Console.WriteLine(new string('-', 50));
-
-            Character character = armory.LoadCharacter(realmName, characterName);
+            */
+            Character character = armory.LoadCharacter(realmName, 
+                                                       characterName, 
+                                                       CharacterDetail.Basic | 
+                                                       CharacterDetail.CharacterSheet);
             if (character != null)
             {
                 Console.WriteLine("Details for {0} - {1}:", characterName, realmName);
-                Console.WriteLine(string.Format("{1} - {2} - {3} - Level {4} - {5}{0}\t{6} - {7} - {8} - {9}",
+                Console.WriteLine(string.Format("{1}{0}" +
+                                                "  {2} - {3} - Level {4} - {5}{0}" +
+                                                "  {6} - {7} - {8} - {9}{0}" +
+                                                "  Spec: {10}{0}" +
+                                                "  HKs: {11}{0}" + 
+                                                "  Strength: {12}{0}" +
+                                                "  Agility: {13}{0}" +
+                                                "  Stamina: {14}{0}" +
+                                                "  Intellect: {15}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -117,7 +128,13 @@ namespace ArmoryTester
                                                 character.Class,
                                                 character.BattleGroup,
                                                 character.Realm,
-                                                character.Guild.Name));
+                                                character.Guild.Name,
+                                                character.TalentSpec.SpecAbbreviation,
+                                                character.PvpInfo.LifeTimeKills,
+                                                character.Stats.Strength,
+                                                character.Stats.Agility,
+                                                character.Stats.Stamina,
+                                                character.Stats.Intellect));
             }
             else
             {

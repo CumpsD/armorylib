@@ -58,7 +58,8 @@ namespace ArmoryLib.Guild
         }
 
         private string _name;
-        public string Name {
+        public string Name
+        {
             get
             {
                 CheckDetailRequired("Name", GuildDetail.Basic);
@@ -106,27 +107,18 @@ namespace ArmoryLib.Guild
         private string RealmUrl { get; set; }
         #endregion
 
-        public Guild(GuildDetail detailLoaded,
+        internal Guild(GuildDetail detailLoaded,
                      Region region,
                      Faction faction,
                      string name,
                      string realm,
                      string battleGroup,
                      string url) :
-            this(detailLoaded,
-                 region,
-                 faction,
-                 name,
-                 realm,
-                 battleGroup,
-                 url,
-                 string.Empty,
-                 string.Empty,
-                 0)
+            this(detailLoaded, region, faction, name, realm, battleGroup, url, string.Empty, string.Empty, 0)
         {
         }
 
-        public Guild(GuildDetail detailLoaded,
+        internal Guild(GuildDetail detailLoaded,
                      Region region,
                      Faction faction,
                      string name,
@@ -154,15 +146,15 @@ namespace ArmoryLib.Guild
         #region Detail Checks
         public bool IsDetailLoaded(GuildDetail checkDetail)
         {
-            return ((DetailLoaded & checkDetail) == checkDetail);
+            return DetailLoaded.ContainsDetail(checkDetail);
         }
 
         private void CheckDetailRequired(string propertyName, GuildDetail requiredDetail)
         {
             if (!IsDetailLoaded(requiredDetail))
             {
-                throw new MissingDetailException(string.Format("{0} requires the {1} detail to be loaded. Current detail: {2}", 
-                                                               propertyName, 
+                throw new MissingDetailException(string.Format("{0} requires the {1} detail to be loaded. Current detail: {2}",
+                                                               propertyName,
                                                                requiredDetail,
                                                                DetailLoaded));
             }
