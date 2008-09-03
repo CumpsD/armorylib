@@ -3,44 +3,108 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using ArmoryLib.Exceptions;
 using C = ArmoryLib.Character.Character;
 
 namespace ArmoryLib.Guild
 {
     public class Guild : IComparable<Guild>, IEquatable<Guild>
     {
-        // TODO: Decorate properties to indicate under which detail-level they are available.
         public GuildDetail DetailLoaded { get; private set; }
 
-        // Search result properties
-        public Region Region { get; private set; }
-        public Faction Faction { get; private set; }
-        public string Realm { get; private set; }
-        public string BattleGroup { get; private set; }
+        #region Basic properties
+        private Region _region;
+        public Region Region
+        {
+            get
+            {
+                CheckDetailRequired("Region", GuildDetail.Basic);
+                return _region;
+            }
+            private set { _region = value; }
+        }
+
+        private Faction _faction;
+        public Faction Faction
+        {
+            get
+            {
+                CheckDetailRequired("Faction", GuildDetail.Basic);
+                return _faction;
+            }
+            private set { _faction = value; }
+        }
+
+        private string _realm;
+        public string Realm
+        {
+            get
+            {
+                CheckDetailRequired("Realm", GuildDetail.Basic);
+                return _realm;
+            }
+            private set { _realm = value; }
+        }
+
+        private string _battleGroup;
+        public string BattleGroup
+        {
+            get
+            {
+                CheckDetailRequired("BattleGroup", GuildDetail.Basic);
+                return _battleGroup;
+            }
+            private set { _battleGroup = value; }
+        }
 
         private string _name;
-        public string Name { 
-            get { return (this._name == string.Empty) ? "(No Guild)" : this._name; }
+        public string Name {
+            get
+            {
+                CheckDetailRequired("Name", GuildDetail.Basic);
+                return (this._name == string.Empty) ? "(No Guild)" : this._name;
+            }
             private set { _name = value; }
         }
 
         private string Url { get; set; }
+        #endregion
 
-        // Detailed properties
-        public int MemberCount { get; private set; }
+        #region Roster Properties
+        private int _memberCount;
+        public int MemberCount
+        {
+            get
+            {
+                CheckDetailRequired("MemberCount", GuildDetail.Roster);
+                return _memberCount;
+            }
+            private set { _memberCount = value; }
+        }
 
         public string MemberCountText
         {
             get
             {
+                CheckDetailRequired("MemberCountText", GuildDetail.Roster);
                 return string.Format("{0} {1}", MemberCount, MemberCount == 1 ? "member" : "members");
             }
         }
 
-        public List<C> Members { get; private set; }
+        private List<C> _members;
+        public List<C> Members
+        {
+            get
+            {
+                CheckDetailRequired("_members", GuildDetail.Roster);
+                return _members;
+            }
+            private set { _members = value; }
+        }
 
         private string NameUrl { get; set; }
         private string RealmUrl { get; set; }
+        #endregion
 
         public Guild(GuildDetail detailLoaded,
                      Region region,
@@ -87,10 +151,23 @@ namespace ArmoryLib.Guild
             Members = new List<C>();
         }
 
+        #region Detail Checks
         public bool IsDetailLoaded(GuildDetail checkDetail)
         {
             return ((DetailLoaded & checkDetail) == checkDetail);
         }
+
+        private void CheckDetailRequired(string propertyName, GuildDetail requiredDetail)
+        {
+            if (!IsDetailLoaded(requiredDetail))
+            {
+                throw new MissingDetailException(string.Format("{0} requires the {1} detail to be loaded. Current detail: {2}", 
+                                                               propertyName, 
+                                                               requiredDetail,
+                                                               DetailLoaded));
+            }
+        }
+        #endregion
 
         #region IComparable<Guild> Members
         public int CompareTo(Guild other)

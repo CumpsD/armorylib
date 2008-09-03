@@ -3,50 +3,130 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using ArmoryLib.Exceptions;
 using G = ArmoryLib.Guild.Guild;
 
 namespace ArmoryLib.Character
 {
     public class Character : IComparable<Character>, IEquatable<Character>
     {
-        // TODO: Decorate properties to indicate under which detail-level they are available.
         public CharacterDetail DetailLoaded { get; private set; }
 
-        // Search result properties
-        [RequiredDetail(CharacterDetail.Basic)]
-        public Region Region { get; private set; }
+        #region Basic Properties
+        private Region _region;
+        public Region Region
+        {
+            get
+            {
+                CheckDetailRequired("Region", CharacterDetail.Basic);
+                return _region;
+            }
+            private set { _region = value; }
+        }
 
-        [RequiredDetail(CharacterDetail.Basic)]
-        public Faction Faction { get; private set; }
+        private Faction _faction;
+        public Faction Faction {
+            get
+            {
+                CheckDetailRequired("Faction", CharacterDetail.Basic);
+                return _faction;
+            }
+            private set { _faction = value; }
+        }
 
-        [RequiredDetail(CharacterDetail.Basic)]
-        public string Name { get; private set; }
+        private string _name;
+        public string Name
+        {
+            get
+            {
+                CheckDetailRequired("Name", CharacterDetail.Basic);
+                return _name;
+            }
+            private set { _name = value; }
+        }
 
-        [RequiredDetail(CharacterDetail.Basic)]
-        public string Realm { get; private set; }
+        private string _realm;
+        public string Realm
+        {
+            get
+            {
+                CheckDetailRequired("Realm", CharacterDetail.Basic);
+                return _realm;
+            }
+            private set { _realm = value; }
+        }
 
-        [RequiredDetail(CharacterDetail.Basic)]
-        public string BattleGroup { get; private set; }
+        private string _battleGroup;
+        public string BattleGroup
+        {
+            get
+            {
+                CheckDetailRequired("BattleGroup", CharacterDetail.Basic);
+                return _battleGroup;
+            }
+            private set { _battleGroup = value; }
+        }
 
-        [RequiredDetail(CharacterDetail.Basic)]
-        public Gender Gender { get; private set; }
+        private Gender _gender;
+        public Gender Gender
+        {
+            get
+            {
+                CheckDetailRequired("Gender", CharacterDetail.Basic);
+                return _gender;
+            }
+            private set { _gender = value; }
+        }
 
-        [RequiredDetail(CharacterDetail.Basic)]
-        public Race Race { get; private set; }
+        private Race _race;
+        public Race Race
+        {
+            get
+            {
+                CheckDetailRequired("Race", CharacterDetail.Basic);
+                return _race;
+            }
+            private set { _race = value; }
+        }
 
-        [RequiredDetail(CharacterDetail.Basic)]
-        public Class Class { get; private set; }
+        private Class _class;
+        public Class Class
+        {
+            get
+            {
+                CheckDetailRequired("Class", CharacterDetail.Basic);
+                return _class;
+            }
+            private set { _class = value; }
+        }
 
-        [RequiredDetail(CharacterDetail.Basic)]
-        public int Level { get; private set; }
+        private int _level;
+        public int Level
+        {
+            get
+            {
+                CheckDetailRequired("Level", CharacterDetail.Basic);
+                return _level;
+            }
+            private set { _level = value; }
+        }
 
-        [RequiredDetail(CharacterDetail.Basic)]
-        public G Guild { get; private set; }
+        private G _guild;
+        public G Guild
+        {
+            get
+            {
+                CheckDetailRequired("Guild", CharacterDetail.Basic);
+                return _guild;
+            }
+            private set { _guild = value; }
+        }
 
         public string BeImbaUrl
         {
             get
             {
+                CheckDetailRequired("BeImbaUrl", CharacterDetail.Basic);
                 return string.Format("http://be.imba.hu/?zone={0}&realm={1}&character={2}", 
                                      this.Region.RegionAbbreviation(), 
                                      this.Realm, 
@@ -55,6 +135,7 @@ namespace ArmoryLib.Character
         }
 
         private string Url { get; set; }
+        #endregion
 
         public Character(CharacterDetail detailLoaded,
                          Region region,
@@ -84,10 +165,23 @@ namespace ArmoryLib.Character
             Guild = guild;
         }
 
+        #region Detail Checks
         public bool IsDetailLoaded(CharacterDetail checkDetail)
         {
             return ((DetailLoaded & checkDetail) == checkDetail);
         }
+
+        private void CheckDetailRequired(string propertyName, CharacterDetail requiredDetail)
+        {
+            if (!IsDetailLoaded(requiredDetail))
+            {
+                throw new MissingDetailException(string.Format("{0} requires the {1} detail to be loaded. Current detail: {2}",
+                                                               propertyName,
+                                                               requiredDetail,
+                                                               DetailLoaded));
+            }
+        }
+        #endregion
 
         #region IComparable<Character> Members
         public int CompareTo(Character other)
