@@ -50,8 +50,8 @@
     <Compile Include="Character\Character.cs" />
     <Compile Include="Character\CharacterDetail.cs" />
     <Compile Include="Character\CharacterExtensions.cs" />
-    <Compile Include="Character\RequiredDetailAttribute.cs" />
     <Compile Include="Class.cs" />
+    <Compile Include="Exceptions\MissingDetailException.cs" />
     <Compile Include="Gender.cs" />
     <Compile Include="Exceptions\InvalidRegionException.cs" />
     <Compile Include="Faction.cs" />
