@@ -25,7 +25,8 @@ namespace ArmoryLib.Character
         }
 
         private Faction _faction;
-        public Faction Faction {
+        public Faction Faction
+        {
             get
             {
                 CheckDetailRequired("Faction", CharacterDetail.Basic);
@@ -127,9 +128,9 @@ namespace ArmoryLib.Character
             get
             {
                 CheckDetailRequired("BeImbaUrl", CharacterDetail.Basic);
-                return string.Format("http://be.imba.hu/?zone={0}&realm={1}&character={2}", 
-                                     this.Region.RegionAbbreviation(), 
-                                     this.Realm, 
+                return string.Format("http://be.imba.hu/?zone={0}&realm={1}&character={2}",
+                                     this.Region.RegionAbbreviation(),
+                                     this.Realm,
                                      this.Name);
             }
         }
@@ -137,7 +138,42 @@ namespace ArmoryLib.Character
         private string Url { get; set; }
         #endregion
 
-        public Character(CharacterDetail detailLoaded,
+        #region CharacterSheet Properties
+        private TalentSpec _talentSpec;
+        public TalentSpec TalentSpec
+        {
+            get
+            {
+                CheckDetailRequired("TalentSpec", CharacterDetail.CharacterSheet);
+                return _talentSpec;
+            }
+            internal set { _talentSpec = value; }
+        }
+
+        private PvpInfo _pvpInfo;
+        public PvpInfo PvpInfo
+        {
+            get
+            {
+                CheckDetailRequired("PvpInfo", CharacterDetail.CharacterSheet);
+                return _pvpInfo;
+            }
+            internal set { _pvpInfo = value; }
+        }
+
+        private Stats _stats;
+        public Stats Stats
+        {
+            get
+            {
+                CheckDetailRequired("Stats", CharacterDetail.CharacterSheet);
+                return _stats;
+            }
+            internal set { _stats = value; }
+        }
+        #endregion
+
+        internal Character(CharacterDetail detailLoaded,
                          Region region,
                          Faction faction,
                          string name,
@@ -168,7 +204,7 @@ namespace ArmoryLib.Character
         #region Detail Checks
         public bool IsDetailLoaded(CharacterDetail checkDetail)
         {
-            return ((DetailLoaded & checkDetail) == checkDetail);
+            return DetailLoaded.ContainsDetail(checkDetail);
         }
 
         private void CheckDetailRequired(string propertyName, CharacterDetail requiredDetail)
@@ -182,6 +218,11 @@ namespace ArmoryLib.Character
             }
         }
         #endregion
+
+        internal void LoadedDetail(CharacterDetail characterDetail)
+        {
+            DetailLoaded = DetailLoaded | characterDetail;
+        }
 
         #region IComparable<Character> Members
         public int CompareTo(Character other)

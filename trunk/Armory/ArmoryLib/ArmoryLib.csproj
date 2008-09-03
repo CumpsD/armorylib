@@ -50,6 +50,13 @@
     <Compile Include="Character\Character.cs" />
     <Compile Include="Character\CharacterDetail.cs" />
     <Compile Include="Character\CharacterExtensions.cs" />
+    <Compile Include="Character\Agility.cs" />
+    <Compile Include="Character\Intellect.cs" />
+    <Compile Include="Character\Stamina.cs" />
+    <Compile Include="Character\PvpInfo.cs" />
+    <Compile Include="Character\Stats.cs" />
+    <Compile Include="Character\Strength.cs" />
+    <Compile Include="Character\TalentSpec.cs" />
     <Compile Include="Class.cs" />
     <Compile Include="Exceptions\MissingDetailException.cs" />
     <Compile Include="Gender.cs" />
@@ -61,6 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Race.cs" />
     <Compile Include="Region.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

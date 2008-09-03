@@ -53,7 +53,7 @@ namespace ArmoryLib
             UserAgent = DefaultUserAgent;
         }
 
-        public XmlDocument Request(string command)
+        internal XmlDocument Request(string command)
         {
             string armoryRequest = Url + command;
             XmlDocument armoryResponse = new XmlDocument();

@@ -12,4 +12,12 @@ namespace ArmoryLib.Guild
         Basic = 1,
         Roster = 2
     }
+
+    internal static class GuildDetailExtensions
+    {
+        internal static bool ContainsDetail(this GuildDetail searchedDetail, GuildDetail detailToSearch)
+        {
+            return ((searchedDetail & detailToSearch) == detailToSearch);
+        }
+    }
 }

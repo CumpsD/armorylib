@@ -16,4 +16,12 @@ namespace ArmoryLib.Character
         Talents = 16,
         Arena = 32
     }
+
+    internal static class CharacterDetailExtensions
+    {
+        internal static bool ContainsDetail(this CharacterDetail searchedDetail, CharacterDetail detailToSearch)
+        {
+            return ((searchedDetail & detailToSearch) == detailToSearch);
+        }
+    }
 }
