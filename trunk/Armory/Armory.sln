@@ -5,6 +5,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmoryTester", "ArmoryTeste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmoryLib", "ArmoryLib\ArmoryLib.csproj", "{D7A1C779-D1E3-4F62-872A-6F892CF21E54}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "License", "License", "{E7B2F676-F435-4195-ACD2-97306109893D}"
+	ProjectSection(SolutionItems) = preProject
+		gpl.txt = gpl.txt
+		lgpl.txt = lgpl.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

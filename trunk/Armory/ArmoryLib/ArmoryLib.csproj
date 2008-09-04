@@ -51,6 +51,8 @@
     <Compile Include="Character\CharacterDetail.cs" />
     <Compile Include="Character\CharacterExtensions.cs" />
     <Compile Include="Character\Agility.cs" />
+    <Compile Include="Character\Armor.cs" />
+    <Compile Include="Character\Spirit.cs" />
     <Compile Include="Character\Intellect.cs" />
     <Compile Include="Character\Stamina.cs" />
     <Compile Include="Character\PvpInfo.cs" />
