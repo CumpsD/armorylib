@@ -114,11 +114,13 @@ namespace ArmoryTester
                                                 "  {2} - {3} - Level {4} - {5}{0}" +
                                                 "  {6} - {7} - {8} - {9}{0}" +
                                                 "  Spec: {10}{0}" +
-                                                "  HKs: {11}{0}" + 
+                                                "  PvP: {11}{0}" + 
                                                 "  Strength: {12}{0}" +
                                                 "  Agility: {13}{0}" +
                                                 "  Stamina: {14}{0}" +
-                                                "  Intellect: {15}{0}",
+                                                "  Intellect: {15}{0}" +
+                                                "  Spirit: {16}{0}" +
+                                                "  Armor: {17}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -130,11 +132,13 @@ namespace ArmoryTester
                                                 character.Realm,
                                                 character.Guild.Name,
                                                 character.TalentSpec.SpecAbbreviation,
-                                                character.PvpInfo.LifeTimeKills,
+                                                character.PvpInfo,
                                                 character.Stats.Strength,
                                                 character.Stats.Agility,
                                                 character.Stats.Stamina,
-                                                character.Stats.Intellect));
+                                                character.Stats.Intellect,
+                                                character.Stats.Spirit,
+                                                character.Stats.Armor));
             }
             else
             {

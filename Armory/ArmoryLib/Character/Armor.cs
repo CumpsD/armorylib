@@ -19,6 +19,7 @@
 /// along with ArmoryLib.  If not, see <http://www.gnu.org/licenses/>.
 /// **** END LICENSE BLOCK ****
 /// </summary>
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,23 +27,28 @@ using System.Text;
 
 namespace ArmoryLib.Character
 {
-    [Flags]
-    public enum CharacterDetail
-    {
-        None = 0,
-        Basic = 1,
-        CharacterSheet = 2,
-        Reputation = 4,
-        Skills = 8,
-        Talents = 16,
-        Arena = 32
-    }
+    // TODO: PetBonus, check on Dinli for hunter XML
 
-    internal static class CharacterDetailExtensions
+    // <armor base="2171" effective="2171" percent="17.06" petBonus="-1"/>
+    public class Armor
     {
-        internal static bool ContainsDetail(this CharacterDetail searchedDetail, CharacterDetail detailToSearch)
+        public double ReducePhysicalDamagePercent { get; private set; }
+        public int BaseArmor { get; private set; }
+        public int EffectiveArmor { get; private set; }
+
+        internal Armor(double reduce, int baseStat, int effectiveStat)
         {
-            return ((searchedDetail & detailToSearch) == detailToSearch);
+            ReducePhysicalDamagePercent = reduce;
+            BaseArmor = baseStat;
+            EffectiveArmor = effectiveStat;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Base: {0}, Effective: {1}, Reduces Physical Damage Taken By {2}%",
+                BaseArmor,
+                EffectiveArmor,
+                ReducePhysicalDamagePercent);
         }
     }
 }

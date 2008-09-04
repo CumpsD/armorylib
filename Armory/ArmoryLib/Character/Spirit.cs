@@ -26,23 +26,29 @@ using System.Text;
 
 namespace ArmoryLib.Character
 {
-    [Flags]
-    public enum CharacterDetail
+    // <spirit base="57" effective="57" healthRegen="20" manaRegen="-1"/>
+    public class Spirit
     {
-        None = 0,
-        Basic = 1,
-        CharacterSheet = 2,
-        Reputation = 4,
-        Skills = 8,
-        Talents = 16,
-        Arena = 32
-    }
+        public int HealthRegen { get; private set; } // hp regen ooc
+        public int ManaRegen { get; private set; } // Mp5 / 5second rule
+        public int BaseSpirit { get; private set; }
+        public int EffectiveSpirit { get; private set; }
 
-    internal static class CharacterDetailExtensions
-    {
-        internal static bool ContainsDetail(this CharacterDetail searchedDetail, CharacterDetail detailToSearch)
+        internal Spirit(int health, int mana, int baseStat, int effectiveStat)
         {
-            return ((searchedDetail & detailToSearch) == detailToSearch);
+            HealthRegen = health;
+            ManaRegen = mana;
+            BaseSpirit = baseStat;
+            EffectiveSpirit = effectiveStat;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Base: {0}, Effective: {1}, Health Regen Out Of Combat: {2}{3}",
+                BaseSpirit,
+                EffectiveSpirit,
+                HealthRegen,
+                (ManaRegen != -1) ? string.Format(", Mana Regen Per 5 Seconds, 5 Seconds Rule: {0}", ManaRegen) : "");
         }
     }
 }

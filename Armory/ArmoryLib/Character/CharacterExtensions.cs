@@ -1,4 +1,25 @@
-﻿using System;
+﻿/// <summary>** BEGIN LICENSE BLOCK *****
+/// Version: LGPL 3
+/// 
+/// Copyright 2008 David Cumps <david@cumps.be>
+/// 
+/// This file is part of ArmoryLib.
+///
+/// ArmoryLib is free software: you can redistribute it and/or modify
+/// it under the terms of the GNU Lesser General Public License as published by
+/// the Free Software Foundation, either version 3 of the License, or
+/// (at your option) any later version.
+///
+/// ArmoryLib is distributed in the hope that it will be useful,
+/// but WITHOUT ANY WARRANTY; without even the implied warranty of
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+/// GNU Lesser General Public License for more details.
+///
+/// You should have received a copy of the GNU Lesser General Public License
+/// along with ArmoryLib.  If not, see <http://www.gnu.org/licenses/>.
+/// **** END LICENSE BLOCK ****
+/// </summary>
+using System;
 using System.Xml;
 using System.Collections.Generic;
 using System.Web;
@@ -133,15 +154,15 @@ namespace ArmoryLib.Character
 
         private static void LoadPvpInfo(Character character, XmlDocument searchResults)
         {
-            // TODO: What is arenacurrency?
             //<pvp>
-            //  <lifetimehonorablekills value="1463"/>
-            //  <arenacurrency value="0"/>
+            //  <lifetimehonorablekills value="1469"/>
+            //  <arenacurrency value="315"/>
             //</pvp>
             XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/pvp");
             
             PvpInfo pvpInfo = new PvpInfo(
-                Convert.ToInt32(characterNode.SelectSingleNode("lifetimehonorablekills").Attributes["value"].Value));
+                Convert.ToInt32(characterNode.SelectSingleNode("lifetimehonorablekills").Attributes["value"].Value),
+                Convert.ToInt32(characterNode.SelectSingleNode("arenacurrency").Attributes["value"].Value));
 
             character.PvpInfo = pvpInfo;
         }
@@ -186,10 +207,25 @@ namespace ArmoryLib.Character
                 Convert.ToDouble(intellectNode.Attributes["critHitPercent"].Value, Util.NumberFormatter),
                 Convert.ToInt32(intellectNode.Attributes["effective"].Value));
 
+            XmlNode spiritNode = characterNode.SelectSingleNode("spirit");
+            Spirit spirit = new Spirit(
+                Convert.ToInt32(spiritNode.Attributes["healthRegen"].Value),
+                Convert.ToInt32(spiritNode.Attributes["manaRegen"].Value),
+                Convert.ToInt32(spiritNode.Attributes["base"].Value),
+                Convert.ToInt32(spiritNode.Attributes["effective"].Value));
+
+            XmlNode armorNode = characterNode.SelectSingleNode("armor");
+            Armor armor = new Armor(
+                Convert.ToDouble(armorNode.Attributes["percent"].Value, Util.NumberFormatter),
+                Convert.ToInt32(armorNode.Attributes["base"].Value),
+                Convert.ToInt32(armorNode.Attributes["effective"].Value));
+
             Stats stats = new Stats(strength,
                                     agility,
                                     stamina,
-                                    intellect);
+                                    intellect,
+                                    spirit,
+                                    armor);
 
             character.Stats = stats;
         }
