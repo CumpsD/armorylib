@@ -24,35 +24,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ArmoryLib.Character.StatsDetail;
-
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.MeleeDetail
 {
-    public class Stats
+    // TODO: Figure out the meaning of these numbers
+
+    // Reduces change to be dodged or parried by <percent>%
+    // Expertise rating: <value>
+    // Additional? Rating?
+    // <expertise additional="0" percent="2.50" rating="0" value="10"/>
+    public class Expertise
     {
-        public Strength Strength { get; private set; }
-        public Agility Agility { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public Intellect Intellect { get; private set; }
-        public Spirit Spirit { get; private set; }
-        public Armor Armor { get; private set; }
+        public double Percent { get; private set; }
 
-        public Resistances Resistances { get; internal set; }
-        public Melee Melee { get; internal set; }
-
-        internal Stats(Strength strength,
-                       Agility agility,
-                       Stamina stamina,
-                       Intellect intellect,
-                       Spirit spirit,
-                       Armor armor)
+        internal Expertise(double percent)
         {
-            Strength = strength;
-            Agility = agility;
-            Stamina = stamina;
-            Intellect = intellect;
-            Spirit = spirit;
-            Armor = armor;
+            Percent = percent;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("-Change to Dodge/Parry: {0}%",
+                Percent);
         }
     }
 }

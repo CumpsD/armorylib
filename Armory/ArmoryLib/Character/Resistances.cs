@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ArmoryLib.Character.Resistance;
+using ArmoryLib.Character.ResistancesDetail;
 
 namespace ArmoryLib.Character
 {
