@@ -19,40 +19,36 @@
 /// along with ArmoryLib.  If not, see <http://www.gnu.org/licenses/>.
 /// **** END LICENSE BLOCK ****
 /// </summary>
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ArmoryLib.Character.StatsDetail;
-
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.StatsDetail
 {
-    public class Stats
+    // TODO: PetBonus, check on Dinli for hunter XML
+
+    // <armor base="2171" effective="2171" percent="17.06" petBonus="-1"/>
+    public class Armor
     {
-        public Strength Strength { get; private set; }
-        public Agility Agility { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public Intellect Intellect { get; private set; }
-        public Spirit Spirit { get; private set; }
-        public Armor Armor { get; private set; }
+        public double ReducePhysicalDamagePercent { get; private set; }
+        public int BaseArmor { get; private set; }
+        public int EffectiveArmor { get; private set; }
 
-        public Resistances Resistances { get; internal set; }
-        public Melee Melee { get; internal set; }
-
-        internal Stats(Strength strength,
-                       Agility agility,
-                       Stamina stamina,
-                       Intellect intellect,
-                       Spirit spirit,
-                       Armor armor)
+        internal Armor(double reduce, int baseStat, int effectiveStat)
         {
-            Strength = strength;
-            Agility = agility;
-            Stamina = stamina;
-            Intellect = intellect;
-            Spirit = spirit;
-            Armor = armor;
+            ReducePhysicalDamagePercent = reduce;
+            BaseArmor = baseStat;
+            EffectiveArmor = effectiveStat;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Base: {0}, Effective: {1}, Reduces Physical Damage Taken By {2}%",
+                BaseArmor,
+                EffectiveArmor,
+                ReducePhysicalDamagePercent);
         }
     }
 }

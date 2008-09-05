@@ -26,8 +26,9 @@ using System.Web;
 
 using ArmoryLib.Guild;
 using G = ArmoryLib.Guild.Guild;
-using ArmoryLib.Character.Stat;
-using ArmoryLib.Character.Resistance;
+using ArmoryLib.Character.StatsDetail;
+using ArmoryLib.Character.ResistancesDetail;
+using ArmoryLib.Character.MeleeDetail;
 
 namespace ArmoryLib.Character
 {
@@ -129,6 +130,7 @@ namespace ArmoryLib.Character
                     LoadPvpInfo(character, searchResults);
                     Stats stats = LoadStats(character, searchResults);
                     LoadResistances(stats, searchResults);
+                    LoadMelee(character, stats, searchResults);
 
                     // Indicate we finished loading extra detail
                     character.LoadedDetail(CharacterDetail.CharacterSheet);
@@ -278,6 +280,68 @@ namespace ArmoryLib.Character
                                                       shadow);
 
             stats.Resistances = resistances;
+        }
+
+        private static void LoadMelee(Character character, Stats stats, XmlDocument searchResults)
+        {
+            //<melee>
+            //  <mainHandDamage dps="184.7" max="532" min="429" percent="0" speed="2.60"/>
+            //  <offHandDamage dps="138.5" max="242" min="174" percent="0" speed="1.50"/>
+            //  <mainHandSpeed hastePercent="0.00" hasteRating="0" value="2.60"/>
+            //  <offHandSpeed hastePercent="0.00" hasteRating="0" value="1.50"/>
+            //  <power base="528" effective="1218" increasedDps="87.0"/>
+            //  <hitRating increasedHitPercent="6.72" value="106"/>
+            //  <critChance percent="19.90" plusPercent="7.29" rating="161"/>
+            //  <expertise additional="0" percent="2.50" rating="0" value="10"/>
+            //</melee>
+            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/melee");
+
+            XmlNode mainHandNode = characterNode.SelectSingleNode("mainHandDamage");
+            XmlNode mainHandSpeedNode = characterNode.SelectSingleNode("mainHandSpeed");
+            MainHand mainHand = new MainHand(
+                Convert.ToDouble(mainHandNode.Attributes["dps"].Value, Util.NumberFormatter),
+                Convert.ToInt32(mainHandNode.Attributes["min"].Value),
+                Convert.ToInt32(mainHandNode.Attributes["max"].Value),
+                 Convert.ToDouble(mainHandNode.Attributes["speed"].Value, Util.NumberFormatter));
+
+            XmlNode offHandNode = characterNode.SelectSingleNode("offHandDamage");
+            XmlNode offHandSpeedNode = characterNode.SelectSingleNode("offHandSpeed");
+            OffHand offHand = new OffHand(
+                Convert.ToDouble(mainHandNode.Attributes["dps"].Value, Util.NumberFormatter),
+                Convert.ToInt32(mainHandNode.Attributes["min"].Value),
+                Convert.ToInt32(mainHandNode.Attributes["max"].Value),
+                Convert.ToDouble(mainHandNode.Attributes["speed"].Value, Util.NumberFormatter));
+
+            XmlNode apNode = characterNode.SelectSingleNode("power");
+            AttackPower attackPower = new AttackPower(
+                Convert.ToInt32(apNode.Attributes["base"].Value),
+                Convert.ToInt32(apNode.Attributes["effective"].Value),
+                Convert.ToDouble(apNode.Attributes["increasedDps"].Value, Util.NumberFormatter));
+
+            XmlNode hitNode = characterNode.SelectSingleNode("hitRating");
+            Hit hit = new Hit(
+                Convert.ToInt32(hitNode.Attributes["value"].Value),
+                Convert.ToDouble(hitNode.Attributes["increasedHitPercent"].Value, Util.NumberFormatter),
+                character.Level);
+
+            XmlNode critNode = characterNode.SelectSingleNode("critChance");
+            Crit crit = new Crit(
+                Convert.ToInt32(critNode.Attributes["rating"].Value),
+                Convert.ToDouble(critNode.Attributes["percent"].Value, Util.NumberFormatter),
+                Convert.ToDouble(critNode.Attributes["plusPercent"].Value, Util.NumberFormatter));
+
+            XmlNode expertiseNode = characterNode.SelectSingleNode("expertise");
+            Expertise expertise = new Expertise(
+                Convert.ToDouble(critNode.Attributes["percent"].Value, Util.NumberFormatter));
+
+            Melee melee = new Melee(mainHand,
+                offHand,
+                attackPower,
+                hit,
+                crit,
+                expertise);
+
+            stats.Melee = melee;
         }
     }
 }

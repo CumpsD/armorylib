@@ -24,35 +24,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ArmoryLib.Character.StatsDetail;
-
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.MeleeDetail
 {
-    public class Stats
+    // TODO: What is percent doing here?
+    // TODO: Add some properties for formules with the speed
+    // TODO: Add properties for haste
+
+    // <offHandDamage dps="138.5" max="242" min="174" percent="0" speed="1.50"/>
+    // <offHandSpeed hastePercent="0.00" hasteRating="0" value="1.50"/>
+    public class OffHand
     {
-        public Strength Strength { get; private set; }
-        public Agility Agility { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public Intellect Intellect { get; private set; }
-        public Spirit Spirit { get; private set; }
-        public Armor Armor { get; private set; }
+        public double DPS { get; private set; }
+        public int MinDamage { get; private set; }
+        public int MaxDamage { get; private set; }
+        public double WeaponSpeed { get; private set; }
 
-        public Resistances Resistances { get; internal set; }
-        public Melee Melee { get; internal set; }
-
-        internal Stats(Strength strength,
-                       Agility agility,
-                       Stamina stamina,
-                       Intellect intellect,
-                       Spirit spirit,
-                       Armor armor)
+        internal OffHand(double dps, int min, int max, double weaponSpeed)
         {
-            Strength = strength;
-            Agility = agility;
-            Stamina = stamina;
-            Intellect = intellect;
-            Spirit = spirit;
-            Armor = armor;
+            DPS = dps;
+            MinDamage = min;
+            MaxDamage = max;
+            WeaponSpeed = weaponSpeed;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("DPS: {0}, Min: {1}, Max: {2}, Speed: {3}",
+                DPS,
+                MinDamage,
+                MaxDamage,
+                WeaponSpeed);
         }
     }
 }

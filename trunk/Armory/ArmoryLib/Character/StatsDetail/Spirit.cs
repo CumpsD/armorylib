@@ -24,35 +24,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ArmoryLib.Character.StatsDetail;
-
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.StatsDetail
 {
-    public class Stats
+    // <spirit base="57" effective="57" healthRegen="20" manaRegen="-1"/>
+    public class Spirit
     {
-        public Strength Strength { get; private set; }
-        public Agility Agility { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public Intellect Intellect { get; private set; }
-        public Spirit Spirit { get; private set; }
-        public Armor Armor { get; private set; }
+        public int HealthRegen { get; private set; } // hp regen ooc
+        public int ManaRegen { get; private set; } // Mp5 / 5second rule
+        public int BaseSpirit { get; private set; }
+        public int EffectiveSpirit { get; private set; }
 
-        public Resistances Resistances { get; internal set; }
-        public Melee Melee { get; internal set; }
-
-        internal Stats(Strength strength,
-                       Agility agility,
-                       Stamina stamina,
-                       Intellect intellect,
-                       Spirit spirit,
-                       Armor armor)
+        internal Spirit(int health, int mana, int baseStat, int effectiveStat)
         {
-            Strength = strength;
-            Agility = agility;
-            Stamina = stamina;
-            Intellect = intellect;
-            Spirit = spirit;
-            Armor = armor;
+            HealthRegen = health;
+            ManaRegen = mana;
+            BaseSpirit = baseStat;
+            EffectiveSpirit = effectiveStat;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Base: {0}, Effective: {1}, Health Regen Out Of Combat: {2}{3}",
+                BaseSpirit,
+                EffectiveSpirit,
+                HealthRegen,
+                (ManaRegen != -1) ? string.Format(", Mana Regen Per 5 Seconds, 5 Seconds Rule: {0}", ManaRegen) : "");
         }
     }
 }

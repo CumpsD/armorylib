@@ -24,35 +24,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ArmoryLib.Character.StatsDetail;
-
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.StatsDetail
 {
-    public class Stats
+    // TODO: PetBonus, check on Dinli for hunter XML
+
+    // <stamina base="90" effective="377" health="3590" petBonus="-1"/>
+    public class Stamina
     {
-        public Strength Strength { get; private set; }
-        public Agility Agility { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public Intellect Intellect { get; private set; }
-        public Spirit Spirit { get; private set; }
-        public Armor Armor { get; private set; }
+        public int AddedHealth { get; private set; }
+        public int BaseStamina { get; private set; }
+        public int EffectiveStamina { get; private set; }
 
-        public Resistances Resistances { get; internal set; }
-        public Melee Melee { get; internal set; }
-
-        internal Stats(Strength strength,
-                       Agility agility,
-                       Stamina stamina,
-                       Intellect intellect,
-                       Spirit spirit,
-                       Armor armor)
+        public int AddedStamina
         {
-            Strength = strength;
-            Agility = agility;
-            Stamina = stamina;
-            Intellect = intellect;
-            Spirit = spirit;
-            Armor = armor;
+            get { return EffectiveStamina - BaseStamina; }
+        }
+
+        internal Stamina(int health, int baseStat, int effectiveStat)
+        {
+            AddedHealth = health;
+            BaseStamina = baseStat;
+            EffectiveStamina = effectiveStat;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Base: {0}, Effective: {1}, +Health: {2}",
+                BaseStamina,
+                EffectiveStamina,
+                AddedHealth);
         }
     }
 }
