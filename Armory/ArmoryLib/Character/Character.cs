@@ -192,6 +192,17 @@ namespace ArmoryLib.Character
             }
             internal set { _stats = value; }
         }
+
+        private Effects _effects;
+        public Effects Effects
+        {
+            get
+            {
+                CheckDetailRequired("Effects", CharacterDetail.CharacterSheet);
+                return _effects;
+            }
+            internal set { _effects = value; }
+        }
         #endregion
 
         internal Character(CharacterDetail detailLoaded,

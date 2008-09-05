@@ -15,8 +15,8 @@ namespace ArmoryTester
         {
             string guildName = "The Dominion";
             string realmName = "Sporeggar";
-            //string characterName = "Zoing";
-            string characterName = "Dinli";
+            string characterName = "Zoing";
+            //string characterName = "Dinli";
 
             Armory armory = new Armory
             {
@@ -125,7 +125,8 @@ namespace ArmoryTester
                                                 "  Resistances: {18}{0}{0}" +
                                                 "  Melee: {0}    {19}{0}" +
                                                 "  Ranged: {0}    {20}{0}" +
-                                                "  Defense: {0}    {21}{0}",
+                                                "  Defense: {0}    {21}{0}" +
+                                                "  {22}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -157,7 +158,10 @@ namespace ArmoryTester
                                                 character.Stats.Defense.ToString()
                                                     .Replace(Environment.NewLine, Environment.NewLine + "    ")
                                                     .Replace(", Reduces", Environment.NewLine + new string(' ', 11) + "Reduces")
-                                                    .Replace(", Pet", Environment.NewLine + new string(' ', 11) + "Pet")
+                                                    .Replace(", Pet", Environment.NewLine + new string(' ', 11) + "Pet"),
+                                                character.Effects.ToString()
+                                                    .Replace(Environment.NewLine, Environment.NewLine + "    ")
+                                                    .Replace("  Debuffs", "Debuffs")
                                                 ));
             }
             else

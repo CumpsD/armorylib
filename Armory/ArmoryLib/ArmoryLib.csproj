@@ -50,6 +50,8 @@
     <Compile Include="Character\Character.cs" />
     <Compile Include="Character\CharacterDetail.cs" />
     <Compile Include="Character\CharacterExtensions.cs" />
+    <Compile Include="Character\Effects.cs" />
+    <Compile Include="Character\Buff.cs" />
     <Compile Include="Character\Defenses.cs" />
     <Compile Include="Character\DefenseDetail\Block.cs" />
     <Compile Include="Character\DefenseDetail\Resilience.cs" />

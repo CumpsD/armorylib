@@ -135,6 +135,7 @@ namespace ArmoryLib.Character
                     LoadMelee(character, stats, searchResults);
                     LoadRanged(character, stats, searchResults);
                     LoadDefense(stats, searchResults);
+                    LoadBuffs(character, searchResults);
 
                     // Indicate we finished loading extra detail
                     character.LoadedDetail(CharacterDetail.CharacterSheet);
@@ -448,6 +449,37 @@ namespace ArmoryLib.Character
 
             defenses.Armor = stats.Armor;
             stats.Defense = defenses;
+        }
+
+        private static void LoadBuffs(Character character, XmlDocument searchResults)
+        {
+            //<buffs>
+            //  <spell effect="Increases attack power by 125." icon="ability_trueshot" name="Trueshot Aura"/>
+            //  <spell effect="30% increased movement speed.  Dazed if struck." icon="ability_mount_jungletiger" name="Aspect of the Cheetah"/>
+            //</buffs>
+
+            XmlNode buffsNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/buffs");
+            List<BuffDebuff> buffs = new List<BuffDebuff>();
+            XmlNodeList buffNodes = buffsNode.SelectNodes("spell");
+            foreach (XmlNode buffNode in buffNodes)
+            {
+                BuffDebuff buff = new BuffDebuff(buffNode.Attributes["name"].Value,
+                                                 buffNode.Attributes["effect"].Value);
+                buffs.Add(buff);
+            }
+
+            XmlNode debuffsNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/debuffs");
+            List<BuffDebuff> debuffs = new List<BuffDebuff>();
+            XmlNodeList debuffNodes = debuffsNode.SelectNodes("spell");
+            foreach (XmlNode debuffNode in debuffNodes)
+            {
+                BuffDebuff debuff = new BuffDebuff(debuffNode.Attributes["name"].Value,
+                                                   debuffNode.Attributes["effect"].Value);
+                debuffs.Add(debuff);
+            }
+
+            Effects effects = new Effects(buffs, debuffs);
+            character.Effects = effects;
         }
     }
 }
