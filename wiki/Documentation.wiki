@@ -152,8 +152,7 @@ Dinli
   Agility: Base: 156, Effective: 518, +AP: 508, +Crit%: 11,42%, +Armor: 1036
   Stamina: Base: 109, Effective: 693, +Health: 6750
   Intellect: Base: 77, Effective: 238, +Mana: 3290, +Crit%: 6,58%
-  Spirit: Base: 84, Effective: 94, Health Regen Out Of Combat: 15, Mana Regen Pe
-r 5 Seconds, 5 Seconds Rule: 67
+  Spirit: Base: 84, Effective: 94, Health Regen Out Of Combat: 15, Mana Regen Per 5 Seconds, 5 Seconds Rule: 67
   Armor: Base: 6540, Effective: 6540, Reduces Physical Damage Taken By 38,25%
   Resistances: Arcane: 0, Fire: 0, Frost: 0, Holy: 0, Nature: 0, Shadow: 0
   Melee:
