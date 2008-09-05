@@ -120,7 +120,8 @@ namespace ArmoryTester
                                                 "  Stamina: {14}{0}" +
                                                 "  Intellect: {15}{0}" +
                                                 "  Spirit: {16}{0}" +
-                                                "  Armor: {17}{0}",
+                                                "  Armor: {17}{0}" +
+                                                "  Resistances: {18}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -138,7 +139,8 @@ namespace ArmoryTester
                                                 character.Stats.Stamina,
                                                 character.Stats.Intellect,
                                                 character.Stats.Spirit,
-                                                character.Stats.Armor));
+                                                character.Stats.Armor,
+                                                character.Stats.Resistances));
             }
             else
             {
