@@ -1,0 +1,34 @@
+#summary Library Examples.
+#labels Documentation,Examples
+
+= Examples =
+
+Supported Armory Functions are shows by using output examples.
+
+== Character Output == 
+
+Currently the following values are fetched for the Character:
+
+=== Rogue ===
+{{{
+Details for Zoing - Sporeggar:
+Zoing
+  Horde - Female - Level 70 - BloodElf
+  Rogue - Vindication - Sporeggar - The Dominion
+  Spec: 20/41/0
+  PvP: HKs: 1567, Arena Points: 315
+  Strength: Base: 92, Effective: 92, +AP: 82
+  Agility: Base: 163, Effective: 316, +AP: 306, +Crit%: 7,61%, +Armor: 632
+  Stamina: Base: 90, Effective: 387, +Health: 3690
+  Intellect: Base: 43, Effective: 43
+  Spirit: Base: 57, Effective: 57, Health Regen Out Of Combat: 20
+  Armor: Base: 2171, Effective: 2171, Reduces Physical Damage Taken By 17,06%
+  Resistances: Arcane: 5, Fire: 5, Frost: 5, Holy: 0, Nature: 5, Shadow: 5
+  Melee:
+    MainHand: DPS: 184,7, Min: 429, Max: 532, Speed: 2,6
+    OffHand: DPS: 184,7, Min: 429, Max: 532, Speed: 2,6
+    AttackPower: Base: 528, Effective: 1218, +DPS: 0
+    Hit: Rating: 106, Change To Hit Against Level 70: 6,72%
+    Crit: Rating: 161 (+7,29%), Crit%: 19,9%
+    Expertise: -Change to Dodge/Parry: 19,9%
+}}}
