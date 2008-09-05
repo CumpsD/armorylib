@@ -203,14 +203,16 @@ namespace ArmoryLib.Character
             Stamina stamina = new Stamina(
                 Convert.ToInt32(staminaNode.Attributes["health"].Value),
                 Convert.ToInt32(staminaNode.Attributes["base"].Value),
-                Convert.ToInt32(staminaNode.Attributes["effective"].Value));
+                Convert.ToInt32(staminaNode.Attributes["effective"].Value),
+                Convert.ToInt32(staminaNode.Attributes["petBonus"].Value));
 
             XmlNode intellectNode = characterNode.SelectSingleNode("intellect");
             Intellect intellect = new Intellect(
                 Convert.ToInt32(intellectNode.Attributes["mana"].Value),
                 Convert.ToInt32(intellectNode.Attributes["base"].Value),
                 Convert.ToDouble(intellectNode.Attributes["critHitPercent"].Value, Util.NumberFormatter),
-                Convert.ToInt32(intellectNode.Attributes["effective"].Value));
+                Convert.ToInt32(intellectNode.Attributes["effective"].Value),
+                Convert.ToInt32(intellectNode.Attributes["petBonus"].Value));
 
             XmlNode spiritNode = characterNode.SelectSingleNode("spirit");
             Spirit spirit = new Spirit(
@@ -223,7 +225,8 @@ namespace ArmoryLib.Character
             Armor armor = new Armor(
                 Convert.ToDouble(armorNode.Attributes["percent"].Value, Util.NumberFormatter),
                 Convert.ToInt32(armorNode.Attributes["base"].Value),
-                Convert.ToInt32(armorNode.Attributes["effective"].Value));
+                Convert.ToInt32(armorNode.Attributes["effective"].Value),
+                Convert.ToInt32(armorNode.Attributes["petBonus"].Value));
 
             Stats stats = new Stats(strength,
                                     agility,
@@ -332,7 +335,7 @@ namespace ArmoryLib.Character
 
             XmlNode expertiseNode = characterNode.SelectSingleNode("expertise");
             Expertise expertise = new Expertise(
-                Convert.ToDouble(critNode.Attributes["percent"].Value, Util.NumberFormatter));
+                Convert.ToDouble(expertiseNode.Attributes["percent"].Value, Util.NumberFormatter));
 
             Melee melee = new Melee(mainHand,
                 offHand,

@@ -26,33 +26,35 @@ using System.Text;
 
 namespace ArmoryLib.Character.StatsDetail
 {
-    // TODO: PetBonus, check on Dinli for hunter XML
-
-    // <stamina base="90" effective="377" health="3590" petBonus="-1"/>
+    // <stamina base="90" effective="377" health="3590" petBonus="-1"/>   (Rogue)
+    // <stamina base="109" effective="693" health="6750" petBonus="208"/> (Hunter)
     public class Stamina
     {
         public int AddedHealth { get; private set; }
         public int BaseStamina { get; private set; }
         public int EffectiveStamina { get; private set; }
+        public int PetBonusStamina { get; private set; }
 
         public int AddedStamina
         {
             get { return EffectiveStamina - BaseStamina; }
         }
 
-        internal Stamina(int health, int baseStat, int effectiveStat)
+        internal Stamina(int health, int baseStat, int effectiveStat, int petBonus)
         {
             AddedHealth = health;
             BaseStamina = baseStat;
             EffectiveStamina = effectiveStat;
+            PetBonusStamina = petBonus;
         }
 
         public override string ToString()
         {
-            return string.Format("Base: {0}, Effective: {1}, +Health: {2}",
+            return string.Format("Base: {0}, Effective: {1}, +Health: {2}{3}",
                 BaseStamina,
                 EffectiveStamina,
-                AddedHealth);
+                AddedHealth,
+                (PetBonusStamina != -1) ? string.Format(", Pet Bonus Stamina: {0}%", PetBonusStamina) : "");
         }
     }
 }

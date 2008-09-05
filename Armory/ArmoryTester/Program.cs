@@ -15,7 +15,8 @@ namespace ArmoryTester
         {
             string guildName = "The Dominion";
             string realmName = "Sporeggar";
-            string characterName = "Zoing";
+            //string characterName = "Zoing";
+            string characterName = "Dinli";
 
             Armory armory = new Armory
             {
