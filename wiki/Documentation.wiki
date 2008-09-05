@@ -5,6 +5,113 @@
 
 Supported Armory Functions are shows by using output examples.
 
+== Guild Search Output ==
+
+The following information is available when searching for a guild:
+
+{{{
+Search results for The Dominion:
+The Dominion - Alliance - Blackout - Agamaggan
+The Dominion - Alliance - Blackout - Al'Akir
+The Dominion - Alliance - Blackout - Aszune
+The Dominion - Alliance - Blackout - Emerald Dream
+The Dominion - Alliance - Nightfall - Darkmoon Faire
+The Dominion - Alliance - Ruin - Steamwheedle Cartel
+The Dominion - Alliance - Vindication - Hellfire
+The Dominion - Horde - Blackout - Aggramar
+The Dominion - Horde - Blackout - Azjol-Nerub
+The Dominion - Horde - Blackout - Bloodscalp
+The Dominion - Horde - Blackout - Doomhammer
+The Dominion - Horde - Blackout - Draenor
+The Dominion - Horde - Conviction - Nordrassil
+The Dominion - Horde - Conviction - Quel'Thalas
+the dominion - Horde - Misery - Eonar
+the dominion - Horde - Nightfall - Alonsus
+The Dominion - Horde - Rampage - Lightning's Blade
+The Dominion - Horde - Todbringer - Blackhand
+The Dominion - Horde - Vindication - Sporeggar
+}}}
+
+== Guild Output ==
+
+The following output is available when looking at a guild:
+
+{{{
+Details for The Dominion - Sporeggar:
+The Dominion - Horde - Vindication - Sporeggar - 31 members.
+  - Zoing, Female Level 70 Rogue
+  - Deake, Male Level 70 Rogue
+  - Dinli, Female Level 70 Hunter
+  - Mask, Female Level 70 Rogue
+  - Lelina, Female Level 70 Rogue
+  - Hellstrike, Male Level 70 Warlock
+  - Lormath, Male Level 70 Priest
+  - Celinda, Female Level 70 Rogue
+  - Nefa, Male Level 70 Paladin
+  - Raquela, Male Level 70 Paladin
+  - Magoth, Male Level 69 Hunter
+  - Latherini, Female Level 67 Paladin
+  - Lantash, Male Level 62 Druid
+  - Gorehooves, Male Level 61 Shaman
+  - Rhyl, Male Level 60 Rogue
+  - Azrel, Male Level 59 Hunter
+  - Aprilia, Male Level 53 Rogue
+  - Zerya, Female Level 49 Warlock
+  - Licia, Female Level 36 Priest
+  - Mixace, Male Level 34 Warrior
+  - Toneros, Male Level 28 Warlock
+  - Cyria, Female Level 28 Mage
+  - Tza, Male Level 27 Warrior
+  - Maltrius, Male Level 25 Priest
+  - Julion, Male Level 24 Mage
+  - Forsy, Male Level 24 Hunter
+  - Lopotomi, Male Level 20 Rogue
+  - Durav, Male Level 18 Warrior
+  - Nurnunna, Female Level 13 Hunter
+  - Umpha, Male Level 11 Druid
+  - Nakhti, Male Level 10 Shaman
+}}}
+
+== Character Search Output ==
+
+The following output is available when searching for a character:
+
+{{{
+Search results for Zoing:
+Zoing - Alliance - Female - Level 38 - Draenei
+        Shaman - Blackout - Arathor - (No Guild)
+Zoing - Alliance - Male - Level 70 - Human
+        Mage - Blackout - Emerald Dream - Stormwatch
+Zoing - Alliance - Male - Level 70 - Human
+        Mage - Blutdurst - Mal'Ganis - S P Q R
+Zoing - Alliance - Female - Level 31 - Draenei
+        Shaman - Conviction - Laughing Skull - (No Guild)
+Zoing - Alliance - Female - Level 25 - Gnome
+        Warlock - Hinterhalt - Teldrassil - (No Guild)
+Zoing - Alliance - Male - Level 28 - Human
+        Warrior - Schattenbrand - Ambossar - Allianz Fighter
+Zoing - Horde - Male - Level 70 - Troll
+        Shaman - Blackout - Bladefist - Wolves of North Watch
+Zoing - Horde - Male - Level 36 - Undead
+        Rogue - Blackout - Draenor - (No Guild)
+Zoing - Horde - Male - Level 10 - Undead
+        Warrior - Bloodlust - Dragonmaw - (No Guild)
+Zoing - Horde - Female - Level 13 - BloodElf
+        Hunter - Blutdurst - Frostmourne - Blutpakt
+Zoing - Horde - Male - Level 70 - Undead
+        Warlock - Blutdurst - Kil'jaeden - (No Guild)
+Zoing - Horde - Male - Level 48 - BloodElf
+        Paladin - Rampage - Ragnaros - (No Guild)
+Zoing - Horde - Female - Level 17 - Orc
+        Warrior - Reckoning - Trollbane - Rockknuckles
+Zoing - Horde - Female - Level 35 - Troll
+        Hunter - Sturmangriff - Echsenkessel - Devils Rejects
+Zoing - Horde - Male - Level 12 - Undead
+        Mage - Todbringer - Baelgun - (No Guild)
+Zoing - Horde - Female - Level 70 - BloodElf
+        Rogue - Vindication - Sporeggar - The Dominion
+}}}
+
 == Character Output == 
 
 Currently the following values are fetched for the Character:
