@@ -24,31 +24,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.Stat
 {
-    // <spirit base="57" effective="57" healthRegen="20" manaRegen="-1"/>
-    public class Spirit
-    {
-        public int HealthRegen { get; private set; } // hp regen ooc
-        public int ManaRegen { get; private set; } // Mp5 / 5second rule
-        public int BaseSpirit { get; private set; }
-        public int EffectiveSpirit { get; private set; }
+    // TODO: PetBonus, check on Dinli for hunter XML
 
-        internal Spirit(int health, int mana, int baseStat, int effectiveStat)
+    // <intellect base="43" critHitPercent="-1.00" effective="43" mana="-1" petBonus="-1"/>
+    public class Intellect
+    {
+        public int AddedMana { get; private set; }
+        public double AddedCritPercent { get; private set; }
+        public int BaseIntellect { get; private set; }
+        public int EffectiveIntellect { get; private set; }
+
+        internal Intellect(int mana, int baseStat, double critPercent, int effectiveStat)
         {
-            HealthRegen = health;
-            ManaRegen = mana;
-            BaseSpirit = baseStat;
-            EffectiveSpirit = effectiveStat;
+            AddedMana = mana;
+            AddedCritPercent = critPercent;
+            BaseIntellect = baseStat;
+            EffectiveIntellect = effectiveStat;
         }
 
         public override string ToString()
         {
-            return string.Format("Base: {0}, Effective: {1}, Health Regen Out Of Combat: {2}{3}",
-                BaseSpirit,
-                EffectiveSpirit,
-                HealthRegen,
-                (ManaRegen != -1) ? string.Format(", Mana Regen Per 5 Seconds, 5 Seconds Rule: {0}", ManaRegen) : "");
+            return string.Format("Base: {0}, Effective: {1}{2}{3}",
+                BaseIntellect,
+                EffectiveIntellect,
+                (AddedMana != -1) ? string.Format(", +Mana: {0}", AddedMana) : "",
+                (AddedCritPercent != -1) ? string.Format(", +Crit%: {0}%", AddedCritPercent) : "");
         }
     }
 }

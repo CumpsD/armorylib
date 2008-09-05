@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.Stat
 {
     // <agility armor="642" attack="311" base="163" critHitPercent="7.73" effective="321"/>
     public class Agility

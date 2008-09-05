@@ -19,36 +19,29 @@
 /// along with ArmoryLib.  If not, see <http://www.gnu.org/licenses/>.
 /// **** END LICENSE BLOCK ****
 /// </summary>
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.Resistance
 {
     // TODO: PetBonus, check on Dinli for hunter XML
 
-    // <armor base="2171" effective="2171" percent="17.06" petBonus="-1"/>
-    public class Armor
+    // <arcane petBonus="-1" value="5"/>
+    public class Arcane
     {
-        public double ReducePhysicalDamagePercent { get; private set; }
-        public int BaseArmor { get; private set; }
-        public int EffectiveArmor { get; private set; }
+        public int Resistance { get; private set; }
 
-        internal Armor(double reduce, int baseStat, int effectiveStat)
+        internal Arcane(int resistance)
         {
-            ReducePhysicalDamagePercent = reduce;
-            BaseArmor = baseStat;
-            EffectiveArmor = effectiveStat;
+            Resistance = resistance;
         }
 
         public override string ToString()
         {
-            return string.Format("Base: {0}, Effective: {1}, Reduces Physical Damage Taken By {2}%",
-                BaseArmor,
-                EffectiveArmor,
-                ReducePhysicalDamagePercent);
+            return string.Format("Arcane: {0}",
+                                 Resistance);
         }
     }
 }

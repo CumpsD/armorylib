@@ -26,6 +26,8 @@ using System.Web;
 
 using ArmoryLib.Guild;
 using G = ArmoryLib.Guild.Guild;
+using ArmoryLib.Character.Stat;
+using ArmoryLib.Character.Resistance;
 
 namespace ArmoryLib.Character
 {
@@ -125,7 +127,8 @@ namespace ArmoryLib.Character
                 {
                     LoadTalentSpec(character, searchResults);
                     LoadPvpInfo(character, searchResults);
-                    LoadStats(character, searchResults);
+                    Stats stats = LoadStats(character, searchResults);
+                    LoadResistances(stats, searchResults);
 
                     // Indicate we finished loading extra detail
                     character.LoadedDetail(CharacterDetail.CharacterSheet);
@@ -167,7 +170,7 @@ namespace ArmoryLib.Character
             character.PvpInfo = pvpInfo;
         }
 
-        private static void LoadStats(Character character, XmlDocument searchResults)
+        private static Stats LoadStats(Character character, XmlDocument searchResults)
         {
             //<baseStats>
             //  <strength attack="82" base="92" block="-1" effective="92"/>
@@ -228,6 +231,53 @@ namespace ArmoryLib.Character
                                     armor);
 
             character.Stats = stats;
+            return stats;
+        }
+
+        private static void LoadResistances(Stats stats, XmlDocument searchResults)
+        {
+            //<resistances>
+            //  <arcane petBonus="-1" value="5"/>
+            //  <fire petBonus="-1" value="5"/>
+            //  <frost petBonus="-1" value="5"/>
+            //  <holy petBonus="-1" value="0"/>
+            //  <nature petBonus="-1" value="5"/>
+            //  <shadow petBonus="-1" value="5"/>
+            //</resistances>
+            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/resistances");
+
+            XmlNode arcaneNode = characterNode.SelectSingleNode("arcane");
+            Arcane arcane = new Arcane(
+                Convert.ToInt32(arcaneNode.Attributes["value"].Value));
+
+            XmlNode fireNode = characterNode.SelectSingleNode("fire");
+            Fire fire = new Fire(
+                Convert.ToInt32(fireNode.Attributes["value"].Value));
+
+            XmlNode frostNode = characterNode.SelectSingleNode("frost");
+            Frost frost = new Frost(
+                Convert.ToInt32(frostNode.Attributes["value"].Value));
+
+            XmlNode holyNode = characterNode.SelectSingleNode("holy");
+            Holy holy = new Holy(
+                Convert.ToInt32(holyNode.Attributes["value"].Value));
+
+            XmlNode natureNode = characterNode.SelectSingleNode("nature");
+            Nature nature = new Nature(
+                Convert.ToInt32(natureNode.Attributes["value"].Value));
+
+            XmlNode shadowNode = characterNode.SelectSingleNode("shadow");
+            Shadow shadow = new Shadow(
+                Convert.ToInt32(shadowNode.Attributes["value"].Value));
+
+            Resistances resistances = new Resistances(arcane,
+                                                      fire,
+                                                      frost,
+                                                      holy,
+                                                      nature,
+                                                      shadow);
+
+            stats.Resistances = resistances;
         }
     }
 }

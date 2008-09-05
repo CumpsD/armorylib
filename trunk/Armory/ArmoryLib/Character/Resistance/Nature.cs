@@ -24,34 +24,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ArmoryLib.Character.Stat;
-
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.Resistance
 {
-    public class Stats
+    // TODO: PetBonus, check on Dinli for hunter XML
+
+    // <fire petBonus="-1" value="5"/>
+    public class Nature
     {
-        public Strength Strength { get; private set; }
-        public Agility Agility { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public Intellect Intellect { get; private set; }
-        public Spirit Spirit { get; private set; }
-        public Armor Armor { get; private set; }
+        public int Resistance { get; private set; }
 
-        public Resistances Resistances { get; internal set; }
-
-        internal Stats(Strength strength,
-                       Agility agility,
-                       Stamina stamina,
-                       Intellect intellect,
-                       Spirit spirit,
-                       Armor armor)
+        internal Nature(int resistance)
         {
-            Strength = strength;
-            Agility = agility;
-            Stamina = stamina;
-            Intellect = intellect;
-            Spirit = spirit;
-            Armor = armor;
+            Resistance = resistance;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Nature: {0}",
+                                 Resistance);
         }
     }
 }
