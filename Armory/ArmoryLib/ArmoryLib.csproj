@@ -50,6 +50,7 @@
     <Compile Include="Character\Character.cs" />
     <Compile Include="Character\CharacterDetail.cs" />
     <Compile Include="Character\CharacterExtensions.cs" />
+    <Compile Include="Character\Ranged.cs" />
     <Compile Include="Character\Melee.cs" />
     <Compile Include="Character\MeleeDetail\AttackPower.cs" />
     <Compile Include="Character\MeleeDetail\Expertise.cs" />
@@ -57,6 +58,10 @@
     <Compile Include="Character\MeleeDetail\Hit.cs" />
     <Compile Include="Character\MeleeDetail\OffHand.cs" />
     <Compile Include="Character\MeleeDetail\MainHand.cs" />
+    <Compile Include="Character\RangedDetail\AttackPower.cs" />
+    <Compile Include="Character\RangedDetail\Crit.cs" />
+    <Compile Include="Character\RangedDetail\Hit.cs" />
+    <Compile Include="Character\RangedDetail\RangedSlot.cs" />
     <Compile Include="Character\Resistances.cs" />
     <Compile Include="Character\ResistancesDetail\Arcane.cs" />
     <Compile Include="Character\ResistancesDetail\Shadow.cs" />

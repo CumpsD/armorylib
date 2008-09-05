@@ -24,36 +24,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ArmoryLib.Character.StatsDetail;
-
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.RangedDetail
 {
-    public class Stats
+    // <hitRating increasedHitPercent="6.72" value="106"/> (Rogue)
+    // <hitRating increasedHitPercent="4.95" value="78"/> (Hunter)
+    public class Hit
     {
-        public Strength Strength { get; private set; }
-        public Agility Agility { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public Intellect Intellect { get; private set; }
-        public Spirit Spirit { get; private set; }
-        public Armor Armor { get; private set; }
+        public int Rating { get; private set; }
+        public double Percent { get; private set; }
 
-        public Resistances Resistances { get; internal set; }
-        public Melee Melee { get; internal set; }
-        public Ranged Ranged { get; internal set; }
+        private int Level { get; set; }
 
-        internal Stats(Strength strength,
-                       Agility agility,
-                       Stamina stamina,
-                       Intellect intellect,
-                       Spirit spirit,
-                       Armor armor)
+        internal Hit(int rating, double percent, int level)
         {
-            Strength = strength;
-            Agility = agility;
-            Stamina = stamina;
-            Intellect = intellect;
-            Spirit = spirit;
-            Armor = armor;
+            Rating = rating;
+            Percent = percent;
+            Level = level;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Rating: {0}, Change To Hit Against Level {1}: {2}%",
+                Rating,
+                Level,
+                Percent);
         }
     }
 }

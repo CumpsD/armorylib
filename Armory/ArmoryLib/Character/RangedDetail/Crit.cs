@@ -24,36 +24,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ArmoryLib.Character.StatsDetail;
-
-namespace ArmoryLib.Character
+namespace ArmoryLib.Character.RangedDetail
 {
-    public class Stats
+    // <critChance percent="18.26" plusPercent="7.29" rating="161"/>  (Rogue)
+    // <critChance percent="30.55" plusPercent="13.14" rating="290"/> (Hunter)
+    public class Crit
     {
-        public Strength Strength { get; private set; }
-        public Agility Agility { get; private set; }
-        public Stamina Stamina { get; private set; }
-        public Intellect Intellect { get; private set; }
-        public Spirit Spirit { get; private set; }
-        public Armor Armor { get; private set; }
+        public int Rating { get; private set; }
+        public double AddedCritPercent { get; private set; }
+        public double Percent { get; private set; }
 
-        public Resistances Resistances { get; internal set; }
-        public Melee Melee { get; internal set; }
-        public Ranged Ranged { get; internal set; }
+        private int Level { get; set; }
 
-        internal Stats(Strength strength,
-                       Agility agility,
-                       Stamina stamina,
-                       Intellect intellect,
-                       Spirit spirit,
-                       Armor armor)
+        internal Crit(int rating, double percent, double plusPercent)
         {
-            Strength = strength;
-            Agility = agility;
-            Stamina = stamina;
-            Intellect = intellect;
-            Spirit = spirit;
-            Armor = armor;
+            Rating = rating;
+            Percent = percent;
+            AddedCritPercent = plusPercent;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Rating: {0} (+{1}%), Crit%: {2}%",
+                Rating,
+                AddedCritPercent,
+                Percent);
         }
     }
 }

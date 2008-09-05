@@ -114,16 +114,17 @@ namespace ArmoryTester
                 Console.WriteLine(string.Format("{1}{0}" +
                                                 "  {2} - {3} - Level {4} - {5}{0}" +
                                                 "  {6} - {7} - {8} - {9}{0}" +
-                                                "  Spec: {10}{0}" +
-                                                "  PvP: {11}{0}" + 
+                                                "  Spec: {10}{0}{0}" +
+                                                "  PvP: {11}{0}{0}" + 
                                                 "  Strength: {12}{0}" +
                                                 "  Agility: {13}{0}" +
                                                 "  Stamina: {14}{0}" +
                                                 "  Intellect: {15}{0}" +
                                                 "  Spirit: {16}{0}" +
-                                                "  Armor: {17}{0}" +
-                                                "  Resistances: {18}{0}" +
-                                                "  Melee: {0}    {19}{0}",
+                                                "  Armor: {17}{0}{0}" +
+                                                "  Resistances: {18}{0}{0}" +
+                                                "  Melee: {0}    {19}{0}" +
+                                                "  Ranged: {0}    {20}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -140,10 +141,18 @@ namespace ArmoryTester
                                                 character.Stats.Agility,
                                                 character.Stats.Stamina,
                                                 character.Stats.Intellect,
-                                                character.Stats.Spirit,
-                                                character.Stats.Armor,
+                                                character.Stats.Spirit.ToString()
+                                                    .Replace(", Health", Environment.NewLine + new string(' ', 10) + "Health")
+                                                    .Replace(", Mana", Environment.NewLine + new string(' ', 10) + "Mana"),
+                                                character.Stats.Armor.ToString()
+                                                    .Replace(", Reduces", Environment.NewLine + new string(' ', 9) + "Reduces")
+                                                    .Replace(", Pet", Environment.NewLine + new string(' ', 9) + "Pet"),
                                                 character.Stats.Resistances,
-                                                character.Stats.Melee.ToString().Replace(Environment.NewLine, Environment.NewLine + "    ")));
+                                                character.Stats.Melee.ToString()
+                                                    .Replace(Environment.NewLine, Environment.NewLine + "    "),
+                                                character.Stats.Ranged.ToString()
+                                                    .Replace(Environment.NewLine, Environment.NewLine + "    ")
+                                                    .Replace(", Pet", Environment.NewLine + new string(' ', 17) + "Pet")));
             }
             else
             {
