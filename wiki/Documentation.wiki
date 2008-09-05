@@ -134,8 +134,33 @@ Zoing
   Melee:
     MainHand: DPS: 184,7, Min: 429, Max: 532, Speed: 2,6
     OffHand: DPS: 184,7, Min: 429, Max: 532, Speed: 2,6
-    AttackPower: Base: 528, Effective: 1218, +DPS: 0
+    AttackPower: Base: 528, Effective: 1218, +DPS: 87
     Hit: Rating: 106, Change To Hit Against Level 70: 6,72%
     Crit: Rating: 161 (+7,29%), Crit%: 19,9%
-    Expertise: -Change to Dodge/Parry: 19,9%
+    Expertise: -Change to Dodge/Parry: 2,5%
+}}}
+
+=== Hunter ===
+{{{
+Details for Dinli - Sporeggar:
+Dinli
+  Horde - Female - Level 70 - Troll
+  Hunter - Vindication - Sporeggar - The Dominion
+  Spec: 11/41/9
+  PvP: HKs: 11816, Arena Points: 1004
+  Strength: Base: 65, Effective: 75, +AP: 65
+  Agility: Base: 156, Effective: 518, +AP: 508, +Crit%: 11,42%, +Armor: 1036
+  Stamina: Base: 109, Effective: 693, +Health: 6750
+  Intellect: Base: 77, Effective: 238, +Mana: 3290, +Crit%: 6,58%
+  Spirit: Base: 84, Effective: 94, Health Regen Out Of Combat: 15, Mana Regen Pe
+r 5 Seconds, 5 Seconds Rule: 67
+  Armor: Base: 6540, Effective: 6540, Reduces Physical Damage Taken By 38,25%
+  Resistances: Arcane: 0, Fire: 0, Frost: 0, Holy: 0, Nature: 0, Shadow: 0
+  Melee:
+    MainHand: DPS: 243,6, Min: 648, Max: 814, Speed: 3
+    OffHand: DPS: 243,6, Min: 648, Max: 814, Speed: 3
+    AttackPower: Base: 713, Effective: 1468, +DPS: 104
+    Hit: Rating: 78, Change To Hit Against Level 70: 4,95%
+    Crit: Rating: 290 (+13,14%), Crit%: 24,55%
+    Expertise: -Change to Dodge/Parry: 0%
 }}}
