@@ -45,9 +45,9 @@ namespace ArmoryLib.Character.MeleeDetail
         public override string ToString()
         {
             return string.Format("Base: {0}, Effective: {1}, +DPS: {2}",
-                BaseAP,
-                EffectiveAP,
-                DPSIncrease);
+                                 BaseAP,
+                                 EffectiveAP,
+                                 DPSIncrease);
         }
     }
 }

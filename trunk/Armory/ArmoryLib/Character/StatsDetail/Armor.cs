@@ -47,10 +47,10 @@ namespace ArmoryLib.Character.StatsDetail
         public override string ToString()
         {
             return string.Format("Base: {0}, Effective: {1}, Reduces Physical Damage Taken By {2}%{3}",
-                BaseArmor,
-                EffectiveArmor,
-                ReducePhysicalDamagePercent,
-                (PetBonusArmor != -1) ? string.Format(", Pet Bonus Armor: {0}", PetBonusArmor) : "");
+                                 BaseArmor,
+                                 EffectiveArmor,
+                                 ReducePhysicalDamagePercent,
+                                 (PetBonusArmor != -1) ? string.Format(", Pet Bonus Armor: {0}", PetBonusArmor) : "");
         }
     }
 }

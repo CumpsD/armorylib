@@ -30,6 +30,7 @@ using ArmoryLib.Character.StatsDetail;
 using ArmoryLib.Character.ResistancesDetail;
 using M = ArmoryLib.Character.MeleeDetail;
 using R = ArmoryLib.Character.RangedDetail;
+using D = ArmoryLib.Character.DefenseDetail;
 
 namespace ArmoryLib.Character
 {
@@ -133,6 +134,7 @@ namespace ArmoryLib.Character
                     LoadResistances(stats, searchResults);
                     LoadMelee(character, stats, searchResults);
                     LoadRanged(character, stats, searchResults);
+                    LoadDefense(stats, searchResults);
 
                     // Indicate we finished loading extra detail
                     character.LoadedDetail(CharacterDetail.CharacterSheet);
@@ -397,6 +399,55 @@ namespace ArmoryLib.Character
                                        crit);
 
             stats.Ranged = ranged;
+        }
+
+        private static void LoadDefense(Stats stats, XmlDocument searchResults)
+        {
+            //<defenses>
+            //  <armor base="6540" effective="6540" percent="38.25" petBonus="2289"/>
+            //  <defense decreasePercent="0.00" increasePercent="0.00" plusDefense="0" rating="0" value="350.00"/>
+            //  <dodge increasePercent="0.00" percent="15.27" rating="0"/>
+            //  <parry increasePercent="0.00" percent="5.00" rating="0"/>
+            //  <block increasePercent="0.00" percent="0.00" rating="0"/>
+            //  <resilience damagePercent="13.70" hitPercent="6.85" value="270.00"/>
+            //</defenses>
+
+            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/defenses");
+
+            XmlNode defenseNode = characterNode.SelectSingleNode("defense");
+            D.Defense defense = new D.Defense(
+                Convert.ToDouble(defenseNode.Attributes["value"].Value, Util.NumberFormatter));
+
+            XmlNode dodgeNode = characterNode.SelectSingleNode("dodge");
+            D.Dodge dodge = new D.Dodge(
+                Convert.ToInt32(dodgeNode.Attributes["rating"].Value),
+                Convert.ToDouble(dodgeNode.Attributes["percent"].Value, Util.NumberFormatter),
+                Convert.ToDouble(dodgeNode.Attributes["increasePercent"].Value, Util.NumberFormatter));
+
+            XmlNode parryNode = characterNode.SelectSingleNode("parry");
+            D.Parry parry = new D.Parry(
+                Convert.ToInt32(parryNode.Attributes["rating"].Value),
+                Convert.ToDouble(parryNode.Attributes["percent"].Value, Util.NumberFormatter),
+                Convert.ToDouble(parryNode.Attributes["increasePercent"].Value, Util.NumberFormatter));
+
+            XmlNode blockNode = characterNode.SelectSingleNode("block");
+            D.Block block = new D.Block(
+                Convert.ToInt32(blockNode.Attributes["rating"].Value),
+                Convert.ToDouble(blockNode.Attributes["percent"].Value, Util.NumberFormatter),
+                Convert.ToDouble(blockNode.Attributes["increasePercent"].Value, Util.NumberFormatter));
+
+            XmlNode resilienceNode = characterNode.SelectSingleNode("resilience");
+            D.Resilience resilience = new D.Resilience(
+                Convert.ToDouble(resilienceNode.Attributes["value"].Value, Util.NumberFormatter));
+
+            Defenses defenses = new Defenses(defense,
+                                             block,
+                                             dodge,
+                                             parry,
+                                             resilience);
+
+            defenses.Armor = stats.Armor;
+            stats.Defense = defenses;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace ArmoryLib.Character.MeleeDetail
         public override string ToString()
         {
             return string.Format("-Change to Dodge/Parry: {0}%",
-                Percent);
+                                 Percent);
         }
     }
 }

@@ -51,10 +51,10 @@ namespace ArmoryLib.Character.StatsDetail
         public override string ToString()
         {
             return string.Format("Base: {0}, Effective: {1}, +Health: {2}{3}",
-                BaseStamina,
-                EffectiveStamina,
-                AddedHealth,
-                (PetBonusStamina != -1) ? string.Format(", Pet Bonus Stamina: {0}%", PetBonusStamina) : "");
+                                 BaseStamina,
+                                 EffectiveStamina,
+                                 AddedHealth,
+                                 (PetBonusStamina != -1) ? string.Format(", Pet Bonus Stamina: {0}%", PetBonusStamina) : "");
         }
     }
 }

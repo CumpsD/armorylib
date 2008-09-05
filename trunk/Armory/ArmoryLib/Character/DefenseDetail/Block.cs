@@ -24,36 +24,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ArmoryLib.Character.MeleeDetail
+namespace ArmoryLib.Character.DefenseDetail
 {
-    // TODO: What is percent doing here?
-    // TODO: Add some properties for formules with the speed
-    // TODO: Add properties for haste
+    // TODO: Test on a warrior
+    // TODO: Add Properties
 
-    // <mainHandDamage dps="184.7" max="532" min="429" percent="0" speed="2.60"/>
-    // <mainHandSpeed hastePercent="0.00" hasteRating="0" value="2.60"/>
-    public class MainHand
+    // <block increasePercent="0.00" percent="0.00" rating="0"/> (Rogue)
+    // <block increasePercent="0.00" percent="0.00" rating="0"/> (Hunter)
+    public class Block
     {
-        public double DPS { get; private set; }
-        public int MinDamage { get; private set; }
-        public int MaxDamage { get; private set; }
-        public double WeaponSpeed { get; private set; }
+        public int Rating { get; private set; }
+        public double AddedBlockPercent { get; private set; }
+        public double Percent { get; private set; }
 
-        internal MainHand(double dps, int min, int max, double weaponSpeed)
+        internal Block(int rating, double percent, double plusPercent)
         {
-            DPS = dps;
-            MinDamage = min;
-            MaxDamage = max;
-            WeaponSpeed = weaponSpeed;
+            Rating = rating;
+            Percent = percent;
+            AddedBlockPercent = plusPercent;
         }
 
         public override string ToString()
         {
-            return string.Format("DPS: {0}, Min: {1}, Max: {2}, Speed: {3}",
-                                 DPS,
-                                 MinDamage,
-                                 MaxDamage,
-                                 WeaponSpeed);
+            return string.Format("Rating: {0} (+{1}%), Block%: {2}%",
+                                 Rating,
+                                 AddedBlockPercent,
+                                 Percent);
         }
     }
 }

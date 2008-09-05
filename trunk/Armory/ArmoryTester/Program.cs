@@ -124,7 +124,8 @@ namespace ArmoryTester
                                                 "  Armor: {17}{0}{0}" +
                                                 "  Resistances: {18}{0}{0}" +
                                                 "  Melee: {0}    {19}{0}" +
-                                                "  Ranged: {0}    {20}{0}",
+                                                "  Ranged: {0}    {20}{0}" +
+                                                "  Defense: {0}    {21}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -152,7 +153,12 @@ namespace ArmoryTester
                                                     .Replace(Environment.NewLine, Environment.NewLine + "    "),
                                                 character.Stats.Ranged.ToString()
                                                     .Replace(Environment.NewLine, Environment.NewLine + "    ")
-                                                    .Replace(", Pet", Environment.NewLine + new string(' ', 17) + "Pet")));
+                                                    .Replace(", Pet", Environment.NewLine + new string(' ', 17) + "Pet"),
+                                                character.Stats.Defense.ToString()
+                                                    .Replace(Environment.NewLine, Environment.NewLine + "    ")
+                                                    .Replace(", Reduces", Environment.NewLine + new string(' ', 11) + "Reduces")
+                                                    .Replace(", Pet", Environment.NewLine + new string(' ', 11) + "Pet")
+                                                ));
             }
             else
             {
