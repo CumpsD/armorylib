@@ -26,31 +26,35 @@ using System.Text;
 
 namespace ArmoryLib.Character.StatsDetail
 {
-    // TODO: PetBonus, check on Dinli for hunter XML
+    // TODO: PetBonus, check hunter with caster pet
 
-    // <intellect base="43" critHitPercent="-1.00" effective="43" mana="-1" petBonus="-1"/>
+    // <intellect base="43" critHitPercent="-1.00" effective="43" mana="-1" petBonus="-1"/>   (Rogue)
+    // <intellect base="77" critHitPercent="6.58" effective="238" mana="3290" petBonus="-1"/> (Hunter, Cat)
     public class Intellect
     {
         public int AddedMana { get; private set; }
         public double AddedCritPercent { get; private set; }
         public int BaseIntellect { get; private set; }
         public int EffectiveIntellect { get; private set; }
+        public int PetBonusIntellect { get; private set; }
 
-        internal Intellect(int mana, int baseStat, double critPercent, int effectiveStat)
+        internal Intellect(int mana, int baseStat, double critPercent, int effectiveStat, int petBonus)
         {
             AddedMana = mana;
             AddedCritPercent = critPercent;
             BaseIntellect = baseStat;
             EffectiveIntellect = effectiveStat;
+            PetBonusIntellect = petBonus;
         }
 
         public override string ToString()
         {
-            return string.Format("Base: {0}, Effective: {1}{2}{3}",
+            return string.Format("Base: {0}, Effective: {1}{2}{3}{4}",
                 BaseIntellect,
                 EffectiveIntellect,
                 (AddedMana != -1) ? string.Format(", +Mana: {0}", AddedMana) : "",
-                (AddedCritPercent != -1) ? string.Format(", +Crit%: {0}%", AddedCritPercent) : "");
+                (AddedCritPercent != -1) ? string.Format(", +Crit%: {0}%", AddedCritPercent) : "",
+                (PetBonusIntellect != -1) ? string.Format(", Pet Bonus Intellect: {0}%", PetBonusIntellect) : "");
         }
     }
 }

@@ -39,7 +39,7 @@ namespace ArmoryLib.Character.MeleeDetail
         {
             BaseAP = baseStat;
             EffectiveAP = effectiveStat;
-            DPSIncrease = DPSIncrease;
+            DPSIncrease = dpsIncrease;
         }
 
         public override string ToString()

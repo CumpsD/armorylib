@@ -27,28 +27,30 @@ using System.Text;
 
 namespace ArmoryLib.Character.StatsDetail
 {
-    // TODO: PetBonus, check on Dinli for hunter XML
-
-    // <armor base="2171" effective="2171" percent="17.06" petBonus="-1"/>
+    // <armor base="2171" effective="2171" percent="17.06" petBonus="-1"/>   (Rogue)
+    // <armor base="6540" effective="6540" percent="38.25" petBonus="2289"/> (Hunter)
     public class Armor
     {
         public double ReducePhysicalDamagePercent { get; private set; }
         public int BaseArmor { get; private set; }
         public int EffectiveArmor { get; private set; }
+        public int PetBonusArmor { get; private set; }
 
-        internal Armor(double reduce, int baseStat, int effectiveStat)
+        internal Armor(double reduce, int baseStat, int effectiveStat, int petBonus)
         {
             ReducePhysicalDamagePercent = reduce;
             BaseArmor = baseStat;
             EffectiveArmor = effectiveStat;
+            PetBonusArmor = petBonus;
         }
 
         public override string ToString()
         {
-            return string.Format("Base: {0}, Effective: {1}, Reduces Physical Damage Taken By {2}%",
+            return string.Format("Base: {0}, Effective: {1}, Reduces Physical Damage Taken By {2}%{3}",
                 BaseArmor,
                 EffectiveArmor,
-                ReducePhysicalDamagePercent);
+                ReducePhysicalDamagePercent,
+                (PetBonusArmor != -1) ? string.Format(", Pet Bonus Armor: {0}", PetBonusArmor) : "");
         }
     }
 }
