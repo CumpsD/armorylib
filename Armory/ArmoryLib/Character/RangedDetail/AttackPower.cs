@@ -50,11 +50,11 @@ namespace ArmoryLib.Character.RangedDetail
         public override string ToString()
         {
             return string.Format("Base: {0}, Effective: {1}, +DPS: {2}{3}{4}",
-                BaseAP,
-                EffectiveAP,
-                DPSIncrease,
-                (PetBonusAP != -1) ? string.Format(", Pet Bonus AP: {0}", PetBonusAP) : "",
-                (PetBonusSpell != -1) ? string.Format(", Pet Bonus Spell: {0}", PetBonusSpell) : "");
+                                 BaseAP,
+                                 EffectiveAP,
+                                 DPSIncrease,
+                                 (PetBonusAP != -1) ? string.Format(", Pet Bonus AP: {0}", PetBonusAP) : "",
+                                 (PetBonusSpell != -1) ? string.Format(", Pet Bonus Spell: {0}", PetBonusSpell) : "");
         }
     }
 }

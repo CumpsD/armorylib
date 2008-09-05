@@ -50,6 +50,12 @@
     <Compile Include="Character\Character.cs" />
     <Compile Include="Character\CharacterDetail.cs" />
     <Compile Include="Character\CharacterExtensions.cs" />
+    <Compile Include="Character\Defenses.cs" />
+    <Compile Include="Character\DefenseDetail\Block.cs" />
+    <Compile Include="Character\DefenseDetail\Resilience.cs" />
+    <Compile Include="Character\DefenseDetail\Parry.cs" />
+    <Compile Include="Character\DefenseDetail\Dodge.cs" />
+    <Compile Include="Character\DefenseDetail\Defense.cs" />
     <Compile Include="Character\Ranged.cs" />
     <Compile Include="Character\Melee.cs" />
     <Compile Include="Character\MeleeDetail\AttackPower.cs" />

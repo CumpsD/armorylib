@@ -45,10 +45,10 @@ namespace ArmoryLib.Character.StatsDetail
         public override string ToString()
         {
             return string.Format("Base: {0}, Effective: {1}, +AP: {2}{3}",
-                BaseStrength,
-                EffectiveStrength,
-                AddedAttackPower,
-                (AddedBlock != -1) ? string.Format(", +Block: {0}", AddedBlock) : "");
+                                 BaseStrength,
+                                 EffectiveStrength,
+                                 AddedAttackPower,
+                                 (AddedBlock != -1) ? string.Format(", +Block: {0}", AddedBlock) : "");
         }
     }
 }

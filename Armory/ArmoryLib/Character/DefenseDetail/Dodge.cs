@@ -24,36 +24,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ArmoryLib.Character.MeleeDetail
+namespace ArmoryLib.Character.DefenseDetail
 {
-    // TODO: What is percent doing here?
-    // TODO: Add some properties for formules with the speed
-    // TODO: Add properties for haste
-
-    // <mainHandDamage dps="184.7" max="532" min="429" percent="0" speed="2.60"/>
-    // <mainHandSpeed hastePercent="0.00" hasteRating="0" value="2.60"/>
-    public class MainHand
+    // <dodge increasePercent="1.90" percent="17.03" rating="36"/> (Rogue)
+    // <dodge increasePercent="0.00" percent="15.27" rating="0"/> (Hunter)
+    public class Dodge
     {
-        public double DPS { get; private set; }
-        public int MinDamage { get; private set; }
-        public int MaxDamage { get; private set; }
-        public double WeaponSpeed { get; private set; }
+        public int Rating { get; private set; }
+        public double AddedDodgePercent { get; private set; }
+        public double Percent { get; private set; }
 
-        internal MainHand(double dps, int min, int max, double weaponSpeed)
+        internal Dodge(int rating, double percent, double plusPercent)
         {
-            DPS = dps;
-            MinDamage = min;
-            MaxDamage = max;
-            WeaponSpeed = weaponSpeed;
+            Rating = rating;
+            Percent = percent;
+            AddedDodgePercent = plusPercent;
         }
 
         public override string ToString()
         {
-            return string.Format("DPS: {0}, Min: {1}, Max: {2}, Speed: {3}",
-                                 DPS,
-                                 MinDamage,
-                                 MaxDamage,
-                                 WeaponSpeed);
+            return string.Format("Rating: {0} (+{1}%), Dodge%: {2}%",
+                                 Rating,
+                                 AddedDodgePercent,
+                                 Percent);
         }
     }
 }

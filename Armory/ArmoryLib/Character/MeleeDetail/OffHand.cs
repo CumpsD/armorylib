@@ -50,10 +50,10 @@ namespace ArmoryLib.Character.MeleeDetail
         public override string ToString()
         {
             return string.Format("DPS: {0}, Min: {1}, Max: {2}, Speed: {3}",
-                DPS,
-                MinDamage,
-                MaxDamage,
-                WeaponSpeed);
+                                 DPS,
+                                 MinDamage,
+                                 MaxDamage,
+                                 WeaponSpeed);
         }
     }
 }

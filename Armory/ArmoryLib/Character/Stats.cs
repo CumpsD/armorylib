@@ -40,6 +40,7 @@ namespace ArmoryLib.Character
         public Resistances Resistances { get; internal set; }
         public Melee Melee { get; internal set; }
         public Ranged Ranged { get; internal set; }
+        public Defenses Defense { get; internal set; }
 
         internal Stats(Strength strength,
                        Agility agility,

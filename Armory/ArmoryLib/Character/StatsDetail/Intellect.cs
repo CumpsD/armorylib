@@ -50,11 +50,11 @@ namespace ArmoryLib.Character.StatsDetail
         public override string ToString()
         {
             return string.Format("Base: {0}, Effective: {1}{2}{3}{4}",
-                BaseIntellect,
-                EffectiveIntellect,
-                (AddedMana != -1) ? string.Format(", +Mana: {0}", AddedMana) : "",
-                (AddedCritPercent != -1) ? string.Format(", +Crit%: {0}%", AddedCritPercent) : "",
-                (PetBonusIntellect != -1) ? string.Format(", Pet Bonus Intellect: {0}%", PetBonusIntellect) : "");
+                                 BaseIntellect,
+                                 EffectiveIntellect,
+                                 (AddedMana != -1) ? string.Format(", +Mana: {0}", AddedMana) : "",
+                                 (AddedCritPercent != -1) ? string.Format(", +Crit%: {0}%", AddedCritPercent) : "",
+                                 (PetBonusIntellect != -1) ? string.Format(", Pet Bonus Intellect: {0}%", PetBonusIntellect) : "");
         }
     }
 }

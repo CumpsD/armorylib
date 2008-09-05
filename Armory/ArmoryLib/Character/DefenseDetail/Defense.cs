@@ -24,36 +24,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ArmoryLib.Character.MeleeDetail
+namespace ArmoryLib.Character.DefenseDetail
 {
-    // TODO: What is percent doing here?
-    // TODO: Add some properties for formules with the speed
-    // TODO: Add properties for haste
+    // TODO: Figure out properties
 
-    // <mainHandDamage dps="184.7" max="532" min="429" percent="0" speed="2.60"/>
-    // <mainHandSpeed hastePercent="0.00" hasteRating="0" value="2.60"/>
-    public class MainHand
+    // <defense decreasePercent="0.00" increasePercent="0.00" plusDefense="0" rating="0" value="348.00"/> (Rogue)
+    // <defense decreasePercent="0.00" increasePercent="0.00" plusDefense="0" rating="0" value="350.00"/> (Hunter)
+    public class Defense
     {
-        public double DPS { get; private set; }
-        public int MinDamage { get; private set; }
-        public int MaxDamage { get; private set; }
-        public double WeaponSpeed { get; private set; }
+        public double Rating { get; private set; }
 
-        internal MainHand(double dps, int min, int max, double weaponSpeed)
+        internal Defense(double rating)
         {
-            DPS = dps;
-            MinDamage = min;
-            MaxDamage = max;
-            WeaponSpeed = weaponSpeed;
+            Rating = rating;
         }
 
         public override string ToString()
         {
-            return string.Format("DPS: {0}, Min: {1}, Max: {2}, Speed: {3}",
-                                 DPS,
-                                 MinDamage,
-                                 MaxDamage,
-                                 WeaponSpeed);
+            return string.Format("Rating: {0}",
+                                 Rating);
         }
     }
 }

@@ -52,11 +52,11 @@ namespace ArmoryLib.Character.StatsDetail
         public override string ToString()
         {
             return string.Format("Base: {0}, Effective: {1}{2}, +Crit%: {3}%, +Armor: {4}",
-                BaseAgility,
-                EffectiveAgility,
-                (AddedAttackPower != -1) ? string.Format(", +AP: {0}", AddedAttackPower) : "",
-                AddedCritPercent,
-                AddedArmor);
+                                 BaseAgility,
+                                 EffectiveAgility,
+                                 (AddedAttackPower != -1) ? string.Format(", +AP: {0}", AddedAttackPower) : "",
+                                 AddedCritPercent,
+                                 AddedArmor);
         }
     }
 }

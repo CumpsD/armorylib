@@ -33,8 +33,6 @@ namespace ArmoryLib.Character.MeleeDetail
         public double AddedCritPercent { get; private set; }
         public double Percent { get; private set; }
 
-        private int Level { get; set; }
-
         internal Crit(int rating, double percent, double plusPercent)
         {
             Rating = rating;
@@ -45,9 +43,9 @@ namespace ArmoryLib.Character.MeleeDetail
         public override string ToString()
         {
             return string.Format("Rating: {0} (+{1}%), Crit%: {2}%",
-                Rating,
-                AddedCritPercent,
-                Percent);
+                                 Rating,
+                                 AddedCritPercent,
+                                 Percent);
         }
     }
 }

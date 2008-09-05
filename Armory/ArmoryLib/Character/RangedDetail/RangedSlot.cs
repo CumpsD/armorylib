@@ -60,11 +60,11 @@ namespace ArmoryLib.Character.RangedDetail
         public override string ToString()
         {
             return string.Format("Skill: {0}, DPS: {1}, Min: {3}, Max: {3}, Speed: {4}",
-                WeaponSkill,
-                DPS,
-                MinDamage,
-                MaxDamage,
-                WeaponSpeed);
+                                 WeaponSkill,
+                                 DPS,
+                                 MinDamage,
+                                 MaxDamage,
+                                 WeaponSpeed);
         }
     }
 }

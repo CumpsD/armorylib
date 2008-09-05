@@ -45,10 +45,10 @@ namespace ArmoryLib.Character.StatsDetail
         public override string ToString()
         {
             return string.Format("Base: {0}, Effective: {1}, Health Regen Out Of Combat: {2}{3}",
-                BaseSpirit,
-                EffectiveSpirit,
-                HealthRegen,
-                (ManaRegen != -1) ? string.Format(", Mana Regen Per 5 Seconds, 5 Seconds Rule: {0}", ManaRegen) : "");
+                                 BaseSpirit,
+                                 EffectiveSpirit,
+                                 HealthRegen,
+                                 (ManaRegen != -1) ? string.Format(", Mana Regen Per 5 Seconds, 5 Seconds Rule: {0}", ManaRegen) : "");
         }
     }
 }

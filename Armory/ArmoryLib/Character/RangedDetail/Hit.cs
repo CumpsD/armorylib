@@ -45,9 +45,9 @@ namespace ArmoryLib.Character.RangedDetail
         public override string ToString()
         {
             return string.Format("Rating: {0}, Change To Hit Against Level {1}: {2}%",
-                Rating,
-                Level,
-                Percent);
+                                 Rating,
+                                 Level,
+                                 Percent);
         }
     }
 }

@@ -34,8 +34,6 @@ namespace ArmoryLib.Character.RangedDetail
         public double AddedCritPercent { get; private set; }
         public double Percent { get; private set; }
 
-        private int Level { get; set; }
-
         internal Crit(int rating, double percent, double plusPercent)
         {
             Rating = rating;
@@ -46,9 +44,9 @@ namespace ArmoryLib.Character.RangedDetail
         public override string ToString()
         {
             return string.Format("Rating: {0} (+{1}%), Crit%: {2}%",
-                Rating,
-                AddedCritPercent,
-                Percent);
+                                 Rating,
+                                 AddedCritPercent,
+                                 Percent);
         }
     }
 }
