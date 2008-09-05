@@ -159,6 +159,11 @@ Zoing
     Resilience: Rating: 24
     Armor: Base: 2171, Effective: 2171
            Reduces Physical Damage Taken By 17,06%
+
+  Buffs:
+    Stealth - Stealthed.  Movement slowed by 30%.
+  Debuffs:
+    None
 }}}
 
 === Hunter ===
@@ -209,4 +214,10 @@ Dinli
     Armor: Base: 6540, Effective: 6540
            Reduces Physical Damage Taken By 38,25%
            Pet Bonus Armor: 2289
+
+  Buffs:
+    Trueshot Aura - Increases attack power by 125.
+    Aspect of the Cheetah - 30% increased movement speed.  Dazed if struck.
+  Debuffs:
+    None
 }}}
