@@ -28,7 +28,8 @@ using ArmoryLib.Guild;
 using G = ArmoryLib.Guild.Guild;
 using ArmoryLib.Character.StatsDetail;
 using ArmoryLib.Character.ResistancesDetail;
-using ArmoryLib.Character.MeleeDetail;
+using M = ArmoryLib.Character.MeleeDetail;
+using R = ArmoryLib.Character.RangedDetail;
 
 namespace ArmoryLib.Character
 {
@@ -131,6 +132,7 @@ namespace ArmoryLib.Character
                     Stats stats = LoadStats(character, searchResults);
                     LoadResistances(stats, searchResults);
                     LoadMelee(character, stats, searchResults);
+                    LoadRanged(character, stats, searchResults);
 
                     // Indicate we finished loading extra detail
                     character.LoadedDetail(CharacterDetail.CharacterSheet);
@@ -301,50 +303,100 @@ namespace ArmoryLib.Character
 
             XmlNode mainHandNode = characterNode.SelectSingleNode("mainHandDamage");
             XmlNode mainHandSpeedNode = characterNode.SelectSingleNode("mainHandSpeed");
-            MainHand mainHand = new MainHand(
+            M.MainHand mainHand = new M.MainHand(
                 Convert.ToDouble(mainHandNode.Attributes["dps"].Value, Util.NumberFormatter),
                 Convert.ToInt32(mainHandNode.Attributes["min"].Value),
                 Convert.ToInt32(mainHandNode.Attributes["max"].Value),
-                 Convert.ToDouble(mainHandNode.Attributes["speed"].Value, Util.NumberFormatter));
+                Convert.ToDouble(mainHandNode.Attributes["speed"].Value, Util.NumberFormatter));
 
             XmlNode offHandNode = characterNode.SelectSingleNode("offHandDamage");
             XmlNode offHandSpeedNode = characterNode.SelectSingleNode("offHandSpeed");
-            OffHand offHand = new OffHand(
+            M.OffHand offHand = new M.OffHand(
                 Convert.ToDouble(mainHandNode.Attributes["dps"].Value, Util.NumberFormatter),
                 Convert.ToInt32(mainHandNode.Attributes["min"].Value),
                 Convert.ToInt32(mainHandNode.Attributes["max"].Value),
                 Convert.ToDouble(mainHandNode.Attributes["speed"].Value, Util.NumberFormatter));
 
             XmlNode apNode = characterNode.SelectSingleNode("power");
-            AttackPower attackPower = new AttackPower(
+            M.AttackPower attackPower = new M.AttackPower(
                 Convert.ToInt32(apNode.Attributes["base"].Value),
                 Convert.ToInt32(apNode.Attributes["effective"].Value),
                 Convert.ToDouble(apNode.Attributes["increasedDps"].Value, Util.NumberFormatter));
 
             XmlNode hitNode = characterNode.SelectSingleNode("hitRating");
-            Hit hit = new Hit(
+            M.Hit hit = new M.Hit(
                 Convert.ToInt32(hitNode.Attributes["value"].Value),
                 Convert.ToDouble(hitNode.Attributes["increasedHitPercent"].Value, Util.NumberFormatter),
                 character.Level);
 
             XmlNode critNode = characterNode.SelectSingleNode("critChance");
-            Crit crit = new Crit(
+            M.Crit crit = new M.Crit(
                 Convert.ToInt32(critNode.Attributes["rating"].Value),
                 Convert.ToDouble(critNode.Attributes["percent"].Value, Util.NumberFormatter),
                 Convert.ToDouble(critNode.Attributes["plusPercent"].Value, Util.NumberFormatter));
 
             XmlNode expertiseNode = characterNode.SelectSingleNode("expertise");
-            Expertise expertise = new Expertise(
+            M.Expertise expertise = new M.Expertise(
                 Convert.ToDouble(expertiseNode.Attributes["percent"].Value, Util.NumberFormatter));
 
             Melee melee = new Melee(mainHand,
-                offHand,
-                attackPower,
-                hit,
-                crit,
-                expertise);
+                                    offHand,
+                                    attackPower,
+                                    hit,
+                                    crit,
+                                    expertise);
 
             stats.Melee = melee;
+        }
+
+        private static void LoadRanged(Character character, Stats stats, XmlDocument searchResults)
+        {
+            //<ranged>
+            //  <weaponSkill rating="0" value="350"/>
+            //  <damage dps="295.7" max="823" min="668" percent="0" speed="2.52"/>
+            //  <speed hastePercent="0.00" hasteRating="0" value="2.52"/>
+            //  <power base="831" effective="1662" increasedDps="118.0" petAttack="365.64" petSpell="213.90"/>
+            //  <hitRating increasedHitPercent="4.95" value="78"/>
+            //  <critChance percent="30.55" plusPercent="13.14" rating="290"/>
+            //</ranged>
+            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/ranged");
+
+            XmlNode rangedSkillNode = characterNode.SelectSingleNode("weaponSkill");
+            XmlNode rangedDpsNode = characterNode.SelectSingleNode("damage");
+            XmlNode rangedSpeedNode = characterNode.SelectSingleNode("speed");
+            R.RangedSlot rangedSlot = new R.RangedSlot(
+                Convert.ToInt32(rangedSkillNode.Attributes["value"].Value),
+                Convert.ToDouble(rangedDpsNode.Attributes["dps"].Value, Util.NumberFormatter),
+                Convert.ToInt32(rangedDpsNode.Attributes["min"].Value),
+                Convert.ToInt32(rangedDpsNode.Attributes["max"].Value),
+                Convert.ToDouble(rangedDpsNode.Attributes["speed"].Value, Util.NumberFormatter));
+
+            XmlNode apNode = characterNode.SelectSingleNode("power");
+            R.AttackPower attackPower = new R.AttackPower(
+                Convert.ToInt32(apNode.Attributes["base"].Value),
+                Convert.ToInt32(apNode.Attributes["effective"].Value),
+                Convert.ToDouble(apNode.Attributes["increasedDps"].Value, Util.NumberFormatter),
+                Convert.ToDouble(apNode.Attributes["petAttack"].Value, Util.NumberFormatter),
+                Convert.ToDouble(apNode.Attributes["petSpell"].Value, Util.NumberFormatter));
+
+            XmlNode hitNode = characterNode.SelectSingleNode("hitRating");
+            R.Hit hit = new R.Hit(
+                Convert.ToInt32(hitNode.Attributes["value"].Value),
+                Convert.ToDouble(hitNode.Attributes["increasedHitPercent"].Value, Util.NumberFormatter),
+                character.Level);
+
+            XmlNode critNode = characterNode.SelectSingleNode("critChance");
+            R.Crit crit = new R.Crit(
+                Convert.ToInt32(critNode.Attributes["rating"].Value),
+                Convert.ToDouble(critNode.Attributes["percent"].Value, Util.NumberFormatter),
+                Convert.ToDouble(critNode.Attributes["plusPercent"].Value, Util.NumberFormatter));
+
+            Ranged ranged = new Ranged(rangedSlot,
+                                       attackPower,
+                                       hit,
+                                       crit);
+
+            stats.Ranged = ranged;
         }
     }
 }
