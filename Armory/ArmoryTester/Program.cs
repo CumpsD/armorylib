@@ -121,7 +121,8 @@ namespace ArmoryTester
                                                 "  Intellect: {15}{0}" +
                                                 "  Spirit: {16}{0}" +
                                                 "  Armor: {17}{0}" +
-                                                "  Resistances: {18}{0}",
+                                                "  Resistances: {18}{0}" +
+                                                "  Melee: {0}    {19}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -140,7 +141,8 @@ namespace ArmoryTester
                                                 character.Stats.Intellect,
                                                 character.Stats.Spirit,
                                                 character.Stats.Armor,
-                                                character.Stats.Resistances));
+                                                character.Stats.Resistances,
+                                                character.Stats.Melee.ToString().Replace(Environment.NewLine, Environment.NewLine + "    ")));
             }
             else
             {
