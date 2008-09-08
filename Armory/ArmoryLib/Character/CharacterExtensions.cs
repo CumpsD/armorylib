@@ -138,6 +138,7 @@ namespace ArmoryLib.Character
                     LoadDefense(stats, searchResults);
                     LoadBuffs(character, searchResults);
                     LoadSpell(character, stats, searchResults);
+                    LoadProfessions(character, searchResults);
 
                     // Indicate we finished loading extra detail
                     character.LoadedDetail(CharacterDetail.CharacterSheet);
@@ -610,6 +611,26 @@ namespace ArmoryLib.Character
                                     petBonus);
 
             stats.Spell = spell;
+        }
+
+        private static void LoadProfessions(Character character, XmlDocument searchResults)
+        {
+            //<professions>
+            //  <skill key="herbalism" max="375" name="Herbalism" value="375"/>
+            //  <skill key="skinning" max="375" name="Skinning" value="375"/>
+            //</professions>
+            XmlNode professionsNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/professions");
+
+            List<Profession> professions = new List<Profession>();
+            XmlNodeList professionNodes = professionsNode.SelectNodes("skill");
+            foreach (XmlNode skillNode in professionNodes)
+            {
+                Profession profession = new Profession(skillNode.Attributes["name"].Value,
+                                                       Convert.ToInt32(skillNode.Attributes["value"].Value));
+                professions.Add(profession);
+            }
+
+            character.Professions = professions;
         }
     }
 }
