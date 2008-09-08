@@ -473,12 +473,9 @@ Hellstrike
     Pet Bonus: +264 AP, +70 Spell (Granted from Fire Bonus)
 
   Buffs:
-    Demon Armor - Increases armor by 660, Shadow resistance by 18 and restores 1
-8 health every 5 sec.
-    Demonic Knowledge - Increases Master's spell damage by a percentage of the a
-ctive demon's Stamina plus Intellect.
-    Master Demonologist - Increases damage caused by 5% and resistance to all ma
-gic schools by 0.
+    Demon Armor - Increases armor by 660, Shadow resistance by 18 and restores 18 health every 5 sec.
+    Demonic Knowledge - Increases Master's spell damage by a percentage of the active demon's Stamina plus Intellect.
+    Master Demonologist - Increases damage caused by 5% and resistance to all magic schools by 0.
 
   Debuffs:
     None
