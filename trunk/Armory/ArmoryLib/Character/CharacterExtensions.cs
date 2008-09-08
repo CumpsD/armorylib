@@ -105,6 +105,12 @@ namespace ArmoryLib.Character
                                     HttpUtility.UrlEncode(realmName),
                                     HttpUtility.UrlEncode(characterName));
                     break;
+                case CharacterDetail.Skills:
+                    // http://eu.wowarmory.com/character-skills.xml?r=Sporeggar&n=Zoing
+                    searchString = string.Format("character-skills.xml?r={0}&n={1}",
+                    HttpUtility.UrlEncode(realmName),
+                    HttpUtility.UrlEncode(characterName));
+                    break;
             }
 
             if (searchString != string.Empty)
@@ -167,6 +173,11 @@ namespace ArmoryLib.Character
                     character.LoadDetail(CharacterDetail.Reputation);
                 }
 
+                if (loadDetail.ContainsDetail(CharacterDetail.Skills))
+                {
+                    character.LoadDetail(CharacterDetail.Skills);
+                }
+
                 return character;
             }
             else
@@ -202,6 +213,11 @@ namespace ArmoryLib.Character
                         searchResults = LoadDetailNode(character.UsedArmory, CharacterDetail.Reputation, character.Realm, character.Name);
 
                         LoadReputation(character, searchResults);
+                        break;
+                    case CharacterDetail.Skills:
+                        searchResults = LoadDetailNode(character.UsedArmory, CharacterDetail.Skills, character.Realm, character.Name);
+
+                        LoadSkills(character, searchResults);
                         break;
                 }
 
@@ -679,12 +695,13 @@ namespace ArmoryLib.Character
             //</professions>
             XmlNode professionsNode = searchResults.SelectSingleNode("characterTab/professions");
 
-            List<Profession> professions = new List<Profession>();
+            List<Skill> professions = new List<Skill>();
             XmlNodeList professionNodes = professionsNode.SelectNodes("skill");
             foreach (XmlNode skillNode in professionNodes)
             {
-                Profession profession = new Profession(skillNode.Attributes["name"].Value,
-                                                       Convert.ToInt32(skillNode.Attributes["value"].Value));
+                Skill profession = new Skill(skillNode.Attributes["name"].Value,
+                                             Convert.ToInt32(skillNode.Attributes["value"].Value),
+                                             SkillType.PrimaryProfession);
                 professions.Add(profession);
             }
 
@@ -785,6 +802,58 @@ namespace ArmoryLib.Character
             }
 
             character.Reputation = reputation;
+        }
+
+        private static void LoadSkills(Character character, XmlNode searchResults)
+        {
+            //<skillTab>
+            //  <skillCategory key="professions" name="Professions">
+            //    <skill key="herbalism" max="375" name="Herbalism" value="375"/>
+            //    <skill key="skinning" max="375" name="Skinning" value="375"/>
+            //  </skillCategory>
+            XmlNodeList skillCategoriesNodes = searchResults.SelectNodes("skillTab/skillCategory");
+
+            List<Skill> skills = new List<Skill>();
+            foreach (XmlNode skillCategoryNode in skillCategoriesNodes)
+            {
+                XmlNodeList skillNodes = skillCategoryNode.SelectNodes("skill");
+
+                SkillType type;
+                switch (skillCategoryNode.Attributes["key"].Value)
+                {
+                    case "professions":
+                        type = SkillType.PrimaryProfession;
+                        break;
+                    case "secondaryskills":
+                        type = SkillType.SecondaryProfession;
+                        break;
+                    case "weaponskills":
+                        type = SkillType.Weapon;
+                        break;
+                    case "classskills":
+                        type = SkillType.Class;
+                        break;
+                    case "armorproficiencies":
+                        type = SkillType.Armor;
+                        break;
+                    case "languages":
+                        type = SkillType.Language;
+                        break;
+                    default:
+                        type = SkillType.None;
+                        break;
+                }
+
+                foreach (XmlNode skillNode in skillNodes)
+                {
+                    Skill skill = new Skill(skillNode.Attributes["name"].Value,
+                                            Convert.ToInt32(skillNode.Attributes["value"].Value),
+                                            type);
+                    skills.Add(skill);
+                }
+            }
+
+            character.Skills = skills;
         }
 
     }

@@ -206,8 +206,8 @@ namespace ArmoryLib.Character
             internal set { _effects = value; }
         }
 
-        private List<Profession> _professions;
-        public List<Profession> Professions
+        private List<Skill> _professions;
+        public List<Skill> Professions
         {
             get
             {
@@ -253,6 +253,20 @@ namespace ArmoryLib.Character
             internal set { _reputation = value; }
         }
         #endregion
+
+        #region Skills Properties
+        private List<Skill> _skills;
+        public List<Skill> Skills
+        {
+            get
+            {
+                CheckDetailRequired("Skills", CharacterDetail.Skills);
+                return _skills;
+            }
+            internal set { _skills = value; }
+        }
+        #endregion
+
 
         internal Character(Armory armory,
                            CharacterDetail detailLoaded,

@@ -24,18 +24,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ArmoryLib.Character
+namespace ArmoryLib
 {
-    // <skill key="herbalism" max="375" name="Herbalism" value="375"/>
-    public class Profession
+    public enum SkillType
     {
-        public string Name { get; private set; }
-        public int Skill { get; private set; }
-
-        internal Profession(string name, int skill)
-        {
-            Name = name;
-            Skill = skill;
-        }
+        None,
+        PrimaryProfession,
+        SecondaryProfession,
+        Weapon,
+        Class,
+        Armor,
+        Language
     }
 }

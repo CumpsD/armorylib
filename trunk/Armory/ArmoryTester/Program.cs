@@ -116,15 +116,13 @@ namespace ArmoryTester
 
             if (character != null)
             {
-                character.LoadDetail(CharacterDetail.Reputation);
-
                 StringBuilder professions = new StringBuilder();
-                foreach (Profession prof in character.Professions)
+                foreach (Skill prof in character.Professions)
                 {
                     professions.Append("    ");
                     professions.Append(prof.Name);
                     professions.Append(" (");
-                    professions.Append(prof.Skill);
+                    professions.Append(prof.Level);
                     professions.Append(")");
                     professions.Append(Environment.NewLine);
                 }
@@ -209,6 +207,7 @@ namespace ArmoryTester
                                                 (character.Titles.Count > 0) ? string.Format("{0}{1}", titles.ToString(), Environment.NewLine) : ""
                                                 ));
 
+                character.LoadDetail(CharacterDetail.Reputation);
                 Console.WriteLine("  Reputation:");
                 foreach (Reputation rep in character.Reputation)
                 {
@@ -228,6 +227,14 @@ namespace ArmoryTester
                 else
                 {
                     Console.WriteLine("    None");
+                }
+                Console.WriteLine();
+
+                character.LoadDetail(CharacterDetail.Skills);
+                Console.WriteLine("  Skills:");
+                foreach (Skill skill in character.Skills)
+                {
+                    Console.WriteLine("    [{0}] {1} ({2})", skill.Type, skill.Name, skill.Level);
                 }
             }
             else
