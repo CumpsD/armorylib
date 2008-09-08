@@ -31,6 +31,8 @@ namespace ArmoryLib
 {
     public class Armory
     {
+        private ICache Cache { get; set; }
+
         public Region Region { get; set; }
         public string UserAgent { get; set; }
 
@@ -65,29 +67,40 @@ namespace ArmoryLib
             }
         }
 
-        // Defaults to European Armory
-        public Armory(): this(Region.Europe) {}
+        // Defaults to European Armory and NoCaching
+        public Armory(): this(Region.Europe, new NoCache()) {}
 
-        public Armory(Region region)
+        public Armory(ICache cache) : this(Region.Europe, cache) { }
+
+        public Armory(Region region): this (region, new NoCache()) { }
+
+        public Armory(Region region, ICache cache)
         {
             Region = region;
+            Cache = cache;
             UserAgent = DefaultUserAgent;
         }
 
         internal XmlDocument Request(string command)
         {
-            // TODO: Caching will probably be inserted here
+            XmlDocument cachedItem = Cache.GetItem(command);
 
-            string armoryRequest = Url + command;
-            XmlDocument armoryResponse = new XmlDocument();
-
-            using (WebClient client = new WebClient())
+            if (cachedItem == null)
             {
-                client.Headers.Set("User-Agent", UserAgent);
-                armoryResponse.LoadXml(client.DownloadString(armoryRequest));
+                string armoryRequest = Url + command;
+                XmlDocument armoryResponse = new XmlDocument();
+
+                using (WebClient client = new WebClient())
+                {
+                    client.Headers.Set("User-Agent", UserAgent);
+                    armoryResponse.LoadXml(client.DownloadString(armoryRequest));
+                }
+
+                Cache.StoreItem(command, armoryResponse);
+                cachedItem = armoryResponse;
             }
 
-            return armoryResponse;
+            return cachedItem;
         }
     }
 }
