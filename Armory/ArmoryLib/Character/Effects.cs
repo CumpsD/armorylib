@@ -58,7 +58,7 @@ namespace ArmoryLib.Character
                 debuffs.Append(Environment.NewLine);
             }
 
-            return string.Format("Buffs:{0}{1}Debuffs:{0}{2}", 
+            return string.Format("Buffs:{0}{1}{0}Debuffs:{0}{2}", 
                                   Environment.NewLine,
                                   (buffs.Length > 0) ? buffs.ToString() : "None", 
                                   (debuffs.Length > 0) ? debuffs.ToString() : "None");
