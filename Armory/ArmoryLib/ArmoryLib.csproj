@@ -50,6 +50,7 @@
     <Compile Include="Character\Character.cs" />
     <Compile Include="Character\CharacterDetail.cs" />
     <Compile Include="Character\CharacterExtensions.cs" />
+    <Compile Include="Character\Spell.cs" />
     <Compile Include="Character\Effects.cs" />
     <Compile Include="Character\Buff.cs" />
     <Compile Include="Character\Defenses.cs" />
@@ -77,6 +78,15 @@
     <Compile Include="Character\ResistancesDetail\Holy.cs" />
     <Compile Include="Character\ResistancesDetail\Nature.cs" />
     <Compile Include="Character\ResistancesDetail\Frost.cs" />
+    <Compile Include="Character\SpellDetail\Arcane.cs" />
+    <Compile Include="Character\SpellDetail\PetBonus.cs" />
+    <Compile Include="Character\SpellDetail\Hit.cs" />
+    <Compile Include="Character\SpellDetail\ManaRegen.cs" />
+    <Compile Include="Character\SpellDetail\Fire.cs" />
+    <Compile Include="Character\SpellDetail\Frost.cs" />
+    <Compile Include="Character\SpellDetail\Holy.cs" />
+    <Compile Include="Character\SpellDetail\Nature.cs" />
+    <Compile Include="Character\SpellDetail\Shadow.cs" />
     <Compile Include="Character\StatsDetail\Agility.cs" />
     <Compile Include="Character\StatsDetail\Armor.cs" />
     <Compile Include="Character\StatsDetail\Spirit.cs" />
@@ -87,6 +97,7 @@
     <Compile Include="Character\StatsDetail\Strength.cs" />
     <Compile Include="Character\TalentSpec.cs" />
     <Compile Include="Class.cs" />
+    <Compile Include="School.cs" />
     <Compile Include="Exceptions\MissingDetailException.cs" />
     <Compile Include="Gender.cs" />
     <Compile Include="Exceptions\InvalidRegionException.cs" />
