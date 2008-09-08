@@ -14,13 +14,13 @@ namespace ArmoryTester
         static void Main(string[] args)
         {
             string guildName = "The Dominion";
-            string realmName = "Aggramar";
-            string characterName = "Vohbo";
+            //string realmName = "Aggramar";
+            //string characterName = "Vohbo";
 
-            //string realmName = "Sporeggar";
+            string realmName = "Sporeggar";
             //string characterName = "Hellstrike";
             //string characterName = "Licia";
-            //string characterName = "Zoing";
+            string characterName = "Zoing";
             //string characterName = "Dinli";
 
             Armory armory = new Armory
@@ -126,6 +126,17 @@ namespace ArmoryTester
                     professions.Append(Environment.NewLine);
                 }
 
+                StringBuilder titles = new StringBuilder();
+                titles.Append(Environment.NewLine);
+                titles.Append("  Available Titles:");
+                titles.Append(Environment.NewLine);
+                foreach (Title title in character.Titles)
+                {
+                    titles.Append("    ");
+                    titles.Append(title.FormattedTitle);
+                    titles.Append(Environment.NewLine);
+                }
+
                 Console.WriteLine("Details for {0} - {1}:", characterName, realmName);
                 Console.WriteLine(string.Format("{1}{0}" +
                                                 "  {2} - {3} - Level {4} - {5}{0}" +
@@ -146,7 +157,9 @@ namespace ArmoryTester
                                                 "  {23}{0}" +
                                                 "  {24}{0}" +
                                                 "  Total Health: {25}{0}" +
-                                                "  Total {26}: {27}{0}",
+                                                "  Total {26}: {27}{0}{0}" +
+                                                "  Title: {28}{0}" +
+                                                "  {29}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -188,7 +201,9 @@ namespace ArmoryTester
                                                 (professions.ToString() != string.Empty) ? string.Format("{1}  Professions:{1}{0}", professions.ToString(), Environment.NewLine) : "",
                                                 character.Stats.TotalHealth,
                                                 character.Stats.SecondaryBar.Type,
-                                                character.Stats.SecondaryBar.Effective
+                                                character.Stats.SecondaryBar.Effective,
+                                                (character.Title != null) ? character.Title : "None",
+                                                (character.Titles.Count > 0) ? string.Format("{0}{1}", titles.ToString(), Environment.NewLine) : ""
                                                 ));
             }
             else
