@@ -174,8 +174,18 @@ Zoing
 
   Buffs:
     Honorless Target - You are currently worth no honor points to the enemy.
+
   Debuffs:
     None
+
+  Professions:
+    Herbalism (375)
+    Skinning (375)
+
+  Total Health: 7214
+  Total Energy: 100
+
+  Title: None
 }}}
 
 === Hunter ===
@@ -242,8 +252,18 @@ Dinli
   Buffs:
     Trueshot Aura - Increases attack power by 125.
     Aspect of the Cheetah - 30% increased movement speed.  Dazed if struck.
+
   Debuffs:
     None
+
+  Professions:
+    Enchanting (266)
+    Mining (375)
+
+  Total Health: 10834
+  Total Mana: 6673
+
+  Title: None
 }}}
 
 === Warlock ===
@@ -311,6 +331,92 @@ Hellstrike
     Demon Armor - Increases armor by 660, Shadow resistance by 18 and restores 18 health every 5 sec.
     Demonic Knowledge - Increases Master's spell damage by a percentage of the active demon's Stamina plus Intellect.
     Master Demonologist - Increases damage caused by 5% and resistance to all magic schools by 0.
+
   Debuffs:
     None
+
+  Professions:
+    Enchanting (351)
+    Tailoring (360)
+
+  Total Health: 9085
+  Total Mana: 8539
+
+  Title: None
+}}}
+
+=== Warrior ===
+{{{
+Details for Vohbo - Aggramar:
+Vohbo
+  Horde - Male - Level 70 - Tauren
+  Warrior - Blackout - Aggramar - The Dominion
+  Spec: 12/5/44
+
+  PvP: HKs: 4
+
+  Strength: Base: 165, Effective: 215, +AP: 410, +Block: 10
+  Agility: Base: 91, Effective: 192, +Crit%: 6,96%, +Armor: 384
+  Stamina: Base: 141, Effective: 1326, +Health: 13080
+  Intellect: Base: 28, Effective: 36
+  Spirit: Base: 53, Effective: 61
+          Health Regen Out Of Combat: 36
+  Armor: Base: 19480, Effective: 19840
+         Reduces Physical Damage Taken By 65,27%
+
+  Resistances: Arcane: 0, Fire: 0, Frost: 0, Holy: 0, Nature: 10, Shadow: 0
+
+  Melee:
+    MainHand: DPS: 153,1, Min: 177, Max: 275, Speed: 1,48
+    OffHand: DPS: 153,1, Min: 177, Max: 275, Speed: 1,48
+    AttackPower: Base: 620, Effective: 620, +DPS: 44
+    Hit: Rating: 82, Change To Hit Against Level 70: 5,2%
+    Crit: Rating: 0 (+0%), Crit%: 11,96%
+    Expertise: -Change to Dodge/Parry: 6%
+
+  Ranged:
+    Ranged: Skill: 350, DPS: 131,8, Min: 294, Max: 294, Speed: 1,87
+    AttackPower: Base: 252, Effective: 252, +DPS: 18
+    Hit: Rating: 82, Change To Hit Against Level 70: 5,2%
+    Crit: Rating: 0 (+0%), Crit%: 6,96%
+
+  Defense:
+    Defense: Rating: 370
+    Block: Rating: 29 (+3,68%), Block%: 21,2%
+    Dodge: Rating: 294 (+15,54%), Dodge%: 30,21%
+    Parry: Rating: 63 (+2,66%), Parry%: 20,18%
+    Resilience: Rating: 0
+    Armor: Base: 19480, Effective: 19840
+           Reduces Physical Damage Taken By 65,27%
+
+  Spell:
+    Arcane: +0 dmg, 0% crit
+    Fire: +0 dmg, 0% crit
+    Frost: +0 dmg, 0% crit
+    Holy: +0 dmg, 0% crit
+    Nature: +0 dmg, 0% crit
+    Shadow: +0 dmg, 0% crit
+    Mana Regen: 0 (Casting), 0 (Not Casting)
+    Rating: 0, Change To Hit Against Level 70: 0%
+    Bonus Healing: 0
+    Spell Penetration: 0
+
+  Buffs:
+    None
+  Debuffs:
+    None
+
+  Professions:
+    Enchanting (375)
+    Jewelcrafting (375)
+
+  Total Health: 18558
+  Total Rage: 100
+
+  Title: Scarab Lord Vohbo
+
+  Available Titles:
+    Scarab Lord Vohbo
+    Vohbo, Champion of the Naaru
+    Vohbo, Hand of A'dal
 }}}
