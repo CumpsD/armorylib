@@ -101,6 +101,8 @@
     <Compile Include="Character\StatsDetail\Strength.cs" />
     <Compile Include="Character\TalentSpec.cs" />
     <Compile Include="Class.cs" />
+    <Compile Include="NoCache.cs" />
+    <Compile Include="ICache.cs" />
     <Compile Include="SkillType.cs" />
     <Compile Include="ReputationLevel.cs" />
     <Compile Include="SecondBar.cs" />
