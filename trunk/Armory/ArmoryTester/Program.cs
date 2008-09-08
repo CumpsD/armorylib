@@ -113,8 +113,11 @@ namespace ArmoryTester
                                                        characterName, 
                                                        CharacterDetail.Basic | 
                                                        CharacterDetail.CharacterSheet);
+
             if (character != null)
             {
+                character.LoadDetail(CharacterDetail.Reputation);
+
                 StringBuilder professions = new StringBuilder();
                 foreach (Profession prof in character.Professions)
                 {
@@ -205,6 +208,27 @@ namespace ArmoryTester
                                                 (character.Title != null) ? character.Title : "None",
                                                 (character.Titles.Count > 0) ? string.Format("{0}{1}", titles.ToString(), Environment.NewLine) : ""
                                                 ));
+
+                Console.WriteLine("  Reputation:");
+                foreach (Reputation rep in character.Reputation)
+                {
+                    Console.WriteLine("    {0} - {1} ({2})", rep.Name, rep.Level, rep.Value);
+                }
+                Console.WriteLine();
+
+                Console.WriteLine("  Exalted With:");
+                var exaltedReps = character.Reputation.GetFilteredReputation(ReputationLevel.Exalted);
+                if (exaltedReps.Count > 0)
+                {
+                    foreach (Reputation rep in exaltedReps)
+                    {
+                        Console.WriteLine("    {0} - {1} ({2})", rep.Name, rep.Level, rep.Value);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("    None");
+                }
             }
             else
             {
@@ -228,3 +252,5 @@ namespace ArmoryTester
 }
 
 // items: wowhead (public)
+// http://eu.wowarmory.com/layout/item-tooltip.xsl
+// http://eu.wowarmory.com/item-tooltip.xml?i=30973

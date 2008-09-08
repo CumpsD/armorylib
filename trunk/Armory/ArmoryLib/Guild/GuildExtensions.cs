@@ -104,6 +104,7 @@ namespace ArmoryLib.Guild
                 {
                     // <character class="Rogue" classId="4" gender="Female" genderId="1" level="70" name="Zoing" race="Blood Elf" raceId="10" rank="0" url="r=Sporeggar&amp;n=Zoing"/>
                     guild.Members.Add(new C(
+                                            armory,
                                             CharacterDetail.Basic,
                                             armory.Region,
                                             guild.Faction,

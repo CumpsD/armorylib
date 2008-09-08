@@ -31,6 +31,8 @@ namespace ArmoryLib.Character
 {
     public class Character : IComparable<Character>, IEquatable<Character>
     {
+        internal Armory UsedArmory { get; private set; }
+
         public CharacterDetail DetailLoaded { get; private set; }
 
         #region Basic Properties
@@ -239,19 +241,34 @@ namespace ArmoryLib.Character
         }
         #endregion
 
-        internal Character(CharacterDetail detailLoaded,
-                         Region region,
-                         Faction faction,
-                         string name,
-                         string realm,
-                         string battleGroup,
-                         Gender gender,
-                         Race race,
-                         Class characterClass,
-                         int level,
-                         string url,
-                         G guild)
+        #region Reputation Properties
+        private List<Reputation> _reputation;
+        public List<Reputation> Reputation
         {
+            get
+            {
+                CheckDetailRequired("Reputation", CharacterDetail.Reputation);
+                return _reputation;
+            }
+            internal set { _reputation = value; }
+        }
+        #endregion
+
+        internal Character(Armory armory,
+                           CharacterDetail detailLoaded,
+                           Region region,
+                           Faction faction,
+                           string name,
+                           string realm,
+                           string battleGroup,
+                           Gender gender,
+                           Race race,
+                           Class characterClass,
+                           int level,
+                           string url,
+                           G guild)
+        {
+            UsedArmory = armory;
             DetailLoaded = detailLoaded;
             Region = region;
             Faction = faction;
