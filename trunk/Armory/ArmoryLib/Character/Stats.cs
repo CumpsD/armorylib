@@ -41,6 +41,7 @@ namespace ArmoryLib.Character
         public Melee Melee { get; internal set; }
         public Ranged Ranged { get; internal set; }
         public Defenses Defense { get; internal set; }
+        public Spell Spell { get; internal set; }
 
         internal Stats(Strength strength,
                        Agility agility,

@@ -15,7 +15,9 @@ namespace ArmoryTester
         {
             string guildName = "The Dominion";
             string realmName = "Sporeggar";
-            string characterName = "Zoing";
+            string characterName = "Hellstrike";
+            //string characterName = "Licia";
+            //string characterName = "Zoing";
             //string characterName = "Dinli";
 
             Armory armory = new Armory
@@ -126,7 +128,8 @@ namespace ArmoryTester
                                                 "  Melee: {0}    {19}{0}" +
                                                 "  Ranged: {0}    {20}{0}" +
                                                 "  Defense: {0}    {21}{0}" +
-                                                "  {22}{0}",
+                                                "  Spell: {0}    {22}{0}" +
+                                                "  {23}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -159,6 +162,8 @@ namespace ArmoryTester
                                                     .Replace(Environment.NewLine, Environment.NewLine + "    ")
                                                     .Replace(", Reduces", Environment.NewLine + new string(' ', 11) + "Reduces")
                                                     .Replace(", Pet", Environment.NewLine + new string(' ', 11) + "Pet"),
+                                                character.Stats.Spell.ToString()
+                                                    .Replace(Environment.NewLine, Environment.NewLine + "    "),
                                                 character.Effects.ToString()
                                                     .Replace(Environment.NewLine, Environment.NewLine + "    ")
                                                     .Replace("  Debuffs", "Debuffs")

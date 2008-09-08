@@ -27,10 +27,11 @@ using System.Web;
 using ArmoryLib.Guild;
 using G = ArmoryLib.Guild.Guild;
 using ArmoryLib.Character.StatsDetail;
-using ArmoryLib.Character.ResistancesDetail;
+using Res = ArmoryLib.Character.ResistancesDetail;
 using M = ArmoryLib.Character.MeleeDetail;
 using R = ArmoryLib.Character.RangedDetail;
 using D = ArmoryLib.Character.DefenseDetail;
+using S = ArmoryLib.Character.SpellDetail;
 
 namespace ArmoryLib.Character
 {
@@ -136,6 +137,7 @@ namespace ArmoryLib.Character
                     LoadRanged(character, stats, searchResults);
                     LoadDefense(stats, searchResults);
                     LoadBuffs(character, searchResults);
+                    LoadSpell(character, stats, searchResults);
 
                     // Indicate we finished loading extra detail
                     character.LoadedDetail(CharacterDetail.CharacterSheet);
@@ -257,27 +259,27 @@ namespace ArmoryLib.Character
             XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/resistances");
 
             XmlNode arcaneNode = characterNode.SelectSingleNode("arcane");
-            Arcane arcane = new Arcane(
+            Res.Arcane arcane = new Res.Arcane(
                 Convert.ToInt32(arcaneNode.Attributes["value"].Value));
 
             XmlNode fireNode = characterNode.SelectSingleNode("fire");
-            Fire fire = new Fire(
+            Res.Fire fire = new Res.Fire(
                 Convert.ToInt32(fireNode.Attributes["value"].Value));
 
             XmlNode frostNode = characterNode.SelectSingleNode("frost");
-            Frost frost = new Frost(
+            Res.Frost frost = new Res.Frost(
                 Convert.ToInt32(frostNode.Attributes["value"].Value));
 
             XmlNode holyNode = characterNode.SelectSingleNode("holy");
-            Holy holy = new Holy(
+            Res.Holy holy = new Res.Holy(
                 Convert.ToInt32(holyNode.Attributes["value"].Value));
 
             XmlNode natureNode = characterNode.SelectSingleNode("nature");
-            Nature nature = new Nature(
+            Res.Nature nature = new Res.Nature(
                 Convert.ToInt32(natureNode.Attributes["value"].Value));
 
             XmlNode shadowNode = characterNode.SelectSingleNode("shadow");
-            Shadow shadow = new Shadow(
+            Res.Shadow shadow = new Res.Shadow(
                 Convert.ToInt32(shadowNode.Attributes["value"].Value));
 
             Resistances resistances = new Resistances(arcane,
@@ -480,6 +482,134 @@ namespace ArmoryLib.Character
 
             Effects effects = new Effects(buffs, debuffs);
             character.Effects = effects;
+        }
+
+        private static void LoadSpell(Character character, Stats stats, XmlDocument searchResults)
+        {
+            //<spell>
+            //  <bonusDamage>
+            //    <arcane value="1183"/>
+            //    <fire value="1183"/>
+            //    <frost value="1183"/>
+            //    <holy value="1183"/>
+            //    <nature value="1183"/>
+            //    <shadow value="1183"/>
+            //    <petBonus attack="674" damage="177" fromType="fire"/>
+            //  </bonusDamage>
+            //  <bonusHealing value="1053"/>
+            //  <hitRating increasedHitPercent="14.51" value="183"/>
+            //  <critChance rating="246">
+            //    <arcane percent="21.03"/>
+            //    <fire percent="21.03"/>
+            //    <frost percent="21.03"/>
+            //    <holy percent="21.03"/>
+            //    <nature percent="21.03"/>
+            //    <shadow percent="21.03"/>
+            //  </critChance>
+            //  <penetration value="0"/>
+            //  <manaRegen casting="6.00" notCasting="141.00"/>
+            //</spell>
+            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/spell");
+
+            XmlNode arcaneDmgNode = characterNode.SelectSingleNode("bonusDamage/arcane");
+            XmlNode arcaneCritNode = characterNode.SelectSingleNode("critChance/arcane");
+            S.Arcane arcane = new S.Arcane(
+                Convert.ToInt32(arcaneDmgNode.Attributes["value"].Value),
+                Convert.ToDouble(arcaneCritNode.Attributes["percent"].Value, Util.NumberFormatter));
+
+            XmlNode fireDmgNode = characterNode.SelectSingleNode("bonusDamage/fire");
+            XmlNode fireCritNode = characterNode.SelectSingleNode("critChance/fire");
+            S.Fire fire = new S.Fire(
+                Convert.ToInt32(fireDmgNode.Attributes["value"].Value),
+                Convert.ToDouble(fireCritNode.Attributes["percent"].Value, Util.NumberFormatter));
+
+            XmlNode frostDmgNode = characterNode.SelectSingleNode("bonusDamage/frost");
+            XmlNode frostCritNode = characterNode.SelectSingleNode("critChance/frost");
+            S.Frost frost = new S.Frost(
+                Convert.ToInt32(frostDmgNode.Attributes["value"].Value),
+                Convert.ToDouble(frostCritNode.Attributes["percent"].Value, Util.NumberFormatter));
+
+            XmlNode holyDmgNode = characterNode.SelectSingleNode("bonusDamage/holy");
+            XmlNode holyCritNode = characterNode.SelectSingleNode("critChance/holy");
+            S.Holy holy = new S.Holy(
+                Convert.ToInt32(frostDmgNode.Attributes["value"].Value),
+                Convert.ToDouble(frostCritNode.Attributes["percent"].Value, Util.NumberFormatter));
+
+            XmlNode natureDmgNode = characterNode.SelectSingleNode("bonusDamage/nature");
+            XmlNode natureCritNode = characterNode.SelectSingleNode("critChance/nature");
+            S.Nature nature = new S.Nature(
+                Convert.ToInt32(natureDmgNode.Attributes["value"].Value),
+                Convert.ToDouble(natureCritNode.Attributes["percent"].Value, Util.NumberFormatter));
+
+            XmlNode shadowDmgNode = characterNode.SelectSingleNode("bonusDamage/shadow");
+            XmlNode shadowCritNode = characterNode.SelectSingleNode("critChance/shadow");
+            S.Shadow shadow = new S.Shadow(
+                Convert.ToInt32(shadowDmgNode.Attributes["value"].Value),
+                Convert.ToDouble(shadowCritNode.Attributes["percent"].Value, Util.NumberFormatter));
+
+            XmlNode manaRegenNode = characterNode.SelectSingleNode("manaRegen");
+            S.ManaRegen manaRegen = new S.ManaRegen(
+                Convert.ToDouble(manaRegenNode.Attributes["casting"].Value, Util.NumberFormatter),
+                Convert.ToDouble(manaRegenNode.Attributes["notCasting"].Value, Util.NumberFormatter));
+
+            XmlNode hitNode = characterNode.SelectSingleNode("hitRating");
+            S.Hit hit = new S.Hit(
+                Convert.ToInt32(hitNode.Attributes["value"].Value),
+                Convert.ToDouble(hitNode.Attributes["increasedHitPercent"].Value, Util.NumberFormatter),
+                character.Level);
+
+            XmlNode bonusHealingNode = characterNode.SelectSingleNode("bonusHealing");
+            int bonusHealing = Convert.ToInt32(bonusHealingNode.Attributes["value"].Value);
+
+            XmlNode spellPenetrationNode = characterNode.SelectSingleNode("penetration");
+            int spellPenetration = Convert.ToInt32(spellPenetrationNode.Attributes["value"].Value);
+         
+            XmlNode petBonusNode = characterNode.SelectSingleNode("bonusDamage/petBonus");
+
+            School school;
+            switch (petBonusNode.Attributes["fromType"].Value)
+            {
+                case "arcane":
+                    school = School.Arcane;
+                    break;
+                case "fire":
+                    school = School.Fire;
+                    break;
+                case "frost":
+                    school = School.Frost;
+                    break;
+                case "holy":
+                    school = School.Holy;
+                    break;
+                case "nature":
+                    school = School.Nature;
+                    break;
+                case "shadow":
+                    school = School.Shadow;
+                    break;
+                default:
+                    school = School.None;
+                    break;
+            }
+
+            S.PetBonus petBonus = new S.PetBonus(
+                Convert.ToInt32(petBonusNode.Attributes["attack"].Value),
+                Convert.ToInt32(petBonusNode.Attributes["damage"].Value),
+                school);
+
+            Spell spell = new Spell(arcane,
+                                    fire,
+                                    frost,
+                                    holy,
+                                    nature,
+                                    shadow,
+                                    manaRegen,
+                                    hit,
+                                    bonusHealing,
+                                    spellPenetration,
+                                    petBonus);
+
+            stats.Spell = spell;
         }
     }
 }
