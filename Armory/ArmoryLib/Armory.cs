@@ -76,6 +76,8 @@ namespace ArmoryLib
 
         internal XmlDocument Request(string command)
         {
+            // TODO: Caching will probably be inserted here
+
             string armoryRequest = Url + command;
             XmlDocument armoryResponse = new XmlDocument();
 

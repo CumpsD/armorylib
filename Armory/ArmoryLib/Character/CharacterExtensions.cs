@@ -35,6 +35,8 @@ using S = ArmoryLib.Character.SpellDetail;
 
 namespace ArmoryLib.Character
 {
+    // Contains Extensions Methods on Armory to load Characters.
+    // Also deals with all XML parsing for a character.
     public static class CharacterExtensions
     {
         public static List<Character> SearchCharacter(this Armory armory, string characterName)
@@ -65,6 +67,7 @@ namespace ArmoryLib.Character
                                           characterNode.Attributes["guild"].Value));
 
                 Character character = new Character(
+                                            armory,
                                             CharacterDetail.Basic,
                                             armory.Region,
                                             (Faction)Enum.Parse(typeof(Faction), characterNode.Attributes["factionId"].Value),
@@ -84,6 +87,38 @@ namespace ArmoryLib.Character
             return characters;
         }
 
+        private static XmlNode LoadDetailNode(Armory armory, CharacterDetail detail, string realmName, string characterName)
+        {
+            string searchString = string.Empty;
+            switch (detail)
+            {
+                case CharacterDetail.Basic:
+                case CharacterDetail.CharacterSheet:
+                    // http://eu.wowarmory.com/character-sheet.xml?r=Sporeggar&n=Zoing
+                    searchString = string.Format("character-sheet.xml?r={0}&n={1}",
+                                    HttpUtility.UrlEncode(realmName),
+                                    HttpUtility.UrlEncode(characterName));
+                    break;
+                case CharacterDetail.Reputation:
+                    // http://eu.wowarmory.com/character-reputation.xml?r=Sporeggar&n=Zoing
+                    searchString = string.Format("character-reputation.xml?r={0}&n={1}",
+                                    HttpUtility.UrlEncode(realmName),
+                                    HttpUtility.UrlEncode(characterName));
+                    break;
+            }
+
+            if (searchString != string.Empty)
+            {
+                XmlDocument searchResults = armory.Request(searchString);
+                XmlNode characterDetails = searchResults.SelectSingleNode("/page/characterInfo");
+                return characterDetails;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public static Character LoadCharacter(this Armory armory, string realmName, string characterName)
         {
             return LoadCharacter(armory, realmName, characterName, CharacterDetail.Basic);
@@ -91,17 +126,11 @@ namespace ArmoryLib.Character
 
         public static Character LoadCharacter(this Armory armory, string realmName, string characterName, CharacterDetail loadDetail)
         {
-            // http://eu.wowarmory.com/character-sheet.xml?r=Sporeggar&n=Zoing
-            string searchString = string.Format("character-sheet.xml?r={0}&n={1}",
-                                    HttpUtility.UrlEncode(realmName),
-                                    HttpUtility.UrlEncode(characterName));
-
-            XmlDocument searchResults = armory.Request(searchString);
-            XmlNode characterDetails = searchResults.SelectSingleNode("/page/characterInfo");
+            XmlNode characterDetails = LoadDetailNode(armory, CharacterDetail.Basic, realmName, characterName);
 
             if (characterDetails != null)
             {
-                XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/character");
+                XmlNode characterNode = characterDetails.SelectSingleNode("character");
 
                 // <character battleGroup="Vindication" charUrl="r=Sporeggar&amp;n=Zoing" class="Rogue" classId="4" faction="Horde" factionId="1" gender="Female" genderId="1" guildName="The Dominion" guildUrl="r=Sporeggar&amp;n=The+Dominion&amp;p=1" lastModified="31 August 2008" level="70" name="Zoing" prefix="" race="Blood Elf" raceId="10" realm="Sporeggar" suffix="">
                 G guild = new G(
@@ -114,6 +143,7 @@ namespace ArmoryLib.Character
                             characterNode.Attributes["guildUrl"].Value);
 
                 Character character = new Character(
+                                                    armory,
                                                     CharacterDetail.Basic,
                                                     armory.Region,
                                                     (Faction)Enum.Parse(typeof(Faction), characterNode.Attributes["factionId"].Value),
@@ -129,21 +159,12 @@ namespace ArmoryLib.Character
 
                 if (loadDetail.ContainsDetail(CharacterDetail.CharacterSheet))
                 {
-                    LoadTalentSpec(character, searchResults);
-                    LoadPvpInfo(character, searchResults);
-                    Stats stats = LoadStats(character, searchResults);
-                    LoadResistances(stats, searchResults);
-                    LoadMelee(character, stats, searchResults);
-                    LoadRanged(character, stats, searchResults);
-                    LoadDefense(stats, searchResults);
-                    LoadBuffs(character, searchResults);
-                    LoadSpell(character, stats, searchResults);
-                    LoadProfessions(character, searchResults);
-                    LoadBars(stats, searchResults);
-                    LoadTitles(character, searchResults);
+                    character.LoadDetail(CharacterDetail.CharacterSheet);
+                }
 
-                    // Indicate we finished loading extra detail
-                    character.LoadedDetail(CharacterDetail.CharacterSheet);
+                if (loadDetail.ContainsDetail(CharacterDetail.Reputation))
+                {
+                    character.LoadDetail(CharacterDetail.Reputation);
                 }
 
                 return character;
@@ -154,10 +175,45 @@ namespace ArmoryLib.Character
             }
         }
 
-        private static void LoadTalentSpec(Character character, XmlDocument searchResults)
+        public static void LoadDetail(this Character character, CharacterDetail extraDetail)
+        {
+            if (!character.DetailLoaded.ContainsDetail(extraDetail))
+            {
+                XmlNode searchResults;
+
+                switch (extraDetail) {
+                    case CharacterDetail.CharacterSheet:
+                        searchResults = LoadDetailNode(character.UsedArmory, CharacterDetail.CharacterSheet, character.Realm, character.Name);
+
+                        LoadTalentSpec(character, searchResults);
+                        LoadPvpInfo(character, searchResults);
+                        Stats stats = LoadStats(character, searchResults);
+                        LoadResistances(stats, searchResults);
+                        LoadMelee(character, stats, searchResults);
+                        LoadRanged(character, stats, searchResults);
+                        LoadDefense(stats, searchResults);
+                        LoadBuffs(character, searchResults);
+                        LoadSpell(character, stats, searchResults);
+                        LoadProfessions(character, searchResults);
+                        LoadBars(stats, searchResults);
+                        LoadTitles(character, searchResults);
+                        break;
+                    case CharacterDetail.Reputation:
+                        searchResults = LoadDetailNode(character.UsedArmory, CharacterDetail.Reputation, character.Realm, character.Name);
+
+                        LoadReputation(character, searchResults);
+                        break;
+                }
+
+                // Indicate we finished loading extra detail
+                character.LoadedDetail(extraDetail);
+            }
+        }
+
+        private static void LoadTalentSpec(Character character, XmlNode searchResults)
         {
             // <talentSpec treeOne="20" treeThree="0" treeTwo="41"/>
-            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/talentSpec");
+            XmlNode characterNode = searchResults.SelectSingleNode("characterTab/talentSpec");
 
             TalentSpec spec = new TalentSpec(
                 Convert.ToInt32(characterNode.Attributes["treeOne"].Value),
@@ -167,13 +223,13 @@ namespace ArmoryLib.Character
             character.TalentSpec = spec;
         }
 
-        private static void LoadPvpInfo(Character character, XmlDocument searchResults)
+        private static void LoadPvpInfo(Character character, XmlNode searchResults)
         {
             //<pvp>
             //  <lifetimehonorablekills value="1469"/>
             //  <arenacurrency value="315"/>
             //</pvp>
-            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/pvp");
+            XmlNode characterNode = searchResults.SelectSingleNode("characterTab/pvp");
             
             PvpInfo pvpInfo = new PvpInfo(
                 Convert.ToInt32(characterNode.SelectSingleNode("lifetimehonorablekills").Attributes["value"].Value),
@@ -182,7 +238,7 @@ namespace ArmoryLib.Character
             character.PvpInfo = pvpInfo;
         }
 
-        private static Stats LoadStats(Character character, XmlDocument searchResults)
+        private static Stats LoadStats(Character character, XmlNode searchResults)
         {
             //<baseStats>
             //  <strength attack="82" base="92" block="-1" effective="92"/>
@@ -192,7 +248,7 @@ namespace ArmoryLib.Character
             //  <spirit base="57" effective="57" healthRegen="20" manaRegen="-1"/>
             //  <armor base="2181" effective="2181" percent="17.12" petBonus="-1"/>
             //</baseStats>
-            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/baseStats");
+            XmlNode characterNode = searchResults.SelectSingleNode("characterTab/baseStats");
 
             XmlNode strengthNode = characterNode.SelectSingleNode("strength");
             Strength strength = new Strength(
@@ -249,7 +305,7 @@ namespace ArmoryLib.Character
             return stats;
         }
 
-        private static void LoadResistances(Stats stats, XmlDocument searchResults)
+        private static void LoadResistances(Stats stats, XmlNode searchResults)
         {
             //<resistances>
             //  <arcane petBonus="-1" value="5"/>
@@ -259,7 +315,7 @@ namespace ArmoryLib.Character
             //  <nature petBonus="-1" value="5"/>
             //  <shadow petBonus="-1" value="5"/>
             //</resistances>
-            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/resistances");
+            XmlNode characterNode = searchResults.SelectSingleNode("characterTab/resistances");
 
             XmlNode arcaneNode = characterNode.SelectSingleNode("arcane");
             Res.Arcane arcane = new Res.Arcane(
@@ -295,7 +351,7 @@ namespace ArmoryLib.Character
             stats.Resistances = resistances;
         }
 
-        private static void LoadMelee(Character character, Stats stats, XmlDocument searchResults)
+        private static void LoadMelee(Character character, Stats stats, XmlNode searchResults)
         {
             //<melee>
             //  <mainHandDamage dps="184.7" max="532" min="429" percent="0" speed="2.60"/>
@@ -307,7 +363,7 @@ namespace ArmoryLib.Character
             //  <critChance percent="19.90" plusPercent="7.29" rating="161"/>
             //  <expertise additional="0" percent="2.50" rating="0" value="10"/>
             //</melee>
-            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/melee");
+            XmlNode characterNode = searchResults.SelectSingleNode("characterTab/melee");
 
             XmlNode mainHandNode = characterNode.SelectSingleNode("mainHandDamage");
             XmlNode mainHandSpeedNode = characterNode.SelectSingleNode("mainHandSpeed");
@@ -357,7 +413,7 @@ namespace ArmoryLib.Character
             stats.Melee = melee;
         }
 
-        private static void LoadRanged(Character character, Stats stats, XmlDocument searchResults)
+        private static void LoadRanged(Character character, Stats stats, XmlNode searchResults)
         {
             //<ranged>
             //  <weaponSkill rating="0" value="350"/>
@@ -367,7 +423,7 @@ namespace ArmoryLib.Character
             //  <hitRating increasedHitPercent="4.95" value="78"/>
             //  <critChance percent="30.55" plusPercent="13.14" rating="290"/>
             //</ranged>
-            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/ranged");
+            XmlNode characterNode = searchResults.SelectSingleNode("characterTab/ranged");
 
             XmlNode rangedSkillNode = characterNode.SelectSingleNode("weaponSkill");
             XmlNode rangedDpsNode = characterNode.SelectSingleNode("damage");
@@ -407,7 +463,7 @@ namespace ArmoryLib.Character
             stats.Ranged = ranged;
         }
 
-        private static void LoadDefense(Stats stats, XmlDocument searchResults)
+        private static void LoadDefense(Stats stats, XmlNode searchResults)
         {
             //<defenses>
             //  <armor base="6540" effective="6540" percent="38.25" petBonus="2289"/>
@@ -418,7 +474,7 @@ namespace ArmoryLib.Character
             //  <resilience damagePercent="13.70" hitPercent="6.85" value="270.00"/>
             //</defenses>
 
-            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/defenses");
+            XmlNode characterNode = searchResults.SelectSingleNode("characterTab/defenses");
 
             XmlNode defenseNode = characterNode.SelectSingleNode("defense");
             D.Defense defense = new D.Defense(
@@ -456,14 +512,14 @@ namespace ArmoryLib.Character
             stats.Defense = defenses;
         }
 
-        private static void LoadBuffs(Character character, XmlDocument searchResults)
+        private static void LoadBuffs(Character character, XmlNode searchResults)
         {
             //<buffs>
             //  <spell effect="Increases attack power by 125." icon="ability_trueshot" name="Trueshot Aura"/>
             //  <spell effect="30% increased movement speed.  Dazed if struck." icon="ability_mount_jungletiger" name="Aspect of the Cheetah"/>
             //</buffs>
 
-            XmlNode buffsNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/buffs");
+            XmlNode buffsNode = searchResults.SelectSingleNode("characterTab/buffs");
             List<BuffDebuff> buffs = new List<BuffDebuff>();
             XmlNodeList buffNodes = buffsNode.SelectNodes("spell");
             foreach (XmlNode buffNode in buffNodes)
@@ -473,7 +529,7 @@ namespace ArmoryLib.Character
                 buffs.Add(buff);
             }
 
-            XmlNode debuffsNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/debuffs");
+            XmlNode debuffsNode = searchResults.SelectSingleNode("characterTab/debuffs");
             List<BuffDebuff> debuffs = new List<BuffDebuff>();
             XmlNodeList debuffNodes = debuffsNode.SelectNodes("spell");
             foreach (XmlNode debuffNode in debuffNodes)
@@ -487,7 +543,7 @@ namespace ArmoryLib.Character
             character.Effects = effects;
         }
 
-        private static void LoadSpell(Character character, Stats stats, XmlDocument searchResults)
+        private static void LoadSpell(Character character, Stats stats, XmlNode searchResults)
         {
             //<spell>
             //  <bonusDamage>
@@ -512,7 +568,7 @@ namespace ArmoryLib.Character
             //  <penetration value="0"/>
             //  <manaRegen casting="6.00" notCasting="141.00"/>
             //</spell>
-            XmlNode characterNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/spell");
+            XmlNode characterNode = searchResults.SelectSingleNode("characterTab/spell");
 
             XmlNode arcaneDmgNode = characterNode.SelectSingleNode("bonusDamage/arcane");
             XmlNode arcaneCritNode = characterNode.SelectSingleNode("critChance/arcane");
@@ -615,13 +671,13 @@ namespace ArmoryLib.Character
             stats.Spell = spell;
         }
 
-        private static void LoadProfessions(Character character, XmlDocument searchResults)
+        private static void LoadProfessions(Character character, XmlNode searchResults)
         {
             //<professions>
             //  <skill key="herbalism" max="375" name="Herbalism" value="375"/>
             //  <skill key="skinning" max="375" name="Skinning" value="375"/>
             //</professions>
-            XmlNode professionsNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/professions");
+            XmlNode professionsNode = searchResults.SelectSingleNode("characterTab/professions");
 
             List<Profession> professions = new List<Profession>();
             XmlNodeList professionNodes = professionsNode.SelectNodes("skill");
@@ -635,7 +691,7 @@ namespace ArmoryLib.Character
             character.Professions = professions;
         }
 
-        private static void LoadBars(Stats stats, XmlDocument searchResults)
+        private static void LoadBars(Stats stats, XmlNode searchResults)
         {
             //<characterBars>
             //  <health effective="7394"/>
@@ -643,7 +699,7 @@ namespace ArmoryLib.Character
             //  <secondBar casting="6" effective="8971" notCasting="141" type="m"/>
             //  <secondBar casting="-1" effective="100" notCasting="-1" perFive="-1" type="r"/>
             //</characterBars>
-            XmlNode barsNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/characterBars");
+            XmlNode barsNode = searchResults.SelectSingleNode("characterTab/characterBars");
 
             XmlNode hpNode = barsNode.SelectSingleNode("health");
             int hp = Convert.ToInt32(hpNode.Attributes["effective"].Value);
@@ -677,7 +733,7 @@ namespace ArmoryLib.Character
             stats.SecondaryBar = secondBar;
         }
 
-        private static void LoadTitles(Character character, XmlDocument searchResults)
+        private static void LoadTitles(Character character, XmlNode searchResults)
         {
             //<title value="Scarab Lord %s"/>
             //<knownTitles>
@@ -685,9 +741,9 @@ namespace ArmoryLib.Character
             //  <title value="%s, Champion of the Naaru"/>
             //  <title value="%s, Hand of A'dal"/>
             //</knownTitles>
-            XmlNode knownTitlesNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/knownTitles");
+            XmlNode knownTitlesNode = searchResults.SelectSingleNode("characterTab/knownTitles");
 
-            XmlNode selectedTitleNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/title");
+            XmlNode selectedTitleNode = searchResults.SelectSingleNode("characterTab/title");
             string selectedTitle = selectedTitleNode.Attributes["value"].Value;
 
             List<Title> titles = new List<Title>();
@@ -701,5 +757,35 @@ namespace ArmoryLib.Character
 
             character.Titles = titles;
         }
+
+        private static void LoadReputation(Character character, XmlNode searchResults)
+        {
+            //<reputationTab>
+            //  <factionCategory key="horde" name="Horde">
+            //    <faction key="darkspeartrolls" name="Darkspear Trolls" reputation="31963"/>
+            //    <faction key="orgrimmar" name="Orgrimmar" reputation="42999"/>
+            //    <faction key="silvermooncity" name="Silvermoon City" reputation="41910"/>
+            //    <faction key="thunderbluff" name="Thunder Bluff" reputation="30581"/>
+            //    <faction key="undercity" name="Undercity" reputation="34237"/>
+            //  </factionCategory>
+            XmlNodeList factionCategoriesNodes = searchResults.SelectNodes("reputationTab/factionCategory");
+
+            List<Reputation> reputation = new List<Reputation>();
+            foreach (XmlNode factionCategoryNode in factionCategoriesNodes)
+            {
+                XmlNodeList factionNodes = factionCategoryNode.SelectNodes("faction");
+
+                foreach (XmlNode factionNode in factionNodes)
+                {
+                    Reputation reputationItem = new Reputation(factionNode.Attributes["name"].Value,
+                                                               factionNode.Attributes["key"].Value,
+                                                               Convert.ToInt32(factionNode.Attributes["reputation"].Value));
+                    reputation.Add(reputationItem);
+                }
+            }
+
+            character.Reputation = reputation;
+        }
+
     }
 }

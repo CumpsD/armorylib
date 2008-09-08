@@ -23,30 +23,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Globalization;
 
 namespace ArmoryLib
 {
-    internal class Util
+    public enum ReputationLevel
     {
-        internal static NumberFormatInfo NumberFormatter
-        {
-            get
-            {
-                NumberFormatInfo provider = new NumberFormatInfo();
-                provider.NumberDecimalSeparator = ".";
-                provider.NumberGroupSeparator = ",";
-                provider.NumberGroupSizes = new int[] { 3 };
-                return provider;
-            }
-        }
-    }
-
-    internal static class UtilExtensions
-    {
-        internal static bool Between(this int value, int min, int max)
-        {
-            return value >= min && value <= max;
-        }
+        None,
+        Exalted,
+        Revered,
+        Honored,
+        Friendly, 
+        Neutral,
+        Unfriendly,
+        Hostile,
+        Hated,
     }
 }
