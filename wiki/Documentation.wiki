@@ -124,44 +124,56 @@ Zoing
   Rogue - Vindication - Sporeggar - The Dominion
   Spec: 20/41/0
 
-  PvP: HKs: 1567, Arena Points: 315
+  PvP: HKs: 1824, Arena Points: 315
 
   Strength: Base: 92, Effective: 92, +AP: 82
-  Agility: Base: 163, Effective: 316, +AP: 306, +Crit%: 7,61%, +Armor: 632
-  Stamina: Base: 90, Effective: 387, +Health: 3690
+  Agility: Base: 163, Effective: 320, +AP: 310, +Crit%: 7,71%, +Armor: 640
+  Stamina: Base: 90, Effective: 369, +Health: 3510
   Intellect: Base: 43, Effective: 43
   Spirit: Base: 57, Effective: 57
           Health Regen Out Of Combat: 20
-  Armor: Base: 2171, Effective: 2171
-         Reduces Physical Damage Taken By 17,06%
+  Armor: Base: 2249, Effective: 2249
+         Reduces Physical Damage Taken By 17,56%
 
   Resistances: Arcane: 5, Fire: 5, Frost: 5, Holy: 0, Nature: 5, Shadow: 5
 
   Melee:
-    MainHand: DPS: 184,7, Min: 429, Max: 532, Speed: 2,6
-    OffHand: DPS: 184,7, Min: 429, Max: 532, Speed: 2,6
-    AttackPower: Base: 528, Effective: 1218, +DPS: 87
-    Hit: Rating: 106, Change To Hit Against Level 70: 6,72%
-    Crit: Rating: 161 (+7,29%), Crit%: 19,9%
+    MainHand: DPS: 185,4, Min: 431, Max: 534, Speed: 2,6
+    OffHand: DPS: 185,4, Min: 431, Max: 534, Speed: 2,6
+    AttackPower: Base: 532, Effective: 1228, +DPS: 87
+    Hit: Rating: 136, Change To Hit Against Level 70: 8,62%
+    Crit: Rating: 161 (+7,29%), Crit%: 20%
     Expertise: -Change to Dodge/Parry: 2,5%
 
   Ranged:
-    Ranged: Skill: 309, DPS: 127,9, Min: 245, Max: 245, Speed: 1,7
-    AttackPower: Base: 376, Effective: 1066, +DPS: 76
-    Hit: Rating: 106, Change To Hit Against Level 70: 6,72%
-    Crit: Rating: 161 (+7,29%), Crit%: 18,26%
+    Ranged: Skill: 323, DPS: 128,6, Min: 246, Max: 246, Speed: 1,7
+    AttackPower: Base: 380, Effective: 1076, +DPS: 76
+    Hit: Rating: 136, Change To Hit Against Level 70: 8,62%
+    Crit: Rating: 161 (+7,29%), Crit%: 18,92%
 
   Defense:
-    Defense: Rating: 348
+    Defense: Rating: 350
     Block: Rating: 0 (+0%), Block%: 0%
-    Dodge: Rating: 36 (+1,9%), Dodge%: 17,03%
-    Parry: Rating: 0 (+0%), Parry%: 4,92%
+    Dodge: Rating: 36 (+1,9%), Dodge%: 17,31%
+    Parry: Rating: 0 (+0%), Parry%: 5%
     Resilience: Rating: 24
-    Armor: Base: 2171, Effective: 2171
-           Reduces Physical Damage Taken By 17,06%
+    Armor: Base: 2249, Effective: 2249
+           Reduces Physical Damage Taken By 17,56%
+
+  Spell:
+    Arcane: +0 dmg, 0% crit
+    Fire: +0 dmg, 0% crit
+    Frost: +0 dmg, 0% crit
+    Holy: +0 dmg, 0% crit
+    Nature: +0 dmg, 0% crit
+    Shadow: +0 dmg, 0% crit
+    Mana Regen: 0 (Casting), 0 (Not Casting)
+    Rating: 0, Change To Hit Against Level 70: 0%
+    Bonus Healing: 0
+    Spell Penetration: 0
 
   Buffs:
-    Stealth - Stealthed.  Movement slowed by 30%.
+    Honorless Target - You are currently worth no honor points to the enemy.
   Debuffs:
     None
 }}}
@@ -215,9 +227,90 @@ Dinli
            Reduces Physical Damage Taken By 38,25%
            Pet Bonus Armor: 2289
 
+  Spell:
+    Arcane: +0 dmg, 6,58% crit
+    Fire: +0 dmg, 6,58% crit
+    Frost: +0 dmg, 6,58% crit
+    Holy: +0 dmg, 6,58% crit
+    Nature: +0 dmg, 6,58% crit
+    Shadow: +0 dmg, 6,58% crit
+    Mana Regen: 10 (Casting), 77 (Not Casting)
+    Rating: 0, Change To Hit Against Level 70: 0%
+    Bonus Healing: 0
+    Spell Penetration: 0
+
   Buffs:
     Trueshot Aura - Increases attack power by 125.
     Aspect of the Cheetah - 30% increased movement speed.  Dazed if struck.
+  Debuffs:
+    None
+}}}
+
+=== Warlock ===
+{{{
+Details for Hellstrike - Sporeggar:
+Hellstrike
+  Horde - Male - Level 70 - BloodElf
+  Warlock - Vindication - Sporeggar - The Dominion
+  Spec: 12/44/5
+
+  PvP: HKs: 558
+
+  Strength: Base: 48, Effective: 63, +AP: 53
+  Agility: Base: 60, Effective: 60, +Crit%: 4,43%, +Armor: 120
+  Stamina: Base: 85, Effective: 551, +Health: 5330, Pet Bonus Stamina: 165%
+  Intellect: Base: 137, Effective: 397, +Mana: 5675, +Crit%: 6,54%
+             Pet Bonus Intellect: 119%
+  Spirit: Base: 131, Effective: 150
+          Health Regen Out Of Combat: 10
+          Mana Regen Per 5 Seconds, 5 Seconds Rule: 139
+  Armor: Base: 1017, Effective: 1995
+         Reduces Physical Damage Taken By 15,89%
+         Pet Bonus Armor: 698
+
+  Resistances: Arcane: 40, Fire: 40, Frost: 40, Holy: 0, Nature: 40, Shadow: 63
+
+  Melee:
+    MainHand: DPS: 47,4, Min: 49, Max: 113, Speed: 1,7
+    OffHand: DPS: 47,4, Min: 49, Max: 113, Speed: 1,7
+    AttackPower: Base: 53, Effective: 53, +DPS: 3
+    Hit: Rating: 0, Change To Hit Against Level 70: 0%
+    Crit: Rating: 0 (+0%), Crit%: 6,67%
+    Expertise: -Change to Dodge/Parry: 0%
+
+  Ranged:
+    Ranged: Skill: 349, DPS: 118,7, Min: 279, Max: 279, Speed: 1,8
+    AttackPower: Base: 50, Effective: 50, +DPS: 3
+    Hit: Rating: 0, Change To Hit Against Level 70: 0%
+    Crit: Rating: 0 (+0%), Crit%: 9,39%
+
+  Defense:
+    Defense: Rating: 345
+    Block: Rating: 0 (+0%), Block%: 0%
+    Dodge: Rating: 0 (+0%), Dodge%: 4,24%
+    Parry: Rating: 0 (+0%), Parry%: 0%
+    Resilience: Rating: 0
+    Armor: Base: 1017, Effective: 1995
+           Reduces Physical Damage Taken By 15,89%
+           Pet Bonus Armor: 698
+
+  Spell:
+    Arcane: +464 dmg, 17,07% crit
+    Fire: +464 dmg, 17,07% crit
+    Frost: +464 dmg, 17,07% crit
+    Holy: +464 dmg, 17,07% crit
+    Nature: +464 dmg, 17,07% crit
+    Shadow: +464 dmg, 17,07% crit
+    Mana Regen: 36 (Casting), 175 (Not Casting)
+    Rating: 18, Change To Hit Against Level 70: 1,43%
+    Bonus Healing: 369
+    Spell Penetration: 0
+    Pet Bonus: +264 AP, +70 Spell (Granted from Fire Bonus)
+
+  Buffs:
+    Demon Armor - Increases armor by 660, Shadow resistance by 18 and restores 18 health every 5 sec.
+    Demonic Knowledge - Increases Master's spell damage by a percentage of the active demon's Stamina plus Intellect.
+    Master Demonologist - Increases damage caused by 5% and resistance to all magic schools by 0.
   Debuffs:
     None
 }}}
