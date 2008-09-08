@@ -203,6 +203,17 @@ namespace ArmoryLib.Character
             }
             internal set { _effects = value; }
         }
+
+        private List<Profession> _professions;
+        public List<Profession> Professions
+        {
+            get
+            {
+                CheckDetailRequired("Professions", CharacterDetail.CharacterSheet);
+                return _professions;
+            }
+            internal set { _professions = value; }
+        }
         #endregion
 
         internal Character(CharacterDetail detailLoaded,

@@ -15,9 +15,9 @@ namespace ArmoryTester
         {
             string guildName = "The Dominion";
             string realmName = "Sporeggar";
-            string characterName = "Hellstrike";
+            //string characterName = "Hellstrike";
             //string characterName = "Licia";
-            //string characterName = "Zoing";
+            string characterName = "Zoing";
             //string characterName = "Dinli";
 
             Armory armory = new Armory
@@ -112,6 +112,17 @@ namespace ArmoryTester
                                                        CharacterDetail.CharacterSheet);
             if (character != null)
             {
+                StringBuilder professions = new StringBuilder();
+                foreach (Profession prof in character.Professions)
+                {
+                    professions.Append("    ");
+                    professions.Append(prof.Name);
+                    professions.Append(" (");
+                    professions.Append(prof.Skill);
+                    professions.Append(")");
+                    professions.Append(Environment.NewLine);
+                }
+
                 Console.WriteLine("Details for {0} - {1}:", characterName, realmName);
                 Console.WriteLine(string.Format("{1}{0}" +
                                                 "  {2} - {3} - Level {4} - {5}{0}" +
@@ -129,7 +140,8 @@ namespace ArmoryTester
                                                 "  Ranged: {0}    {20}{0}" +
                                                 "  Defense: {0}    {21}{0}" +
                                                 "  Spell: {0}    {22}{0}" +
-                                                "  {23}{0}",
+                                                "  {23}{0}" +
+                                                "  {24}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -145,7 +157,8 @@ namespace ArmoryTester
                                                 character.Stats.Strength,
                                                 character.Stats.Agility,
                                                 character.Stats.Stamina,
-                                                character.Stats.Intellect,
+                                                character.Stats.Intellect.ToString()
+                                                    .Replace(", Pet", Environment.NewLine + new string(' ', 13) + "Pet"),
                                                 character.Stats.Spirit.ToString()
                                                     .Replace(", Health", Environment.NewLine + new string(' ', 10) + "Health")
                                                     .Replace(", Mana", Environment.NewLine + new string(' ', 10) + "Mana"),
@@ -166,7 +179,8 @@ namespace ArmoryTester
                                                     .Replace(Environment.NewLine, Environment.NewLine + "    "),
                                                 character.Effects.ToString()
                                                     .Replace(Environment.NewLine, Environment.NewLine + "    ")
-                                                    .Replace("  Debuffs", "Debuffs")
+                                                    .Replace("  Debuffs", "Debuffs"),
+                                                    (professions.ToString() != string.Empty) ? string.Format("{1}  Professions:{1}{0}", professions.ToString(), Environment.NewLine) : ""
                                                 ));
             }
             else
