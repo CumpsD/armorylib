@@ -50,6 +50,7 @@
     <Compile Include="Character\Character.cs" />
     <Compile Include="Character\CharacterDetail.cs" />
     <Compile Include="Character\CharacterExtensions.cs" />
+    <Compile Include="Character\SecondaryBar.cs" />
     <Compile Include="Character\Profession.cs" />
     <Compile Include="Character\Spell.cs" />
     <Compile Include="Character\Effects.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Character\StatsDetail\Strength.cs" />
     <Compile Include="Character\TalentSpec.cs" />
     <Compile Include="Class.cs" />
+    <Compile Include="SecondBar.cs" />
     <Compile Include="School.cs" />
     <Compile Include="Exceptions\MissingDetailException.cs" />
     <Compile Include="Gender.cs" />

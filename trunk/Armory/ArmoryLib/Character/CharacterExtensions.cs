@@ -139,6 +139,7 @@ namespace ArmoryLib.Character
                     LoadBuffs(character, searchResults);
                     LoadSpell(character, stats, searchResults);
                     LoadProfessions(character, searchResults);
+                    LoadBars(stats, searchResults);
 
                     // Indicate we finished loading extra detail
                     character.LoadedDetail(CharacterDetail.CharacterSheet);
@@ -631,6 +632,48 @@ namespace ArmoryLib.Character
             }
 
             character.Professions = professions;
+        }
+
+        private static void LoadBars(Stats stats, XmlDocument searchResults)
+        {
+            //<characterBars>
+            //  <health effective="7394"/>
+            //  <secondBar casting="-1" effective="100" notCasting="-1" type="e"/>
+            //  <secondBar casting="6" effective="8971" notCasting="141" type="m"/>
+            //  <secondBar casting="-1" effective="100" notCasting="-1" perFive="-1" type="r"/>
+            //</characterBars>
+            XmlNode barsNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/characterBars");
+
+            XmlNode hpNode = barsNode.SelectSingleNode("health");
+            int hp = Convert.ToInt32(hpNode.Attributes["effective"].Value);
+
+            XmlNode secondaryNode = barsNode.SelectSingleNode("secondBar");
+
+            SecondBar barType;
+            switch (secondaryNode.Attributes["type"].Value)
+            {
+                case "r":
+                    barType = SecondBar.Rage;
+                    break;
+                case "m":
+                    barType = SecondBar.Mana;
+                    break;
+                case "e":
+                    barType = SecondBar.Energy;
+                    break;
+                default:
+                    barType = SecondBar.None;
+                    break;
+            }
+
+            SecondaryBar secondBar = new SecondaryBar(
+                barType,
+                Convert.ToInt32(secondaryNode.Attributes["effective"].Value),
+                Convert.ToInt32(secondaryNode.Attributes["casting"].Value),
+                Convert.ToInt32(secondaryNode.Attributes["notCasting"].Value));
+
+            stats.TotalHealth = hp;
+            stats.SecondaryBar = secondBar;
         }
     }
 }

@@ -14,10 +14,13 @@ namespace ArmoryTester
         static void Main(string[] args)
         {
             string guildName = "The Dominion";
-            string realmName = "Sporeggar";
+            string realmName = "Aggramar";
+            string characterName = "Vohbo";
+
+            //string realmName = "Sporeggar";
             //string characterName = "Hellstrike";
             //string characterName = "Licia";
-            string characterName = "Zoing";
+            //string characterName = "Zoing";
             //string characterName = "Dinli";
 
             Armory armory = new Armory
@@ -141,7 +144,9 @@ namespace ArmoryTester
                                                 "  Defense: {0}    {21}{0}" +
                                                 "  Spell: {0}    {22}{0}" +
                                                 "  {23}{0}" +
-                                                "  {24}{0}",
+                                                "  {24}{0}" +
+                                                "  Total Health: {25}{0}" +
+                                                "  Total {26}: {27}{0}",
                                                 Environment.NewLine,
                                                 character.Name,
                                                 character.Faction,
@@ -180,7 +185,10 @@ namespace ArmoryTester
                                                 character.Effects.ToString()
                                                     .Replace(Environment.NewLine, Environment.NewLine + "    ")
                                                     .Replace("  Debuffs", "Debuffs"),
-                                                    (professions.ToString() != string.Empty) ? string.Format("{1}  Professions:{1}{0}", professions.ToString(), Environment.NewLine) : ""
+                                                (professions.ToString() != string.Empty) ? string.Format("{1}  Professions:{1}{0}", professions.ToString(), Environment.NewLine) : "",
+                                                character.Stats.TotalHealth,
+                                                character.Stats.SecondaryBar.Type,
+                                                character.Stats.SecondaryBar.Effective
                                                 ));
             }
             else

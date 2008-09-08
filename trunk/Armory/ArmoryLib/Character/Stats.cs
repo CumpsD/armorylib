@@ -43,6 +43,9 @@ namespace ArmoryLib.Character
         public Defenses Defense { get; internal set; }
         public Spell Spell { get; internal set; }
 
+        public int TotalHealth { get; internal set; }
+        public SecondaryBar SecondaryBar { get; internal set; }
+
         internal Stats(Strength strength,
                        Agility agility,
                        Stamina stamina,
