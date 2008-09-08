@@ -140,6 +140,7 @@ namespace ArmoryLib.Character
                     LoadSpell(character, stats, searchResults);
                     LoadProfessions(character, searchResults);
                     LoadBars(stats, searchResults);
+                    LoadTitles(character, searchResults);
 
                     // Indicate we finished loading extra detail
                     character.LoadedDetail(CharacterDetail.CharacterSheet);
@@ -674,6 +675,31 @@ namespace ArmoryLib.Character
 
             stats.TotalHealth = hp;
             stats.SecondaryBar = secondBar;
+        }
+
+        private static void LoadTitles(Character character, XmlDocument searchResults)
+        {
+            //<title value="Scarab Lord %s"/>
+            //<knownTitles>
+            //  <title value="Scarab Lord %s"/>
+            //  <title value="%s, Champion of the Naaru"/>
+            //  <title value="%s, Hand of A'dal"/>
+            //</knownTitles>
+            XmlNode knownTitlesNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/knownTitles");
+
+            XmlNode selectedTitleNode = searchResults.SelectSingleNode("/page/characterInfo/characterTab/title");
+            string selectedTitle = selectedTitleNode.Attributes["value"].Value;
+
+            List<Title> titles = new List<Title>();
+            XmlNodeList titlesNodes = knownTitlesNode.SelectNodes("title");
+            foreach (XmlNode titleNodes in titlesNodes)
+            {
+                string titleText = titleNodes.Attributes["value"].Value;
+                Title title = new Title(character.Name, titleText, (titleText == selectedTitle));
+                titles.Add(title);
+            }
+
+            character.Titles = titles;
         }
     }
 }

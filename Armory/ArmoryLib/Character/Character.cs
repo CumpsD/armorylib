@@ -214,6 +214,29 @@ namespace ArmoryLib.Character
             }
             internal set { _professions = value; }
         }
+
+        private List<Title> _titles;
+        public List<Title> Titles
+        {
+            get
+            {
+                CheckDetailRequired("Titles", CharacterDetail.CharacterSheet);
+                return _titles;
+            }
+            internal set { _titles = value; }
+        }
+
+        public string Title
+        {
+            get
+            {
+                foreach (Title title in Titles)
+                {
+                    if (title.Selected) { return title.FormattedTitle; }
+                }
+                return null;
+            }
+        }
         #endregion
 
         internal Character(CharacterDetail detailLoaded,
