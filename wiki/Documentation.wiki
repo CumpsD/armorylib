@@ -39,7 +39,7 @@ Available detail levels are:
   * Talents
   * Arena
 
-To see all available properties for Guild and Character, have a look at the example Program in the ArmoryTester project, below you can see examples of the output of this program.
+To see all available properties for Guild and Character, have a look at the example Program in the !ArmoryTester project, below you can see examples of the output of this program.
 
 = Examples =
 
