@@ -33,7 +33,7 @@ character.LoadDetail(CharacterDetail.Reputation);
 
 Available detail levels are:
   * Basic
-  * CharacterSheet
+  * !CharacterSheet
   * Reputation
   * Skills
   * Talents
