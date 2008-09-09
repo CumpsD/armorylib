@@ -236,6 +236,11 @@ namespace ArmoryTester
                 {
                     Console.WriteLine("    [{0}] {1} ({2})", skill.Type, skill.Name, skill.Level);
                 }
+
+                Console.WriteLine();
+                character.LoadDetail(CharacterDetail.Talents);
+                Console.WriteLine("Talents: {0}", character.Talents);
+                Console.WriteLine("Talents Url: {0}", character.TalentsUrl);
             }
             else
             {

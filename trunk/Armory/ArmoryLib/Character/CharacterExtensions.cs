@@ -96,20 +96,26 @@ namespace ArmoryLib.Character
                 case CharacterDetail.CharacterSheet:
                     // http://eu.wowarmory.com/character-sheet.xml?r=Sporeggar&n=Zoing
                     searchString = string.Format("character-sheet.xml?r={0}&n={1}",
-                                    HttpUtility.UrlEncode(realmName),
-                                    HttpUtility.UrlEncode(characterName));
+                                                 HttpUtility.UrlEncode(realmName),
+                                                 HttpUtility.UrlEncode(characterName));
                     break;
                 case CharacterDetail.Reputation:
                     // http://eu.wowarmory.com/character-reputation.xml?r=Sporeggar&n=Zoing
                     searchString = string.Format("character-reputation.xml?r={0}&n={1}",
-                                    HttpUtility.UrlEncode(realmName),
-                                    HttpUtility.UrlEncode(characterName));
+                                                 HttpUtility.UrlEncode(realmName),
+                                                 HttpUtility.UrlEncode(characterName));
                     break;
                 case CharacterDetail.Skills:
                     // http://eu.wowarmory.com/character-skills.xml?r=Sporeggar&n=Zoing
                     searchString = string.Format("character-skills.xml?r={0}&n={1}",
-                    HttpUtility.UrlEncode(realmName),
-                    HttpUtility.UrlEncode(characterName));
+                                                 HttpUtility.UrlEncode(realmName),
+                                                 HttpUtility.UrlEncode(characterName));
+                    break;
+                case CharacterDetail.Talents:
+                    // http://eu.wowarmory.com/character-talents.xml?r=Sporeggar&n=Zoing
+                    searchString = string.Format("character-talents.xml?r={0}&n={1}",
+                                                 HttpUtility.UrlEncode(realmName),
+                                                 HttpUtility.UrlEncode(characterName));
                     break;
             }
 
@@ -178,6 +184,11 @@ namespace ArmoryLib.Character
                     character.LoadDetail(CharacterDetail.Skills);
                 }
 
+                if (loadDetail.ContainsDetail(CharacterDetail.Talents))
+                {
+                    character.LoadDetail(CharacterDetail.Talents);
+                }
+
                 return character;
             }
             else
@@ -218,6 +229,11 @@ namespace ArmoryLib.Character
                         searchResults = LoadDetailNode(character.UsedArmory, CharacterDetail.Skills, character.Realm, character.Name);
 
                         LoadSkills(character, searchResults);
+                        break;
+                    case CharacterDetail.Talents:
+                        searchResults = LoadDetailNode(character.UsedArmory, CharacterDetail.Talents, character.Realm, character.Name);
+
+                        LoadTalents(character, searchResults);
                         break;
                 }
 
@@ -856,5 +872,14 @@ namespace ArmoryLib.Character
             character.Skills = skills;
         }
 
+        private static void LoadTalents(Character character, XmlNode searchResults)
+        {
+            //<talentTab>
+            //  <talentTree value="0053201054000000000003203050020050150123210510000000000000000000000"/>
+            //</talentTab>
+            XmlNode talentTreeNode = searchResults.SelectSingleNode("talentTab/talentTree");
+
+            character.Talents = talentTreeNode.Attributes["value"].Value;
+        }
     }
 }
