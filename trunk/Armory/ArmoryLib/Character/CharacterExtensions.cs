@@ -117,6 +117,12 @@ namespace ArmoryLib.Character
                                                  HttpUtility.UrlEncode(realmName),
                                                  HttpUtility.UrlEncode(characterName));
                     break;
+                case CharacterDetail.Arena:
+                    // http://eu.wowarmory.com/character-arenateams.xml?r=Sporeggar&n=Zoing
+                    searchString = string.Format("character-arenateams.xml?r={0}&n={1}",
+                                                 HttpUtility.UrlEncode(realmName),
+                                                 HttpUtility.UrlEncode(characterName));
+                    break;
             }
 
             if (searchString != string.Empty)
@@ -234,6 +240,11 @@ namespace ArmoryLib.Character
                         searchResults = LoadDetailNode(character.UsedArmory, CharacterDetail.Talents, character.Realm, character.Name);
 
                         LoadTalents(character, searchResults);
+                        break;
+                    case CharacterDetail.Arena:
+                        searchResults = LoadDetailNode(character.UsedArmory, CharacterDetail.Arena, character.Realm, character.Name);
+
+                        LoadArena(character, searchResults);
                         break;
                 }
 
@@ -880,6 +891,21 @@ namespace ArmoryLib.Character
             XmlNode talentTreeNode = searchResults.SelectSingleNode("talentTab/talentTree");
 
             character.Talents = talentTreeNode.Attributes["value"].Value;
+        }
+
+        private static void LoadArena(Character character, XmlNode searchResults)
+        {
+            //<arenaTeams>
+            //  <arenaTeam battleGroup="Vindication" faction="Horde" factionId="1" gamesPlayed="10" gamesWon="3" lastSeasonRanking="0" name="The Dominion" ranking="0" rating="1432" realm="Sporeggar" realmUrl="b=Vindication&amp;r=Sporeggar&amp;ts=2&amp;t=The+Dominion&amp;ff=realm&amp;fv=Sporeggar&amp;select=The+Dominion" seasonGamesPlayed="10" seasonGamesWon="3" size="2" url="r=Sporeggar&amp;ts=2&amp;t=The+Dominion&amp;select=The+Dominion">
+            //    <emblem background="ff292829" borderColor="ffdb9617" borderStyle="5" iconColor="ffc7272e" iconStyle="1"/>
+            //    <members>
+            //      <character battleGroup="" charUrl="r=Sporeggar&amp;n=Zoing" class="Rogue" classId="4" contribution="1432" gamesPlayed="10" gamesWon="3" gender="Female" genderId="1" guild="The Dominion" guildId="222341" guildUrl="r=Sporeggar&amp;n=The+Dominion&amp;p=1" name="Zoing" race="Blood Elf" raceId="10" seasonGamesPlayed="10" seasonGamesWon="3" teamRank="0"/>
+            //      <character battleGroup="" charUrl="r=Sporeggar&amp;n=Celinda" class="Rogue" classId="4" contribution="1432" gamesPlayed="10" gamesWon="3" gender="Female" genderId="1" guild="The Dominion" guildId="222341" guildUrl="r=Sporeggar&amp;n=The+Dominion&amp;p=1" name="Celinda" race="Undead" raceId="5" seasonGamesPlayed="10" seasonGamesWon="3" teamRank="1"/>
+            //    </members>
+            //  </arenaTeam>
+            //</arenaTeams>
+
+            // TODO: Implement
         }
     }
 }
