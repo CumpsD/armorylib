@@ -3,7 +3,7 @@
 
 = API =
 
-ArmoryLib! provides a very simply API, consisting out of the following 4 methods:
+!ArmoryLib provides a very simply API, consisting out of the following 4 methods:
 
 {{{
 armory.SearchCharacter(characterName);
@@ -12,7 +12,7 @@ armory.SearchGuild(guildName);
 armory.LoadGuild(realmName, guildName);
 }}}
 
-To use these, simply put a reference to ArmoryLib! and create an instance of Armory.
+To use these, simply put a reference to !ArmoryLib and create an instance of Armory.
 
 {{{
 Armory armory = new Armory
@@ -23,9 +23,9 @@ Armory armory = new Armory
 
 The two main objects are Guild and Character.
 
-By default, using LoadCharacter!(realmName, characterName) will only load the Basic detail.
+By default, using !LoadCharacter(realmName, characterName) will only load the Basic detail.
 
-To load additional detail, use the LoadDetail!(characterDetail) method on an existing Character object.
+To load additional detail, use the !LoadDetail(characterDetail) method on an existing Character object.
 
 {{{
 character.LoadDetail(CharacterDetail.Reputation);
