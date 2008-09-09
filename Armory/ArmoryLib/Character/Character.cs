@@ -267,6 +267,29 @@ namespace ArmoryLib.Character
         }
         #endregion
 
+        #region Talents Properties
+        private string _talents;
+        public string Talents
+        {
+            get
+            {
+                CheckDetailRequired("Talents", CharacterDetail.Talents);
+                return _talents;
+            }
+            internal set { _talents = value; }
+        }
+
+        public string TalentsUrl
+        {
+            get
+            {
+                CheckDetailRequired("TalentsUrl", CharacterDetail.Talents);
+                return string.Format("http://www.wow-europe.com/en/info/basics/talents/{0}/talents.html?tal={1}",
+                                     this.Class.ToString().ToLowerInvariant(),
+                                     this.Talents);
+            }
+        }
+        #endregion
 
         internal Character(Armory armory,
                            CharacterDetail detailLoaded,
