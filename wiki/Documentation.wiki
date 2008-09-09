@@ -1,5 +1,45 @@
-#summary Library Examples.
-#labels Documentation,Examples
+#summary Library API & Examples.
+#labels Documentation,Examples,API
+
+= API =
+
+ArmoryLib provides a very simply API, consisting out of the following 4 methods:
+
+{{{
+armory.SearchCharacter(characterName);
+armory.LoadCharacter(realmName, characterName);
+armory.SearchGuild(guildName);
+armory.LoadGuild(realmName, guildName);
+}}}
+
+To use these, simply put a reference to ArmoryLib and create an instance of Armory.
+
+{{{
+Armory armory = new Armory
+{
+    Region = Region.Europe
+};
+}}}
+
+The two main objects are Guild and Character.
+
+By default, using LoadCharacter(realmName, characterName) will only load the Basic detail.
+
+To load additional detail, use the LoadDetail(characterDetail) method on an existing Character object.
+
+{{{
+character.LoadDetail(CharacterDetail.Reputation);
+}}}
+
+Available detail levels are:
+  * Basic
+  * CharacterSheet
+  * Reputation
+  * Skills
+  * Talents
+  * Arena
+
+To see all available properties for Guild and Character, have a look at the example Program in the ArmoryTester project, below you can see examples of the output of this program.
 
 = Examples =
 
@@ -254,6 +294,9 @@ Zoing
     [Armor] Leather (1)
     [Language] Language: Orcish (300)
     [Language] Language: Thalassian (300)
+
+Talents: 0053201054000000000003203050020050150123210510000000000000000000000
+Talents Url: http://www.wow-europe.com/en/info/basics/talents/rogue/talents.html?tal=0053201054000000000003203050020050150123210510000000000000000000000
 }}}
 
 === Hunter ===
@@ -409,6 +452,9 @@ Dinli
     [Armor] Mail (1)
     [Language] Language: Orcish (300)
     [Language] Language: Troll (300)
+
+Talents: 0520120100000000000005500201215013243105102301030000000000000000
+Talents Url: http://www.wow-europe.com/en/info/basics/talents/hunter/talents.html?tal=0520120100000000000005500201215013243105102301030000000000000000
 }}}
 
 === Warlock ===
@@ -546,6 +592,9 @@ Hellstrike
     [Armor] Cloth (1)
     [Language] Language: Orcish (300)
     [Language] Language: Thalassian (300)
+
+Talents: 0502220010000000000000352030133050100531351500000000000000000000
+Talents Url: http://www.wow-europe.com/en/info/basics/talents/warlock/talents.html?tal=0502220010000000000000352030133050100531351500000000000000000000
 }}}
 
 === Warrior ===
@@ -719,4 +768,7 @@ Vohbo
     [Armor] Shield (1)
     [Language] Language: Orcish (300)
     [Language] Language: Taurahe (300)
+
+Talents: 350003010000000000000000500000000000000000000055511033020103501351
+Talents Url: http://www.wow-europe.com/en/info/basics/talents/warrior/talents.html?tal=350003010000000000000000500000000000000000000055511033020103501351
 }}}
