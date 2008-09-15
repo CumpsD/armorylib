@@ -146,6 +146,15 @@ namespace ArmoryLib.Character
             private set { _guild = value; }
         }
 
+        public string Avatar
+        {
+            get
+            {
+                CheckDetailRequired("Avatar", CharacterDetail.Basic);
+                return string.Format("{0}-{1}-{2}.gif", (int)Gender, (int)Race, (int)Class);
+            }
+        }
+
         public string BeImbaUrl
         {
             get

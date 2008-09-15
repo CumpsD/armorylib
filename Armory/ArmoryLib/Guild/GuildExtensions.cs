@@ -103,20 +103,26 @@ namespace ArmoryLib.Guild
                 foreach (XmlNode guildMember in guildMembers)
                 {
                     // <character class="Rogue" classId="4" gender="Female" genderId="1" level="70" name="Zoing" race="Blood Elf" raceId="10" rank="0" url="r=Sporeggar&amp;n=Zoing"/>
-                    guild.Members.Add(new C(
-                                            armory,
-                                            CharacterDetail.Basic,
-                                            armory.Region,
-                                            guild.Faction,
-                                            guildMember.Attributes["name"].Value,
-                                            guild.Realm,
-                                            guild.BattleGroup,
-                                            (Gender)Enum.Parse(typeof(Gender), guildMember.Attributes["genderId"].Value),
-                                            (Race)Enum.Parse(typeof(Race), guildMember.Attributes["raceId"].Value),
-                                            (Class)Enum.Parse(typeof(Class), guildMember.Attributes["classId"].Value),
-                                            Convert.ToInt32(guildMember.Attributes["level"].Value),
-                                            guildMember.Attributes["url"].Value,
-                                            guild));
+                    int rank = Convert.ToInt32(guildMember.Attributes["rank"].Value);
+                    if (!guild.Members.ContainsKey(rank))
+                    {
+                        guild.Members.Add(rank, new List<C>());
+                    }
+
+                    guild.Members[rank].Add(new C(
+                                                  armory,
+                                                  CharacterDetail.Basic,
+                                                  armory.Region,
+                                                  guild.Faction,
+                                                  guildMember.Attributes["name"].Value,
+                                                  guild.Realm,
+                                                  guild.BattleGroup,
+                                                  (Gender)Enum.Parse(typeof(Gender), guildMember.Attributes["genderId"].Value),
+                                                  (Race)Enum.Parse(typeof(Race), guildMember.Attributes["raceId"].Value),
+                                                  (Class)Enum.Parse(typeof(Class), guildMember.Attributes["classId"].Value),
+                                                  Convert.ToInt32(guildMember.Attributes["level"].Value),
+                                                  guildMember.Attributes["url"].Value,
+                                                  guild));
                 }
 
                 return guild;

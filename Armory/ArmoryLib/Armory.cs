@@ -24,8 +24,10 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Web;
 using System.Net;
+using System.Text;
 
 using ArmoryLib.Exceptions;
+using System.IO;
 
 namespace ArmoryLib
 {
@@ -90,10 +92,29 @@ namespace ArmoryLib
                 string armoryRequest = Url + command;
                 XmlDocument armoryResponse = new XmlDocument();
 
-                using (WebClient client = new WebClient())
+                // Need to figure out why WebClient.DownloadString has problems with the returned í character
+                // While the ResponseStream implementation doesn't have...
+                /*using (WebClient client = new WebClient())
                 {
                     client.Headers.Set("User-Agent", UserAgent);
-                    armoryResponse.LoadXml(client.DownloadString(armoryRequest));
+                    string armoryXml = client.DownloadString(armoryRequest);
+                    armoryResponse.LoadXml(armoryXml);
+                }*/
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(armoryRequest);
+                request.UserAgent = UserAgent;
+                request.Credentials = CredentialCache.DefaultCredentials;
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (Stream dataStream = response.GetResponseStream())
+                    {
+                        using (StreamReader reader = new StreamReader(dataStream))
+                        {
+                            string responseFromServer = reader.ReadToEnd();
+                            armoryResponse.LoadXml(responseFromServer);
+                        }
+                    }
                 }
 
                 Cache.StoreItem(command, armoryResponse);
