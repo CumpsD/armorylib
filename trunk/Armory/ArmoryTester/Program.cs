@@ -13,24 +13,27 @@ namespace ArmoryTester
     {
         static void Main(string[] args)
         {
+            // http://eu.wowarmory.com/character-sheet.xml?r=Sporeggar&n=Lok%C3%AD
+
             string guildName = "The Dominion";
             //string realmName = "Aggramar";
             //string characterName = "Vohbo";
-
+        
             string realmName = "Sporeggar";
-            string characterName = "Zoing";
+            string characterName = "Lokí";
+            //string characterName = "Zoing";
             //string characterName = "Hellstrike";
             //string characterName = "Licia";
             //string characterName = "Dinli";
 
-            Console.Write("Realm: ");
+           /* Console.Write("Realm: ");
             realmName = Console.ReadLine();
 
             Console.Write("Guild: ");
             guildName = Console.ReadLine();
 
             Console.Write("Character: ");
-            characterName = Console.ReadLine();
+            characterName = Console.ReadLine();*/
 
             Armory armory = new Armory
             {
@@ -38,7 +41,7 @@ namespace ArmoryTester
             };
 
 
-            if (guildName != string.Empty)
+            /*if (guildName != string.Empty)
             {
                 List<Guild> guilds = armory.SearchGuild(guildName);
                 guilds.Sort();
@@ -79,13 +82,18 @@ namespace ArmoryTester
 
                     if (guild.IsDetailLoaded(GuildDetail.Roster))
                     {
-                        foreach (Character member in guild.Members)
+                        foreach (var rank in guild.Members.Keys)
                         {
-                            Console.WriteLine(string.Format("  - {0}, {1} Level {2} {3}",
-                                                            member.Name,
-                                                            member.Gender,
-                                                            member.Level,
-                                                            member.Class));
+                            foreach (var member in guild.Members[rank])
+                            {
+                                //member.LoadDetail(CharacterDetail.CharacterSheet);
+                                Console.WriteLine(string.Format("  - [{4}] {0}, {1} Level {2} {3}",
+                                                                member.Name,
+                                                                member.Gender,
+                                                                member.Level,
+                                                                member.Class,
+                                                                rank));
+                            }
                         }
                     }
                 }
@@ -127,7 +135,7 @@ namespace ArmoryTester
 
                 Console.WriteLine(new string('-', 50));
             }
-
+            */
             if ((realmName != string.Empty) && (characterName != string.Empty))
             {
                 Character character = armory.LoadCharacter(realmName,

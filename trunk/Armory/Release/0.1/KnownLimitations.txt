@@ -1,0 +1,13 @@
+SearchCharacter does not take multiple pages into account.
+SearchGuild does not take multiple pages into account.
+LoadGuild does not take multiple pages into account.
+Arena Teams not yet implemented.
+DefenseDetail.Block needs to be tested on a Warrior acc, and have some additional properties.
+DefenseDetail.Defense needs to have some additional properties.
+DefenseDetail.Resilience needs to have some additional properties.
+MeleeDetail.Expertise needs to have some additional properties and be further researched.
+MeleeDetail.MainHand needs to have some additional properties and formulas.
+MeleeDetail.OffHand needs to have some additional properties and formulas.
+RangedDetail.RangedSlot needs to have some additional properties and formulas.
+Resistances Pet Bonus is not yet implemented.
+Intellect Pet Bonus has to be checked.

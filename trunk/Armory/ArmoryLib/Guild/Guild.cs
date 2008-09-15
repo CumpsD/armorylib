@@ -113,8 +113,8 @@ namespace ArmoryLib.Guild
             }
         }
 
-        private List<C> _members;
-        public List<C> Members
+        private Dictionary<int, List<C>> _members;
+        public Dictionary<int, List<C>> Members
         {
             get
             {
@@ -161,7 +161,7 @@ namespace ArmoryLib.Guild
             RealmUrl = realmUrl;
             MemberCount = memberCount;
 
-            Members = new List<C>();
+            Members = new Dictionary<int, List<C>>();
         }
 
         #region Detail Checks

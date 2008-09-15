@@ -39,4 +39,25 @@ namespace ArmoryLib
         BloodElf = 10,
         Draenei = 11,
     }
+
+    public static class RaceExtensions
+    {
+        public static string Humanize(this Race race)
+        {
+            switch (race)
+            {
+                case Race.Human: return "Human";
+                case Race.Orc: return "Orc";
+                case Race.Dwarf: return "Dwarf";
+                case Race.NightElf: return "Night Elf";
+                case Race.Undead: return "Undead";
+                case Race.Tauren: return "Tauren";
+                case Race.Gnome: return "Gnome";
+                case Race.Troll: return "Troll";
+                case Race.BloodElf: return "Blood Elf";
+                case Race.Draenei: return "Draenei";
+                default: return string.Empty;
+            }
+        }
+    }
 }
